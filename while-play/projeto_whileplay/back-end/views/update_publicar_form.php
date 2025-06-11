@@ -64,7 +64,7 @@
 </head>
 <body>
 
-<form action="/meu_projeto/update-publicar" method="POST" enctype="multipart/form-data">
+<form action="/while-play/projeto_whileplay/back-end/update-publicar" method="POST" enctype="multipart/form-data">
     <h2>Atualizar Publicação</h2>
 
     <!-- Campo oculto para identificar a publicação -->
@@ -87,7 +87,7 @@
 
     <label>Imagem Atual:</label>
     <?php if (!empty($publicarInfo['arquivo_url'])): ?>
-        <img src="/meu_projeto/<?= htmlspecialchars($publicarInfo['arquivo_url']) ?>" alt="Imagem da Publicação" class="current-image">
+        <img src="/while-play/projeto_whileplay/back-end/<?= htmlspecialchars($publicarInfo['arquivo_url']) ?>" alt="Imagem da Publicação" class="current-image">
     <?php else: ?>
         <p>Sem imagem disponível.</p>
     <?php endif; ?>
@@ -104,7 +104,7 @@
     <button type="submit">Salvar Alterações</button>
 </form>
 
-<a href="/meu_projeto/list-publicados" class="back-link">← Voltar para Lista de Publicações</a>
+<a href="/while-play/projeto_whileplay/back-end/list-publicados" class="back-link">← Voltar para Lista de Publicações</a>
 
 </body>
 </html>

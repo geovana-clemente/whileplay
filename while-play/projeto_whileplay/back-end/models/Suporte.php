@@ -9,7 +9,7 @@ class Suporte {
     }
 
     public function save($usuario_id, $mensagem, $data_envio) {
-        $stmt = $this->pdo->prepare("INSERT INTO suportes (usuario_id, mensagem, data_envio) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $this->pdo->prepare("INSERT INTO suportes (usuario_id, mensagem, data_envio) VALUES (?, ?, ?)");
         $stmt->execute([$usuario_id, $mensagem, $data_envio]);
     }
 

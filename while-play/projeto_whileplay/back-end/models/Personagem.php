@@ -11,7 +11,7 @@ class Personagem {
     public function save($id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem) {
         $stmt = $this->pdo->prepare("
             INSERT INTO personagens (id_sobre, mais_bem_avaliados$, lançados_recentemente, caminho_imagem)
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?)
         ");
         $stmt->execute([$id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem]);
     }

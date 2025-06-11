@@ -19,7 +19,7 @@ exit;
 
 
 switch ($request) {
-    case '/while_play/public/assinatura':
+    case '/projeto_whilepla/public/assinatura':
         $controller = new AssinaturaController();
         $controller->showForm();
         break;
@@ -109,122 +109,122 @@ switch ($request) {
         break;
 
 
-    case '/meu_projeto/public/perfil':
+    case '/while-play/projeto_whileplay/back-end/public/perfil':
         $controller = new PerfilController();
         $controller->showForm();
         break;
 
-    case '/meu_projeto/save-perfil':    
+    case '/while-play/projeto_whileplay/back-end/save-perfil':    
         $controller = new PerfilController();
         $controller->savePerfil();
         break;
 
-    case '/meu_projeto/list-perfils':
+    case '/while-play/projeto_whileplay/back-end/list-perfils':
         $controller = new PerfilController();
         $controller->listPerfils();
         break;
 
-    case '/meu_projeto/delete-perfil':
+    case '/while-play/projeto_whileplay/back-end/delete-perfil':
         $controller = new PerfilController();
         $controller->deletePerfilById($_GET['id'] ?? null); // <-- cuidado com parâmetro
         break;
 
-    case (preg_match('/\/meu_projeto\/update-perfil\/(\d+)/', $request, $matches) ? true : false):
+    case (preg_match('/\/while-play/projeto_whileplay/back-end\/update-perfil\/(\d+)/', $request, $matches) ? true : false):
         $id = $matches[1];
         $controller = new PerfilController();
         $controller->showUpdateForm($id);
         break;
 
-    case '/meu_projeto/update-perfil':
+    case '/while-play/projeto_whileplay/back-end/update-perfil':
         $controller = new PerfilController();
         $controller->updatePerfil();
         break;
 
 
                     //pagamento
-    case '/meu_projeto/public/personagem':
+    case '/while-play/projeto_whileplay/back-end/public/personagem':
         $controller = new PersonagemController();
         $controller->showForm();
         break;
-    case '/meu_projeto/save-personagem':
+    case '/while-play/projeto_whileplay/back-end/save-personagem':
         $controller = new PersonagemController();
         $controller->savePersonagem();
         break;
-    case '/meu_projeto/list-personagens':
+    case '/while-play/projeto_whileplay/back-end/list-personagens':
         $controller = new PersonagemController();
         $controller->listPersonagens();
         break;
-    case '/meu_projeto/delete-personagem':
+    case '/while-play/projeto_whileplay/back-end/delete-personagem':
         $controller = new PersonagemController();
         $controller->deletePersonagemById();
         break;
-    case (preg_match('/\/meu_projeto\/update-personagem\/(\d+)/', $request, $matches) ? true : false):
+    case (preg_match('/\/while-play/projeto_whileplay/back-end\/update-personagem\/(\d+)/', $request, $matches) ? true : false):
         $id = $matches[1];
         $controller = new PersonagemController();
         $controller->showUpdateForm($id);
         break;
-    case '/meu_projeto/update-personagem':
+    case '/while-play/projeto_whileplay/back-end/update-personagem':
         $controller = new PersonagemController();
         $controller->updatePersonagem();
         break;
 
     // Publicar
-    case '/meu_projeto/public/publicar':
+    case '/while-play/projeto_whileplay/back-end/public/publicar':
         $controller = new PublicarController();
         $controller->showForm();
         break;
         $controller = new PublicarController();
         $controller->showForm();
         break;
-    case '/meu_projeto/save-publicar':
+    case '/while-play/projeto_whileplay/back-end/save-publicar':
         $controller = new PublicarController();
         $controller->savePublicar();
         break;
-    case '/meu_projeto/list-publicados':
+    case '/while-play/projeto_whileplay/back-end/list-publicados':
         $controller = new PublicarController();
         $controller->listPublicados();
         break;
-    case '/meu_projeto/delete-publicar':
+    case '/while-play/projeto_whileplay/back-end/delete-publicar':
         $controller = new PublicarController();
         $controller->deletePublicarById($_POST['id'] ?? null);
         break;
-    case (preg_match('/\/meu_projeto\/update-publicar\/(\d+)/', $request, $matches) ? true : false):
+    case (preg_match('/\/while-play/projeto_whileplay/back-end\/update-publicar\/(\d+)/', $request, $matches) ? true : false):
         $id = $matches[1];
         $controller = new PublicarController();
         $controller->showUpdateForm($id);
         break;
-    case '/meu_projeto/update-publicar':
+    case '/while-play/projeto_whileplay/back-end/update-publicar':
         $controller = new PublicarController();
         $controller->updatePublicar();
         break; 
 
 
       //suporte
-         case '/meu_projeto/public/suporte':
+         case '/while-play/projeto_whileplay/back-end/public/suporte':
         $controller = new SuporteController();
         $controller->showForm();
         break;
         $controller = new SuporteController();
         $controller->showForm();
         break;
-    case '/meu_projeto/save-suporte':
+    case '/while-play/projeto_whileplay/back-end/save-suporte':
         $controller = new SuporteController();
         $controller->savePublicar();
         break;
-    case '/meu_projeto/list-suportes':
+    case '/while-play/projeto_whileplay/back-end/list-suportes':
         $controller = new SuporteController();
         $controller->listSuportes();
         break;
-    case '/meu_projeto/delete-suporte':
+    case '/while-play/projeto_whileplay/back-end/delete-suporte':
         $controller = new SuporteController();
         $controller->deletePublicarById($_POST['id'] ?? null);
         break;
-    case (preg_match('/\/meu_projeto\/update-suporte\/(\d+)/', $request, $matches) ? true : false):
+    case (preg_match('/\/while-play/projeto_whileplay/back-end\/update-suporte\/(\d+)/', $request, $matches) ? true : false):
         $id = $matches[1];  
         $controller = new SuporteController();
         $controller->showUpdateForm($id);
         break;
-    case '/meu_projeto/update-suporte':
+    case '/while-play/projeto_whileplay/back-end/update-suporte':
         $controller = new SuporteController();
         $controller->updateSuporte();
         break; 

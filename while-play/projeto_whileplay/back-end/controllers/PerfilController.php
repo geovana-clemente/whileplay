@@ -39,7 +39,7 @@ class PerfilController {
         $perfil = new Perfil();
         $perfil->save($nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao);
 
-        header('Location: /meu_projeto/list-perfils');
+        header('Location: /while-play/projeto_whileplay/back-end/list-perfils');
         exit;
     }
 
@@ -55,7 +55,7 @@ class PerfilController {
         $perfil->deleteById($id);
     }
 
-    header('Location: /meu_projeto/perfil_list.php');
+    header('Location: /while-play/projeto_whileplay/back-end/perfil_list.php');
     exit;
 }
 
@@ -103,7 +103,7 @@ class PerfilController {
 
         $perfil->update($nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao);
 
-        header('Location: /meu_projeto/list-perfils');
+        header('Location: /while-play/projeto_whileplay/back-end/list-perfils');
         exit;
     }
 }

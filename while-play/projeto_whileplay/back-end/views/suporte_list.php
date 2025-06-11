@@ -61,8 +61,8 @@
             <td><?= date('d/m/Y H:i', strtotime($s['data_envio'])) ?></td>
             <td><?= htmlspecialchars(ucfirst($s['status'])) ?></td>
             <td>
-                <a href="/meu_projeto/update-suporte/<?= $s['id'] ?>">Atualizar</a>
-                <form action="/meu_projeto/delete-suporte" method="POST" style="display:inline;">
+                <a href="/while-play/projeto_whileplay/back_end/update-suporte/<?= $s['id'] ?>">Atualizar</a>
+                <form action="/while-play/projeto_whileplay/back_end/delete-suporte" method="POST" style="display:inline;">
                     <input type="hidden" name="id" value="<?= $s['id'] ?>" />
                     <button type="submit" onclick="return confirm('Deseja excluir esta mensagem de suporte?')">Excluir</button>
                 </form>
@@ -75,7 +75,7 @@
     </tbody>
 </table>
 
-<a href="/meu_projeto/public/suporte">Nova Mensagem</a>
+<a href="/while-play/projeto_whileplay/back_end/public/suporte">Nova Mensagem</a>
 
 </body>
 </html>

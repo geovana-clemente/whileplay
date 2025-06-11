@@ -56,7 +56,7 @@
 </head>
 <body>
 
-<form action="/meu_projeto/update-suporte" method="POST">
+<form action="/while-play/projeto_whileplay/back-end/update-suporte" method="POST">
     <h2>Atualizar Suporte</h2>
 
     <!-- Campo oculto para identificar o registro -->
@@ -74,7 +74,7 @@
     <button type="submit">Salvar Alterações</button>
 </form>
 
-<a href="/meu_projeto/list-suportes" class="back-link">← Voltar para Lista de Suportes</a>
+<a href="/while-play/projeto_whileplay/back-end/list-suportes" class="back-link">← Voltar para Lista de Suportes</a>
 
 </body>
 </html>

@@ -11,7 +11,7 @@ class Perfil {
     public function save($nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao) {
         $stmt = $this->pdo->prepare("
             INSERT INTO perfil (nome_completo, username, email, senha, biografia, foto_url, data_criacao)
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?,?,?)
         ");
         $stmt->execute([$nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao]);
     }

@@ -57,7 +57,7 @@
 </head>
 <body>
 
-<form action="/meu_projeto/save-personagem" method="POST" enctype="multipart/form-data">
+<form action="/while-play/projeto_whileplay/back-end/save-personagem" method="POST" enctype="multipart/form-data">
     <h2>Cadastrar Novo Personagem</h2>
 
     <label for="id_sobre">ID Sobre:</label>
@@ -75,7 +75,7 @@
     <button type="submit">Salvar</button>
 </form>
 
-<a class="back-link" href="/meu_projeto/list-personagens">← Voltar para a lista de personagens</a>
+<a class="back-link" href="/while-play/projeto_whileplay/back-end/list-personagens">← Voltar para a lista de personagens</a>
 
 </body>
 </html>

@@ -37,7 +37,7 @@
 
     <h2 style="text-align:center;">Criar Novo Perfil</h2>
 
-    <form action="/meu_projeto/save-perfil" method="POST" enctype="multipart/form-data">
+    <form action="/while-play/projeto_whileplay/back-end/save-perfil" method="POST" enctype="multipart/form-data">
         <label for="nome_completo">Nome Completo:</label>
         <input type="text" id="nome_completo" name="nome_completo" required>
 

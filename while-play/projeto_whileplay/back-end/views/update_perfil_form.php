@@ -68,7 +68,7 @@
 </head>
 <body>
 
-    <form action="/meu_projeto/update-perfil" method="POST" enctype="multipart/form-data">
+    <form action="/while-play/projeto_whileplay/back-end/update-perfil" method="POST" enctype="multipart/form-data">
         <h2>Atualizar Perfil</h2>
 
         <!-- Campo oculto para identificar o perfil -->
@@ -94,7 +94,7 @@
 
         <label>Foto Atual:</label>
         <?php if (!empty($perfilInfo['foto_url'])): ?>
-            <img src="/meu_projeto/<?= htmlspecialchars($perfilInfo['foto_url']) ?>" alt="Foto do Perfil" class="current-photo">
+            <img src="/while-play/projeto_whileplay/back-end/<?= htmlspecialchars($perfilInfo['foto_url']) ?>" alt="Foto do Perfil" class="current-photo">
         <?php else: ?>
             <p>Sem foto disponível.</p>
         <?php endif; ?>
@@ -105,7 +105,7 @@
         <button type="submit">Salvar Alterações</button>
     </form>
 
-    <a class="back-link" href="/meu_projeto/list-perfils">← Voltar para Lista de Perfis</a>
+    <a class="back-link" href="/while-play/projeto_whileplay/back-end/list-perfils">← Voltar para Lista de Perfis</a>
 
 </body>
 </html>

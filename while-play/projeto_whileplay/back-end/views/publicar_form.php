@@ -44,7 +44,7 @@
 
     <h2>Nova Publicação</h2>
 
-    <form action="/meu_projeto/save-publicar" method="POST" enctype="multipart/form-data">
+    <form action="/while-play/projeto_whileplay/back-end/save-publicar" method="POST" enctype="multipart/form-data">
         <label for="usuario_id">ID do Usuário:</label>
         <input type="number" name="usuario_id" id="usuario_id" required>
 

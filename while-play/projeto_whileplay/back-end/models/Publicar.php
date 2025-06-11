@@ -11,7 +11,7 @@ class Publicar {
     public function save($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado) {
         $stmt = $this->pdo->prepare("
             INSERT INTO publicados (usuario_id, titulo, sinopse, tipo, arquivo_url, data_criacao, publicado)
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         $stmt->execute([$usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado]);
     }

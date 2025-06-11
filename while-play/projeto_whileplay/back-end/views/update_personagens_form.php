@@ -46,7 +46,7 @@
 
 <h2 style="text-align:center;">Editar Personagem</h2>
 
-<form action="/meu_projeto/update-personagem" method="POST" enctype="multipart/form-data">
+<form action="/while-play/projeto_whileplay/back-end/update-personagem" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?= htmlspecialchars($personagemInfo['id']) ?>">
 
     <label for="id_sobre">ID Sobre:</label>
@@ -60,7 +60,7 @@
 
     <label for="imagem">Imagem Atual:</label>
     <?php if (!empty($personagemInfo['caminho_imagem'])): ?>
-        <img src="/meu_projeto/<?= htmlspecialchars($personagemInfo['caminho_imagem']) ?>" alt="Imagem Atual">
+        <img src="/while-play/projeto_whileplay/back-end/<?= htmlspecialchars($personagemInfo['caminho_imagem']) ?>" alt="Imagem Atual">
     <?php else: ?>
         <p>Sem imagem.</p>
     <?php endif; ?>
