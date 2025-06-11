@@ -563,94 +563,68 @@
                 </div>
             </div>
             
-            <div class="detail-info">
-                <div class="input-field">
-                    <label for="titulo">Título do Projeto</label>
-                    <input type="text" id="titulo" placeholder="Digite o título do seu projeto">
-                </div>
-                
-                <div class="input-field">
-                    <label for="email">E-mail para contato</label>
-                    <input type="email" id="email" placeholder="Digite seu e-mail">
-                </div>
-                
-                <div class="input-field">
-                    <label for="sinopse">Sinopse</label>
-                    <textarea id="sinopse" placeholder="Digite a sinopse do seu projeto" style="min-height:150px;resize:vertical;"></textarea>
-                </div>
-                
-                <div class="upload-container">
+            <form id="form-publicar" action="/while_play/save-publicar" method="POST" enctype="multipart/form-data">
+              <div class="detail-info">
+                  <div class="input-field">
+                      <label for="usuario_id">ID do Usuário</label>
+                      <input type="number" id="usuario_id" name="usuario_id" required>
+                  </div>
+                  <div class="input-field">
+                      <label for="titulo">Título do Projeto</label>
+                      <input type="text" id="titulo" name="titulo" placeholder="Digite o título do seu projeto" required>
+                  </div>
+                  
+                  <div class="input-field">
+                      <label for="email">E-mail para contato</label>
+                      <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+                  </div>
+                  
+                  <div class="input-field">
+                      <label for="sinopse">Sinopse</label>
+                      <textarea id="sinopse" name="sinopse" placeholder="Digite a sinopse do seu projeto" style="min-height:150px;resize:vertical;" required></textarea>
+                  </div>
+                  
+                  <div class="input-field">
+                      <label for="tipo">Tipo</label>
+                      <select id="tipo" name="tipo" required>
+                        <option value="personagem">Personagem (PNG)</option>
+                        <option value="roteiro">Roteiro (DOCX)</option>
+                      </select>
+                  </div>
+                  
+                  <div class="upload-container">
                     <div id="upload-personagem" class="input-field">
                         <label for="arquivo-personagem">Imagem do Personagem (PNG)</label>
-                        <input type="file" id="arquivo-personagem" class="file-upload" accept=".png">
-                        <label for="arquivo-personagem" class="file-upload-label">Clique para selecionar o arquivo PNG</label>
-                        <div class="file-info">Tamanho máximo: 20MB • Formatos aceitos: PNG</div>
+                        <input type="file" id="arquivo-personagem" name="arquivo" class="file-upload" accept=".png">
                     </div>
                     
                     <div id="upload-roteiro" class="input-field" style="display:none">
                         <label for="arquivo-roteiro">Documento do Roteiro (DOCX)</label>
-                        <input type="file" id="arquivo-roteiro" class="file-upload" accept=".docx">
-                        <label for="arquivo-roteiro" class="file-upload-label">Clique para selecionar o arquivo DOCX</label>
-                        <div class="file-info">Tamanho máximo: 100MB • Formatos aceitos: DOCX</div>
+                        <input type="file" id="arquivo-roteiro" name="arquivo" class="file-upload" accept=".docx">
                     </div>
-                </div>
-                
-                <div class="terms-container">
-                    <div class="terms-scroll">
-                        <h4>TERMOS DE COMERCIALIZAÇÃO E VENDA DE DIREITOS</h4>
-                        <p>Ao submeter este projeto à plataforma, você ("Autor") concorda com os seguintes termos e condições:</p>
-                        
-                        <h5>1. DISPONIBILIZAÇÃO PARA VENDA DE DIREITOS</h5>
-                        <p>1.1. O Autor consente expressamente em disponibilizar seu projeto (doravante "Obra") para que terceiros interessados possam adquirir direitos de uso, adaptação, produção ou comercialização mediante compensação financeira.</p>
-                        <p>1.2. A disponibilização da Obra não implica em transferência imediata de direitos, mas na declaração de interesse e consentimento para potenciais negociações futuras.</p>
-                        <p>1.3. O Autor reconhece que a plataforma tornará visível para potenciais compradores: o título da Obra, sua sinopse e o material enviado (personagem ou roteiro).</p>
-                        
-                        <h5>2. COMPENSAÇÃO FINANCEIRA</h5>
-                        <p>2.1. Em caso de transação bem-sucedida para venda de direitos, o Autor receberá 70% (setenta por cento) do valor da transação.</p>
-                        <p>2.2. A plataforma reterá 30% (trinta por cento) como taxa de intermediação, custos operacionais e manutenção do serviço.</p>
-                        <p>2.3. Os pagamentos serão processados em até 30 dias úteis após a confirmação da transação e validação dos dados bancários do Autor.</p>
-                        <p>2.4. Impostos aplicáveis sobre a compensação financeira são de responsabilidade exclusiva do Autor, conforme legislação vigente.</p>
-                        
-                        <h5>3. TITULARIDADE E PROPRIEDADE INTELECTUAL</h5>
-                        <p>3.1. O Autor mantém a titularidade original e todos os direitos sobre a Obra enquanto não houver transação formal de venda de direitos.</p>
-                        <p>3.2. O Autor declara e garante ser o legítimo detentor dos direitos da Obra submetida, que esta é original e não viola direitos de terceiros.</p>
-                        <p>3.3. Caso ocorra a venda dos direitos, o escopo da transferência (total ou parcial, exclusiva ou não-exclusiva) será determinado no contrato específico de cada transação.</p>
-                        <p>3.4. O Autor é responsável por eventuais reclamações de terceiros referentes a plágio ou violação de direitos autorais.</p>
-                        
-                        <h5>4. PAPEL DA PLATAFORMA</h5>
-                        <p>4.1. A plataforma atuará exclusivamente como intermediária para negociações e transações relacionadas à Obra.</p>
-                        <p>4.2. A plataforma não garante a concretização de vendas ou ofertas pelos projetos disponibilizados.</p>
-                        <p>4.3. A plataforma se reserva o direito de remover qualquer Obra que viole seus termos de uso ou que contenha material inapropriado, ofensivo ou ilegal.</p>
-                        <p>4.4. Em caso de disputa entre o Autor e potenciais compradores, a plataforma poderá atuar como mediadora, mas não se responsabiliza pelo resultado da negociação.</p>
-                        
-                        <h5>5. VISIBILIDADE E PROMOÇÃO</h5>
-                        <p>5.1. O Autor autoriza a plataforma a promover sua Obra através de destaque na plataforma, newsletters, redes sociais e outras formas de divulgação.</p>
-                        <p>5.2. A plataforma poderá apresentar estatísticas de visualização e interesse pela Obra ao Autor.</p>
-                        <p>5.3. O Autor pode solicitar a remoção da Obra a qualquer momento, desde que não haja negociação em andamento.</p>
-                        
-                        <h5>6. CONFIDENCIALIDADE</h5>
-                        <p>6.1. A plataforma se compromete a manter em sigilo informações sensíveis do Autor, como dados de contato e bancários.</p>
-                        <p>6.2. As interações entre potenciais compradores e o Autor serão intermediadas pela plataforma até que ambas as partes concordem em negociar diretamente.</p>
-                        
-                        <h5>7. DURAÇÃO E RESCISÃO</h5>
-                        <p>7.1. Estes termos vigoram por tempo indeterminado a partir da submissão da Obra.</p>
-                        <p>7.2. O Autor pode solicitar a remoção da Obra e rescisão destes termos a qualquer momento, mediante notificação por escrito, exceto se houver negociação em andamento.</p>
-                        <p>7.3. A plataforma reserva-se o direito de encerrar a disponibilização da Obra mediante notificação prévia de 30 dias ao Autor.</p>
-                        
-                        <h5>8. DISPOSIÇÕES GERAIS</h5>
-                        <p>8.1. Estes termos constituem o acordo integral entre o Autor e a plataforma em relação à disponibilização da Obra para venda de direitos.</p>
-                        <p>8.2. A plataforma pode atualizar estes termos mediante notificação ao Autor.</p>
-                        <p>8.3. O Autor reconhece que leu, compreendeu e concorda com todos os termos e condições aqui estabelecidos.</p>
-                    </div>
-                    
-                    <div class="terms-checkbox">
-                        <input type="checkbox" id="aceite-termos">
-                        <label for="aceite-termos">Li e concordo com os termos de comercialização de direitos do projeto</label>
-                    </div>
-                </div>
-                
-                <button class="btn" id="submit-btn" disabled>Publicar e Disponibilizar para Venda</button>
-            </div>
+                  </div>
+                  
+                  <div class="input-field">
+                      <label for="data_criacao">Data de Criação</label>
+                      <input type="date" id="data_criacao" name="data_criacao" required>
+                  </div>
+                  
+                  <div class="input-field">
+                      <label for="publicado">Publicado?</label>
+                      <select id="publicado" name="publicado" required>
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
+                      </select>
+                  </div>
+                  
+                  <div class="terms-checkbox">
+                    <input type="checkbox" id="aceite-termos" required>
+                    <label for="aceite-termos">Li e concordo com os termos de comercialização de direitos do projeto</label>
+                  </div>
+                  
+                  <button class="btn" id="submit-btn" type="submit" disabled>Publicar e Disponibilizar para Venda</button>
+              </div>
+            </form>
         </div>
     </main>
     
@@ -665,27 +639,10 @@
             document.getElementById('upload-personagem').style.display = 'flex';
             document.getElementById('upload-roteiro').style.display = 'none';
         });
-        
         document.getElementById('roteiro').addEventListener('change', function() {
             document.getElementById('upload-personagem').style.display = 'none';
             document.getElementById('upload-roteiro').style.display = 'flex';
         });
-        
-        // Mostrar nome do arquivo selecionado
-        document.getElementById('arquivo-personagem').addEventListener('change', function() {
-            if (this.files.length > 0) {
-                const fileName = this.files[0].name;
-                this.nextElementSibling.textContent = fileName;
-            }
-        });
-        
-        document.getElementById('arquivo-roteiro').addEventListener('change', function() {
-            if (this.files.length > 0) {
-                const fileName = this.files[0].name;
-                this.nextElementSibling.textContent = fileName;
-            }
-        });
-        
         // Controle do checkbox de termos para habilitar/desabilitar o botão
         document.getElementById('aceite-termos').addEventListener('change', function() {
             document.getElementById('submit-btn').disabled = !this.checked;

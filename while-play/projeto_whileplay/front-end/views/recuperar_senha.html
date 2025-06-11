@@ -111,10 +111,10 @@
   <div class="recovery-container">
     <h1>Recuperar Senha</h1>
     <p>Preencha os dados abaixo para redefinir sua senha.</p>
-    <form id="recoveryForm">
-      <input type="email" placeholder="Email" required>
-      <input type="password" id="senha1" placeholder="Nova senha" required>
-      <input type="password" id="senha2" placeholder="Repetir nova senha" required>
+    <form id="recoveryForm" action="/while_play/recuperar-senha" method="POST">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="nova_senha" id="senha1" placeholder="Nova senha" required>
+      <input type="password" name="confirma_senha" id="senha2" placeholder="Repetir nova senha" required>
       <button type="submit">Redefinir Senha</button>
     </form>
     <div class="footer">
@@ -124,25 +124,31 @@
   </div>
 
   <script>
+    // Exibe mensagens de erro/sucesso se houver parâmetro na URL
+    document.addEventListener('DOMContentLoaded', function() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('erro') === 'senhas') {
+        alert('As senhas digitadas não são iguais.');
+      }
+      if (params.get('erro') === 'email') {
+        alert('Email não encontrado.');
+      }
+      if (params.get('erro') === 'senhapequena') {
+        alert('A senha deve ter pelo menos 6 caracteres.');
+      }
+      if (params.get('erro') === 'bd') {
+        alert('Erro ao atualizar senha. Tente novamente.');
+      }
+      if (params.get('senha') === 'alterada') {
+        alert('Senha alterada com sucesso! Faça login.');
+      }
+    });
     function handleBackgroundClick(event) {
       const container = document.querySelector('.recovery-container');
       if (!container.contains(event.target)) {
         window.history.back();
       }
     }
-    // Redireciona para login.html ao redefinir senha, só se as senhas forem iguais
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('recoveryForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const senha1 = document.getElementById('senha1').value;
-        const senha2 = document.getElementById('senha2').value;
-            if (senha1 !== senha2) {
-              alert('As senhas digitadas não são iguais.');
-              return;
-            }
-            // Aqui você pode adicionar a lógica para redefinir a senha, por exemplo, enviar para o backend
-            // Após redefinir, redireciona para login.html
-            window.location.href = "login.html";
-          });
-        });
-      </script>
+  </script>
+</body>
+</html>

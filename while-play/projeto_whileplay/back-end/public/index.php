@@ -132,6 +132,46 @@ switch ($request) {
         $controller->updatePublicar();
         break;
     
+    // Login
+    case '/while_play/login':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            require_once '../controllers/LoginController.php';
+            $controller = new LoginController();
+            $controller->authenticate();
+        } else {
+            require_once '../controllers/LoginController.php';
+            $controller = new LoginController();
+            $controller->showForm();
+        }
+        break;
+    case '/while_play/logout':
+        require_once '../controllers/LoginController.php';
+        $controller = new LoginController();
+        $controller->logout();
+        break;
+    case '/while_play/dashboard':
+        include '../views/dashboard.php';
+        break;
+    // Cadastro
+    case '/while_play/cadastro':
+        require_once '../controllers/CadastroController.php';
+        $controller = new CadastroController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->cadastrar();
+        } else {
+            $controller->showForm();
+        }
+        break;
+    // Recuperar senha
+    case '/while_play/recuperar-senha':
+        require_once '../controllers/RecuperarSenhaController.php';
+        $controller = new RecuperarSenhaController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $controller->processForm();
+        } else {
+            $controller->showForm();
+        }
+        break;
     default:
         http_response_code(404);
         echo $request;
