@@ -1,0 +1,569 @@
+<!-- Note: Allow sound in your browser for a more satisfying popping experience! -->
+
+<div id="loading-container">
+  <div id="loading-text">CARREGANDO</div>
+  <audio class="pop" src="https://freesound.org/data/previews/244/244654_3624044-lq.mp3"></audio>
+  <audio class="pop" src="https://freesound.org/data/previews/411/411642_5121236-lq.mp3"></audio>
+  <audio class="pop" src="https://freesound.org/data/previews/245/245645_1038806-lq.mp3"></audio>
+</div>
+
+<div id="confirmation-container" style="display: none;">
+  <div class="confirmation-content">
+    <div class="success-icon">
+      <svg viewBox="0 0 52 52">
+        <circle class="circle" cx="26" cy="26" r="25" fill="none" />
+        <path class="check" d="M14.1 27.2l7.1 7.2 16.7-16.8" fill="none" />
+      </svg>
+    </div>
+    <h1>Pagamento Confirmado!</h1>
+    <p>Seu pedido foi processado com sucesso.</p>
+    <div class="order-details">
+      <p><strong>Número do Pedido:</strong> #128756</p>
+      <p><strong>Data:</strong> <span id="current-date"></span></p>
+    </div>
+    <div class="action-buttons">
+      <button id="view-library" class="primary-btn">Visualizar Biblioteca</button>
+      <button id="continue-shopping" class="secondary-btn">Continuar Navegando</button>
+    </div>
+  </div>
+</div>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f7f8;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#loading-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  transition: opacity 0.5s ease-out;
+}
+
+#loading-text {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Arial, sans-serif;
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+#confirmation-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  background-color: rgba(247, 247, 248, 0.95);
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+.confirmation-content {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+}
+
+.circle {
+  stroke: #4BB543;
+  stroke-width: 2;
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.check {
+  stroke: #4BB543;
+  stroke-width: 2;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+h1 {
+  color: #333;
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+p {
+  color: #666;
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+.order-details {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 24px 0;
+  text-align: left;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+button {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primary-btn {
+  background-color: #4BB543;
+  color: white;
+  border: none;
+}
+
+.primary-btn:hover {
+  background-color: #429a3c;
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  background-color: transparent;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.secondary-btn:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  .action-buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script>
+// Set window height and width variables
+let width = window.innerWidth,
+  height = window.innerHeight;
+
+const audio = document.querySelectorAll("audio");
+const loadingText = document.getElementById("loading-text");
+const loadingContainer = document.getElementById("loading-container");
+const confirmationContainer = document.getElementById("confirmation-container");
+let loadingDots = "";
+let dotCount = 0;
+
+// Função para atualizar a data atual no recibo
+function updateCurrentDate() {
+  const now = new Date();
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById("current-date").textContent = now.toLocaleDateString('pt-BR', options);
+}
+
+// Função para gerar número de pedido aleatório (letras e números, tamanho maior)
+function generateOrderNumber(length = 12) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
+// Função para animar os pontos do texto de carregamento
+function animateLoadingDots() {
+  const dotPatterns = [".", "..", "...", ""];
+  loadingDots = dotPatterns[dotCount % dotPatterns.length];
+  loadingText.textContent = "CARREGANDO" + loadingDots;
+  dotCount++;
+}
+
+// Iniciar a animação dos pontos
+setInterval(animateLoadingDots, 500);
+
+// Função para mostrar a tela de confirmação após 5 segundos
+setTimeout(function() {
+  // Atualizar a data
+  updateCurrentDate();
+  // Gerar número de pedido aleatório
+  document.querySelector('.order-details p strong').nextSibling.textContent = ' ' + generateOrderNumber();
+  // Esconder a tela de carregamento
+  loadingContainer.style.opacity = "0";
+  // Mostrar a tela de confirmação
+  confirmationContainer.style.display = "flex";
+  setTimeout(() => {
+    confirmationContainer.style.opacity = "1";
+  }, 100);
+  // Parar as simulações de física após confirmação
+  clearInterval(mouseDown);
+  mouseDown = -1;
+  clearInterval(addCorn);
+  addCorn = false;
+}, 5000);
+
+// Adicionar eventos aos botões
+document.getElementById("view-library").addEventListener("click", function() {
+  alert("Redirecionando para a Biblioteca...");
+  // Aqui você adicionaria o código para redirecionar para a página da biblioteca
+  // window.location.href = "biblioteca.html";
+});
+
+document.getElementById("continue-shopping").addEventListener("click", function() {
+  alert("Continuando a navegação...");
+  // Aqui você adicionaria o código para voltar à página principal ou outra página
+  // window.location.href = "index.html";
+});
+
+// This project uses Matter.js so load in the modules as necessary
+var Engine = Matter.Engine,
+  Render = Matter.Render,
+  World = Matter.World,
+  Mouse = Matter.Mouse,
+  Body = Matter.Body,
+  Bodies = Matter.Bodies,
+  Vertices = Matter.Vertices,
+  Constraint = Matter.Constraint,
+  Composite = Matter.Composite;
+
+// Create an engine
+var engine = Engine.create();
+
+// Create a renderer
+var render = Render.create({
+  element: document.body,
+  engine: engine,
+  options: {
+    showAngleIndicator: false,
+    wireframes: false,
+    background: "#f7f7f8",
+    width: width,
+    height: height,
+    showAngleIndicator: false,
+    showCollisions: false,
+    showInternalEdges: false,
+    showVelocity: false
+  }
+});
+
+// Add container walls
+World.add(engine.world, [
+  Bodies.rectangle(width / 2, height + 30, width, 60, {
+    label: "ground",
+    isStatic: true
+  }),
+  Bodies.rectangle(-30, height / 2, 60, height * 4, {
+    label: "left-wall",
+    isStatic: true
+  }),
+  Bodies.rectangle(width + 30, height / 2, 60, height * 4, {
+    label: "right-wall",
+    isStatic: true
+  })
+]);
+
+// Define the corn shape with a set of coordinates
+let cornSet = [
+  { x: 9.006618, y: 13.010806 },
+  { x: 10.698117, y: 10.06409 },
+  { x: 9.065259, y: 3.235077 },
+  { x: 7.587805, y: 1.178564 },
+  { x: 5.419502, y: 0.144841 },
+  { x: 3.324593, y: 1.059169 },
+  { x: 1.773746, y: 3.235077 },
+  { x: 0.140884, y: 10.064096 },
+  { x: 1.832385, y: 13.010806 },
+  { x: 5.419502, y: 13.741506 }
+];
+
+// Increase the scale of the corn
+cornSet = Vertices.scale(cornSet, 3, 3);
+
+// Track number of corn dropped and corn popped
+let cornDropped = 0;
+let cornPopped = 0;
+// Define the function to create a single grain of corn
+const corn = function() {
+  // Corn colours
+  let corn0 = "#e28a27";
+  let corn1 = "#ea9d20";
+  // Add a random spin to the corn
+  let spin = Math.random() * 0.4 - 0.2;
+  // Start colour for the corn
+  let color = corn0;
+  // If the number is divisible by 2 then change the appearance
+  if (cornDropped % 2 === 0) {
+    color = corn1;
+  }
+  // Increase the number of corn dropped
+  cornDropped++;
+  // Create a new grain of corn
+  return Bodies.fromVertices(
+    width / 2,
+    -80,
+    cornSet,
+    {
+      label: "corn",
+      // Add some elasticity
+      restitution: 0.8,
+      friction: 0.05,
+      torque: spin,
+      render: {
+        fillStyle: color,
+        strokeStyle: color
+      }
+    },
+    true
+  );
+};
+
+// Define the function to create popcorn
+function makePopcorn(x, y) {
+  // Popcorn colours
+  let popcorn0 = "#f9e7a4";
+  let popcorn1 = "#f1dda6";
+  let color = popcorn0;
+  // If the number is divisible by 2 then change the appearance
+  if (cornPopped % 2 === 0) {
+    color = popcorn1;
+  }
+  var options = {
+    render: {
+      fillStyle: color,
+      strokeStyle: color
+    }
+  };
+  // Give the popped corn random sizes
+  function randomSize(base) {
+    return Math.floor(Math.random() * base) + base;
+  }
+  // Offset each part of the popcorn by a random amount
+  function randomOffset() {
+    return Math.ceil(Math.random() * 2);
+  }
+  // Add a random force to popcorn when it is created
+  function randomForce() {
+    return Math.random() * 2 - 1;
+  }
+  // Save each random size as a separate value for later reference
+  const topSize = randomSize(18);
+  const leftSize = randomSize(18);
+  const rightSize = randomSize(18);
+  const mainSize = randomSize(20);
+
+  const offset = mainSize / 4;
+  // Create new circles based on the randomised values
+  const top = Bodies.circle(
+    x,
+    y - (topSize / randomOffset() + offset),
+    topSize,
+    options
+  );
+  const main = Bodies.circle(x, y, mainSize, options);
+  const right = Bodies.circle(
+    x + (rightSize / randomOffset() + offset),
+    y - rightSize / randomOffset(),
+    rightSize,
+    options
+  );
+  const left = Bodies.circle(
+    x - (leftSize / randomOffset() + offset),
+    y - leftSize / randomOffset(),
+    leftSize,
+    options
+  );
+
+  let spin = Math.random() * 0.4 - 0.2;
+  let forceX = randomForce();
+  let forceY = randomForce();
+  // Create the popcorn
+  var popcorn = Body.create({
+    parts: [main, top, left, right],
+    label: "popcorn",
+    torque: spin,
+    force: { x: forceX, y: forceY }
+  });
+
+  // Increase number of corn popped
+  cornPopped++;
+  // Send the new popcorn to the world
+  return popcorn;
+}
+
+// Create an influencer which will be used to pop the corn
+const influencer = Bodies.circle(width / 2, height / 2, 10, {
+  label: "popper",
+  isStatic: true,
+  restitution: 1,
+  friction: 0.05,
+  render: {
+    // Make it invisible
+    visible: false
+  }
+});
+
+// Add the influencer to the world
+World.add(engine.world, influencer);
+
+// Add a mouse controller
+const mouse = Mouse.create(render.canvas);
+
+// Define what happens when the mouse moves
+Matter.Events.on(engine, "afterUpdate", function() {
+  // Early exit condition
+  if (!mouse.position.x) {
+    return;
+  }
+  const offset1 = {
+    x: 0,
+    y: 0
+  };
+  const offset2 = {
+    x: 0,
+    y: 0
+  };
+  // Smoothly move the influencer towards the mouse position
+  Body.translate(influencer, {
+    x: (mouse.position.x - influencer.position.x - offset1.x) * 0.3,
+    y: (mouse.position.y - influencer.position.y + offset1.y) * 0.3
+  });
+});
+
+// Create a collision event for when the mouse iteracts with the corn
+Matter.Events.on(engine, "collisionStart", function(event) {
+  let pairs = event.pairs;
+  pairs.forEach(function(pair) {
+    // Check if the collision is between the corn and the "popper" of the corn
+    if (pair.bodyB.label === "corn" && pair.bodyA.label === "popper") {
+      // Remove the corn from the world
+      World.remove(engine.world, pair.bodyB.parent, [(deep = true)]);
+      // Store the exit point for where the corn is removed from
+      const xPos = pair.bodyB.parent.position.x;
+      const yPos = pair.bodyB.parent.position.y;
+      // Add a popcorn in its place using the exit point variables
+      let choice = Math.round(Math.random() * (audio.length - 1));
+      audio[choice].currentTime = 0; //reset sound
+      audio[choice].play();
+      World.add(engine.world, makePopcorn(xPos, yPos));
+    }
+  });
+});
+
+// Start the addCorn as true so that it can be switched into a interval function later
+let addCorn = true;
+
+//Global variable to track the mouse down interval
+let mouseDown = -1;
+
+// Define the function for what should happen when the mouse is down
+function onMouseDown() {
+  // Early return if too much corn has been dropped
+  if (cornDropped > 100) {
+    return;
+  } else {
+    // Otherwise add new corn to the world
+    World.add(engine.world, corn());
+  }
+}
+
+function start() {
+  if (mouseDown == -1) {
+    //Prevent multiple loops!
+    // And run the function at a regular interval
+    mouseDown = setInterval(onMouseDown, 200);
+  }
+}
+
+function end() {
+  // Change the variable to stop new items from being added
+  if (mouseDown != -1) {
+    // Only stop if it exists
+    clearInterval(mouseDown);
+    // Set the default value to allow it to be triggered again
+    mouseDown = -1;
+  }
+}
+
+// If the mouse is down
+window.addEventListener("mousedown", start);
+
+// When the mouse button is up
+window.addEventListener("mouseup", end);
+
+document.addEventListener("touchstart", function(e) {
+  e.preventDefault();
+  start();
+});
+
+document.addEventListener("touchend", function(e) {
+  end();
+});
+
+// Run the engine
+Engine.run(engine);
+
+// Run the renderer
+Render.run(render);
+
+// When the document has loaded
+document.addEventListener("DOMContentLoaded", function(event) {
+  // Add a maximum of 10 corn in the beginning
+  const startMax = 10;
+  // Start an interval for adding corn
+  addCorn = setInterval(function() {
+    // Count whether the maximum number of corn has been added
+    if (cornDropped > startMax) {
+      // If so then clear the interval
+      clearInterval(addCorn);
+      // Don't add any more corn!
+      addCorn = false;
+      // Exit the function
+      return;
+    }
+    // If the function is still running then add a new corn
+    World.add(engine.world, corn());
+  }, 200);
+});
+</script>

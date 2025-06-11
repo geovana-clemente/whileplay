@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recuperar Senha - NewTalent Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: url(/Whileplay/VIEWS/MEDIA/imagens/While\ Play.png) no-repeat left center fixed;
+      background-size: cover;
+      color: #ffffff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 30%;
+      cursor: pointer;
+    }
+
+    .recovery-container {
+      background: #707070;
+      padding: 2rem;
+      border-radius: 50px;
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(251, 251, 251, 0.2);
+      cursor: auto;
+    }
+
+    .recovery-container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #000000;
+    }
+
+    .recovery-container p {
+      color: #000000;
+      margin-bottom: 2rem;
+    }
+
+    .recovery-container input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ffffff;
+      border-radius: 5px;
+      background: #ffffff;
+      color: #000000;
+      font-size: 1rem;
+    }
+
+    .recovery-container input::placeholder {
+      color: #666666;
+    }
+
+    .recovery-container button {
+      width: 100%;
+      padding: 0.8rem;
+      background: linear-gradient(45deg, #060662, #062b50);
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .recovery-container button:hover {
+      transform: translateY(-2px);
+    }
+
+    .recovery-container a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .recovery-container a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 2rem;
+      color: #cccccc;
+      font-size: 0.9rem;
+    }
+
+    .footer a {
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body onclick="handleBackgroundClick(event)">
+  <div class="recovery-container">
+    <h1>Recuperar Senha</h1>
+    <p>Preencha os dados abaixo para redefinir sua senha.</p>
+    <form id="recoveryForm">
+      <input type="email" placeholder="Email" required>
+      <input type="password" id="senha1" placeholder="Nova senha" required>
+      <input type="password" id="senha2" placeholder="Repetir nova senha" required>
+      <button type="submit">Redefinir Senha</button>
+    </form>
+    <div class="footer">
+      <a href="cadastro.html">Não tem conta? Cadastre-se</a>
+      <a href="login.html">Lembrou sua conta? Faça seu login</a>
+    </div>
+  </div>
+
+  <script>
+    function handleBackgroundClick(event) {
+      const container = document.querySelector('.recovery-container');
+      if (!container.contains(event.target)) {
+        window.history.back();
+      }
+    }
+    // Redireciona para login.html ao redefinir senha, só se as senhas forem iguais
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('recoveryForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const senha1 = document.getElementById('senha1').value;
+        const senha2 = document.getElementById('senha2').value;
+            if (senha1 !== senha2) {
+              alert('As senhas digitadas não são iguais.');
+              return;
+            }
+            // Aqui você pode adicionar a lógica para redefinir a senha, por exemplo, enviar para o backend
+            // Após redefinir, redireciona para login.html
+            window.location.href = "login.html";
+          });
+        });
+      </script>

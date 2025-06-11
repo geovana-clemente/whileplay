@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=PT+Mono|Quicksand:400,700&display=swap');
+        
+        :root {
+            --coral: #EF533D;
+            --navy: #0F1626;
+            --leather: #AB987A;
+            --eggshell: #F5F5F5;
+        }
+        
+        /* Removida a animação de bouncing do body */
+        
+        /* Estilo para o botão de voltar */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: var(--coral);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-button:hover {
+            background-color: var(--navy);
+            transform: scale(1.1);
+        }
+        
+        .back-button::before {
+            content: "←";
+            font-size: 24px;
+            font-weight: bold;
+        }
+           
+        body {
+            margin: 0;
+            font-family: 'Adamina', serif;
+        }
+
+        body, html {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            font-family: 'Quicksand', sans-serif;
+            /* Aplicação do fundo */
+            background: url('/Whileplay/VIEWS/MEDIA/imagens/backgroundclean.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .Checkout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .Card {
+            width: 25.68rem;
+            height: 16.194rem;
+            border-radius: 0.9rem;
+            background: linear-gradient(110deg, var(--coral) 60%, var(--navy) 60%);
+            font-size: 0.7em;
+            text-transform: uppercase;
+            color: white;
+            position: relative;
+            box-shadow: 
+                2px 2px 8px 0 rgba(15, 22, 38, 0.05),
+                0 0 64px 0 rgba(15, 22, 38, 0.1);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s ease-in-out;
+            transform: translate(0, 4rem);
+        }
+
+        .Card .card-chip {
+            width: 4.5em;
+            height: 3em;
+            position: absolute;
+            top: 2.5rem;
+            left: 2rem;
+            border-radius: 0.3em;
+            background: linear-gradient(135deg, #fefcea, gold 120%);
+        }
+
+        .Card .card-logo {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            font-size: 2em;
+            font-weight: 700;
+            line-height: 0.9em;
+            text-align: right;
+        }
+
+        .Card .card-number {
+            position: absolute;
+            top: 6.5rem;
+            left: 1rem;
+        }
+
+        .Card .card-number div {
+            font-size: 2.9em;
+        }
+
+        .Card .card-holder {
+            position: absolute;
+            top: 10rem;
+            left: 1rem;
+        }
+
+        .Card .card-date {
+            position: absolute;
+            top: 12.8rem;
+            left: 1rem;
+        }
+
+        .Card .card-strip {
+            background: black;
+            width: 100%;
+            height: 5em;
+            position: absolute;
+            top: 4em;
+        }
+
+        .Card .card-logo-back {
+            position: absolute;
+            top: 12rem;
+            right: 1.5rem;
+            font-size: 2em;
+            font-weight: 700;
+            line-height: 0.9em;
+            text-align: right;
+        }
+
+        .Card .card-code {
+            position: absolute;
+            top: 12rem;
+            left: 1rem;
+        }
+
+        .Card .mono {
+            font-family: 'PT Mono', monospace;
+            font-size: 2em;
+        }
+
+        .Card .front, .Card .back {
+            transition: opacity 0s linear 0.2s, transform 0s linear 0.2s;
+        }
+
+        .Card .back {
+            opacity: 0;
+        }
+
+        .Card.flipped {
+            transform: translate(0, 4rem) scale(-1, 1);
+        }
+
+        .Card.flipped .front {
+            opacity: 0;
+        }
+
+        .Card.flipped .back {
+            opacity: 1;
+            transform: scale(-1, 1);
+        }
+
+        .Form {
+            background: white;
+            box-shadow: 
+                2px 2px 8px 0 rgba(15, 22, 38, 0.05),
+                0 0 64px 0 rgba(15, 22, 38, 0.1);
+            padding: 4rem 2rem 2rem 2rem;
+            width: 28rem;
+            border-radius: 1rem;
+        }
+
+        .Form .Input {
+            margin-top: 1rem;
+        }
+
+        .Form .Input label {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .Form .Input input {
+            outline: none;
+        }
+
+        .Form .Input input[type="text"], 
+        .Form .Input input[type="number"] {
+            font-family: inherit;
+            font-size: 1.2em;
+            padding: 0.3em;
+            border: #ccc 1px solid;
+            border-radius: 3px;
+            width: 28rem;
+        }
+
+        .Form .Input input::-webkit-inner-spin-button, 
+        .Form .Input input::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
+        .Form .Input select {
+            -webkit-appearance: none; 
+            appearance: none;
+            padding: 0;
+            border: none;
+            outline: none!important;
+            top: 6px;
+            left: 6px;
+            background: none;
+            font-family: inherit;
+            font-size: 1.2em;
+            padding: 0.3em;
+            border: #ccc 1px solid;
+            border-radius: 3px;
+            min-width: 5em;
+            margin-right: 1em;
+        }
+
+        .Form .row {
+            display: flex;
+            width: 100%;
+        }
+
+        .Form .row input {
+            width: 1.9em !important;
+            align-self: flex-end;
+        }
+
+        .Form button {
+            width: 100%;
+            background: var(--coral);
+            border: 0;
+            color: white;
+            font-family: inherit;
+            font-weight: 700;
+            margin: 1.5rem 0 0 0;
+            padding: 1rem 0;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out;
+            
+        }
+
+        .Form button:hover {
+            background: var(--navy);
+        }
+    </style>
+</head>
+<body>
+    <!-- Botão de voltar que substituiu a seta -->
+    <button class="back-button" title="Voltar à página anterior"></button>
+    
+    <div class="Checkout">
+        <div class="Card">
+            <div class="front">
+                <div class="card-chip"></div>
+                <div class="card-logo">Seu<br>Cartão</div>
+                <div class="card-number">
+                    <label>Card Number</label>
+                    <div class="mono">0000 0000 0000 0000</div>
+                </div>
+                <div class="card-holder">
+                    <label>Card Holder</label>
+                    <div class="mono">Nome completo</div>
+                </div>
+                <div class="card-date">
+                    <label>Expires</label>
+                    <div class="mono">01/2025</div>
+                </div>
+            </div>
+            <div class="back">
+                <div class="card-strip"></div>
+                <div class="card-logo-back">Seu<br>Cartão</div>
+                <div class="card-code">
+                    <label>CCV</label>
+                    <div class="mono">123</div>
+                </div>
+            </div>
+        </div>
+        <div class="Form">
+            <form onsubmit="window.location.href='/Whileplay/VIEWS/pagamento e outros/carregando.html'; return false">
+                <div class="Input">
+                    <label>Card Number</label>
+                    <input id="number" type="text" maxlength="19" placeholder="0000 0000 0000 0000">
+                </div>
+                <div class="Input">
+                    <label>Card Holder</label>
+                    <input id="holder" type="text" maxlength="29" placeholder="Nome completo do titular">
+                </div>
+                <div class="row">
+                    <div class="Input">
+                        <label>Month</label>
+                        <select id="month">
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                    <div class="Input">
+                        <label>Year</label>
+                        <select id="year">
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                            <option value="2031">2031</option>
+                            <option value="2032">2032</option>
+                            <option value="2033">2033</option>
+                            <option value="2034">2034</option>
+                            <option value="2035">2035</option>
+                            <option value="2036">2036</option>
+                            <option value="2037">2037</option>
+                            <option value="2038">2038</option>
+                            <option value="2039">2039</option>
+                            <option value="2040">2040</option>
+                        </select>
+                    </div>
+                    <div class="Input">
+                        <label>CCV</label>
+                        <input id="ccv" type="text" maxlength="3" placeholder="123">
+                    </div>
+                </div>
+                <button>PAGAR</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Configuração do botão de voltar
+            const backButton = document.querySelector(".back-button");
+            backButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                window.history.back(); // Volta para a página anterior no histórico do navegador
+            });
+            
+            // Virar o cartão ao clicar
+            const card = document.querySelector(".Card");
+            card.addEventListener("click", function() {
+                card.classList.toggle("flipped");
+            });
+            
+            // Focar no CCV vira o cartão automaticamente
+            const ccvInput = document.getElementById('ccv');
+            ccvInput.addEventListener('focus', function() {
+                card.classList.add("flipped");
+            });
+            
+            ccvInput.addEventListener('blur', function() {
+                card.classList.remove("flipped");
+            });
+
+            // Atualizar o número do cartão com formatação (espaço a cada 4 dígitos)
+            const numberInput = document.getElementById('number');
+            numberInput.addEventListener('input', function() {
+                let value = this.value.replace(/\D/g, "").substring(0, 16); // Remove não-dígitos e limita a 16 caracteres
+                let formattedValue = '';
+                
+                // Adiciona espaço a cada 4 dígitos
+                for(let i = 0; i < value.length; i++) {
+                    if(i > 0 && i % 4 === 0) {
+                        formattedValue += ' ';
+                    }
+                    formattedValue += value[i];
+                }
+                
+                this.value = formattedValue; // Atualiza o campo com a formatação
+                
+                // Atualiza o visual do cartão
+                const cardNumber = document.querySelector(".card-number .mono");
+                cardNumber.textContent = formattedValue || "0000 0000 0000 0000";
+            });
+
+            // Atualizar o nome do titular
+            const holderInput = document.getElementById('holder');
+            holderInput.addEventListener('input', function() {
+                let value = this.value.replace(/[^a-zA-Z\s]/g, ""); // Permite apenas letras e espaços
+                this.value = value.toUpperCase(); // Converte para maiúsculas
+                
+                const cardHolder = document.querySelector(".card-holder .mono");
+                cardHolder.textContent = value || "Nome completo";
+            });
+
+            // Atualizar a data de expiração
+            const monthSelect = document.getElementById('month');
+            const yearSelect = document.getElementById('year');
+            
+            function updateExpireDate() {
+                const month = monthSelect.value;
+                const year = yearSelect.value;
+                const cardDate = document.querySelector(".card-date .mono");
+                cardDate.textContent = `${month}/${year}`;
+            }
+            
+            monthSelect.addEventListener('change', updateExpireDate);
+            yearSelect.addEventListener('change', updateExpireDate);
+
+            // Atualizar o CCV
+            ccvInput.addEventListener('input', function() {
+                let value = this.value.replace(/\D/g, "").substring(0, 3); // Apenas números, máximo 3
+                this.value = value;
+                
+                const cardCode = document.querySelector(".card-code .mono");
+                cardCode.textContent = value || "123";
+            });
+
+            // Definir valores iniciais no cartão
+            updateExpireDate();
+        });
+    </script>
+</body>
+</html>

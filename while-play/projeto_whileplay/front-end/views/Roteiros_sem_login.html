@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trending Games</title>
+  <!-- Fonte Adamina -->
+  <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="/VIEWS/MEDIA/FONTE/creato_display/CreatoDisplay-ExtraBoldItalic.otf" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+
+  <style>
+@charset "utf-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  background-color: #000;
+  color: #fff;
+}
+
+/* Cabeçalho personalizado */
+header {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Adamina', serif;
+}
+
+.header-container {
+  background-image: url('/Whileplay/VIEWS/MEDIA/imagens/background.png');
+  background-size: cover;
+  background-position: center;
+  padding: 40px 0;
+  width: 100%;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.navbar a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 22px; /* AUMENTADO */
+  padding: 12px 18px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.navbar a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.search-box {
+  background: white;
+  border-radius: 30px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 18px; /* AUMENTADO */
+  font-family: 'Adamina', serif;
+}
+
+.search-box span {
+  font-size: 20px; /* AUMENTADO */
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.login-button {
+  background-color: white;
+  color: #007bff;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 20px; /* AUMENTADO */
+  cursor: pointer;
+  transition: background 0.3s;
+  font-family: 'Adamina', serif;
+}
+
+.login-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Estilos gerais */
+.clear {
+  clear: both;
+}
+
+img {
+  max-width: 100%;
+  border: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+  transition: all 0.4s ease-in-out;
+}
+
+a:hover {
+  color: #ffffff;
+}
+
+h2 {
+  margin-bottom: 48px;
+  padding-bottom: 16px;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  position: relative;
+  text-transform: capitalize;
+}
+
+h3 {
+  margin: 0 0 10px;
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.line-title {
+  position: relative;
+  width: 400px;
+}
+
+.line-title::before,
+.line-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.line-title::before {
+  width: 100%;
+  background: #f2f2f2;
+}
+
+.line-title::after {
+  width: 32px;
+  background: #ffffff;
+}
+
+.game-section {
+  padding: 60px 50px;
+}
+
+.game-section .owl-stage {
+  margin: 15px 0;
+  display: flex;
+}
+
+.game-section .item {
+  margin: 0 15px 60px;
+  width: 320px;
+  height: 400px;
+  display: flex;
+  align-items: flex-end;
+  background: #343434 no-repeat center center / cover;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.game-section .item.active {
+  width: 500px;
+  box-shadow: 12px 40px 40px rgba(0, 0, 0, 0.25);
+}
+
+.game-section .item:after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+}
+
+.game-section .item-desc {
+  padding: 0 24px 12px;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transform: translateY(calc(100% - 54px));
+  transition: all 0.4s ease-in-out;
+}
+
+.game-section .item.active .item-desc {
+  transform: none;
+}
+
+.game-section .item-desc p {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: all 0.4s ease-in-out 0.2s;
+}
+
+.game-section .item.active .item-desc p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.game-section .owl-theme.custom-carousel .owl-dots {
+  margin-top: -20px;
+  position: relative;
+  z-index: 5;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  h2 {
+    margin-bottom: 32px;
+  }
+  h3 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .game-section {
+    padding: 50px 30px;
+  }
+  .game-section .item {
+    width: 260px;
+    height: 360px;
+  }
+  .game-section .item.active {
+    width: 400px;
+  }
+  .game-section .item-desc {
+    transform: translateY(calc(100% - 46px));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  h2 {
+    margin-bottom: 32px;
+  }
+  h3 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .line-title {
+    width: 330px;
+  }
+  .game-section {
+    padding: 50px 30px 40px;
+  }
+  .game-section .item {
+    width: 240px;
+    height: 330px;
+  }
+  .game-section .item.active {
+    width: 360px;
+  }
+  .game-section .item-desc {
+    transform: translateY(calc(100% - 42px));
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    font-size: 14px;
+  }
+  h2 {
+    margin-bottom: 20px;
+  }
+  h3 {
+    font-size: 19px;
+    line-height: 24px;
+  }
+  .line-title {
+    width: 250px;
+  }
+  .game-section {
+    padding: 30px 15px 20px;
+  }
+  .game-section .item {
+    width: 200px;
+    height: 280px;
+  }
+  .game-section .item.active {
+    width: 270px;
+    box-shadow: 6px 10px 10px rgba(0, 0, 0, 0.25);
+  }
+  .game-section .item-desc {
+    padding: 0 14px 5px;
+    transform: translateY(calc(100% - 42px));
+  }
+}
+.options {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  overflow: hidden;
+  min-width: 600px;
+  max-width: 900px;
+  width: calc(100% - 100px);
+  height: 400px;
+  margin: 40px auto;
+}
+
+.option {
+  position: relative;
+  overflow: hidden;
+  min-width: 60px;
+  margin: 10px;
+  background: var(--optionBackground, var(--defaultBackground, #E6E9ED));
+  background-size: auto 120%;
+  background-position: center;
+  cursor: pointer;
+  transition: .5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.option.active {
+  flex-grow: 10000;
+  transform: scale(1);
+  max-width: 600px;
+  margin: 0px;
+  border-radius: 40px;
+  background-size: auto 100%;
+}
+
+.option .shadow {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 120px;
+  transition: .5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+}
+
+.option .label {
+  display: flex;
+  position: absolute;
+  bottom: 10px; /* Posiciona na parte inferior */
+  left: 10px; /* Posiciona na parte esquerda */
+  height: auto;
+  opacity: 0; /* Inicialmente invisível */
+  transition: opacity 0.5s ease-in-out; /* Transição suave */
+}
+
+.option .label .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  color: white;
+  white-space: pre;
+}
+
+.option .label .info > div {
+  position: relative;
+  transition: .5s cubic-bezier(0.05, 0.61, 0.41, 0.95), opacity .5s ease-out;
+}
+
+.option .label .info .main {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.option .label .info .sub {
+  transition-delay: .1s;
+}
+.option.active .label {
+  opacity: 1; /* Torna visível quando o slide está ativo */
+}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="navbar">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Pesquisar">
+          <span onclick="clearSearch()">❌</span>
+        </div>
+        <a href="sobrenos.html">Sobre Nós</a>
+        <a href="premios_semlogin.html">Prêmios</a>
+        <a href="homepage1.html">Homepage</a>
+        <a href="Roteiros_sem_login.html">Roteiro</a>
+        <a href="personagens_sem_login.html">Personagens</a>
+        <button class="login-button" onclick="window.location.href='login.html'">Login</button>
+      </div>
+    </div>
+  </header>
+  <script>
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+    }
+  </script>
+<section class="game-section">
+  <h2 class="line-title">Recentes publicados</h2>
+  <div class="owl-carousel custom-carousel owl-theme">
+    <div class="item active" style="background-image: url(https://th.bing.com/th/id/OIG3.RWv5dPSC.lNdGAoGGrU0?pid=ImgGn);">
+      <div class="item-desc">
+        <h3>Meu amigo alien</h3>
+        <p>Em um futuro distante, após a destruição de seu planeta natal, um jovem garoto humano é enviado em uma cápsula de fuga para sobreviver. Ele aterrissa em um mundo alienígena hostil e desconhecido, onde a sobrevivência parece impossível. Lá, ele conhece uma criatura nativa enigmática e solitária. Contra todas as probabilidades, nasce uma amizade improvável que pode mudar o destino de dois mundos.</p>
+      </div>
+    </div>
+    <div class="item" style="background-image: url(https://th.bing.com/th/id/OIG1.O3XiOudoayu_xxLXBXVD?pid=ImgGn);">
+      <div class="item-desc">
+        <h3>Vulkr</h3>
+        <p>Nascido nas ruas quentes de uma megacidade esquecida, Malik descobriu, após um trágico incêndio, que carrega dentro de si o poder ancestral do fogo. Capaz de manipular chamas com pura vontade, ele assume o nome Vulkr e luta contra corporações corruptas e gangues que consomem sua comunidade. Mais que um herói, ele é uma chama de resistência em um mundo prestes a apagar.</p>
+      </div>
+    </div>
+    <div class="item" style="background-image: url(https://th.bing.com/th/id/OIG4.JY9yLUPZnpP9xDMlpkGS?w=1024&h=1024&rs=1&pid=ImgDetMain);">
+      <div class="item-desc">
+        <h3>Popeye 2.0</h3>
+        <p>Na era dos likes e reels, Popeye troca a lata de espinafre por uma garrafa fitness orgânica para salvar Olivia das garras de um influenciador mal-intencionado. Entre memes e desafios virais, ele prova que coragem nunca sai de moda.</p>
+      </div>
+    </div>
+    <div class="item" style="background-image: url(https://th.bing.com/th/id/OIG1.SEdmnBDyh8nh4oZ4B3eC?pid=ImgGn);">
+      <div class="item-desc">
+        <h3>Mundo lá fora</h3>
+        <p>Em uma utopia, o garoto se ve preso em seu sonho, sendo obrigado á descobrir os segredos e a forma dele sair do mundo acima da realidade.</p>
+      </div>
+    </div>
+    <div class="item" style="background-image: url(/Whileplay/VIEWS/MEDIA/imagens/Bella-aterrire.png);">
+      <div class="item-desc">
+        <h3>Bella-Arterriré</h3>
+        <p>Inspirado na artes de Bella-Arterriré, a animação conta sobre o caso famoso de romance da pintura, que traz montanhas e vales, com um toque de magia e amor. A história gira em torno de dois amantes que se encontram em um mundo de cores vibrantes e paisagens deslumbrantes.</p>
+        </p>
+      </div>
+    </div>
+    <div class="item" style="background-image: url(https://th.bing.com/th/id/OIG1.HFdna0Gfh.stk.g46hhw?pid=ImgGn);">
+      <div class="item-desc">
+        <h3>Vida de gato</h3>
+        <p>Animação sobre uma vida de gato no dia a dia, descobrindo romances, filhos e a ignorância das pessoas ao seu redor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="game-section">
+  <h2 class="line-title">Maiores Avaliações</h2>
+  <div class="owl-carousel custom-carousel owl-theme">
+    <div class="item active" style="background-image: url(https://th.bing.com/th/id/OIG1.Tf5N8CoZYEGBba0.mHpl?cb=iwc1&pid=ImgGn);">
+      <div class="item-desc">
+        <h3>Phill e Jhonson</h3>
+        <p>Quando dois agentes aposentados, sofrem por uma volta de um vilão antigo da dupla, eles voltam a tona com mais uma missão de tirar o fôlego.</p>
+      </div>
+    </div>
+    <div class="item" style="background-image: url(https://th.bing.com/th/id/OIG1.puPuzKYXSqDMjmSqOWPm?cb=iwc1&pid=ImgGn);">
+      <div class="item-desc">
+        <h3>Mãe padrasta</h3>
+        <p>Quando se vê individada e golpeada por seu marido, ela decide fazer de tudo para sustentar a filha de seu ex marido, em uma jornada emocionante e trágica.</p>
+      </div>
+    </div>
+    <div class="item" style="background-image: url(https://th.bing.com/th/id/OIG2.HybcnpvnKJKU3JVfDbB4?cb=iwc1&w=1024&h=1024&rs=1&pid=ImgDetMain);">
+      <div class="item-desc">
+        <h3>Cats, a descoberta</h3>
+        <p>Lili, é uma gata de uma dona meiga e simples, porém após a morte de sua dona, o gato é jogado para viver a rua, onde aprende a se virar e vivenciar a maldade humana.</p>
+      </div>
+    </div>
+    <div class="item" style="background-image: url(https://th.bing.com/th/id/OIG2.n.KGhxVSXHyKnGYlonMb?cb=iwc1&w=1024&h=1024&rs=1&pid=ImgDetMain);">
+      <div class="item-desc">
+        <h3>Free Throw</h3>
+        <p>Uma escola pobre consegue uma vaga na liga nacional pela desistência de uma antiga universidade, eles precisam ser campeões para se provarem que são dignos de continuarem na liga. </p>
+      </div>
+    </div>
+    <div class="item" style="background-image: url(https://th.bing.com/th/id/OIG3.0WDJJHLDqUB_CFSGzRZv?cb=iwc1&w=1024&h=1024&rs=1&pid=ImgDetMain);">
+      <div class="item-desc">
+        <h3>Phillipe</h3>
+        <p>Em um mundo diatópico, onde os animais são estrelas, ele enfrenta dificuldades na vida da fama e em ser um animal de estimação. Ele se vê em uma jornada de autodescoberta e aceitação.</p>
+      </div>
+    </div>
+    <div class="item" style="background-image: url(https://th.bing.com/th/id/OIG3.hF7pTMuG8iO4HM679ps3?cb=iwc1&pid=ImgGn);">
+      <div class="item-desc">
+        <h3>The door</h3>
+        <p>A porta sempre se tantém fechada, porém de noite após Maik e seu grupo de amigos invadir a escola em busca da prova do professor para colarem no dia do teste final, eles entram em uma jornada em uma escola distópica que se muda a cada dia.</p>
+      </div>
+    </div>
+  </div>
+  <h2 class="line-title">Roteiristas Do Mês</h2>
+  <div class="options">
+    <div class="option active" style="--optionBackground:url(/VIEWS/MEDIA/imagens/icone_perfil1.jpg);">
+      <div class="shadow"></div>
+      <div class="label">
+        <div class="info">
+          <div class="main">9.7</div>
+          <div class="sub">Ericksen A.</div>
+        </div>
+      </div>
+    </div>
+    <div class="option" style="--optionBackground:url(/VIEWS/MEDIA/imagens/icone_perfil2.png);">
+      <div class="shadow"></div>
+      <div class="label">
+        <div class="info">
+          <div class="main">9.6</div>
+          <div class="sub">Isabelle Malash</div>
+        </div>
+      </div>
+    </div>
+    <div class="option" style="--optionBackground:url(/VIEWS/MEDIA/imagens/icone_perfil4.jpg);">
+      <div class="shadow"></div>
+      <div class="label">
+        <div class="info">
+          <div class="main">9.1</div>
+          <div class="sub">Stella Alves</div>
+        </div>
+      </div>
+    </div>
+    <div class="option" style="--optionBackground:url(/VIEWS/MEDIA/imagens/icone_perfil6.png);">
+      <div class="shadow"></div>
+      <div class="label">
+        <div class="info">
+          <div class="main">8.9</div>
+          <div class="sub">Cornelius Coconut</div>
+        </div>
+      </div>
+    </div>
+    <div class="option" style="--optionBackground:url(/VIEWS/MEDIA/imagens/icone_perfil8.jpg);">
+      <div class="shadow"></div>
+      <div class="label">
+        <div class="info">
+          <div class="main">8.6</div>
+          <div class="sub">Darius Bellppepa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal para ampliar card -->
+  <div id="modal-ampliar" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);justify-content:center;align-items:center;">
+    <div id="modal-content" style="background:#222;border-radius:20px;box-shadow:0 8px 32px #000a;padding:32px 24px;display:flex;flex-direction:column;align-items:center;max-width:90vw;max-height:90vh;">
+      <img id="modal-img" src="" alt="Perfil ampliado" style="max-width:350px;max-height:60vh;border-radius:16px;box-shadow:0 4px 24px #0008;margin-bottom:24px;">
+      <button id="download-btn" style="background:#fff;color:#222;font-weight:bold;padding:10px 28px;border:none;border-radius:8px;cursor:pointer;font-size:18px;margin-bottom:12px;">Baixar imagem</button>
+      <button id="close-modal" style="background:#fe4141;color:#fff;font-weight:bold;padding:8px 22px;border:none;border-radius:8px;cursor:pointer;font-size:16px;">Fechar</button>
+    </div>
+  </div>
+  <!-- Modal para ampliar roteiro -->
+  <div id="modal-roteiro" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);justify-content:center;align-items:center;">
+    <div id="modal-roteiro-content" style="background:#222;border-radius:20px;box-shadow:0 8px 32px #000a;padding:32px 24px;display:flex;flex-direction:column;align-items:center;max-width:90vw;max-height:90vh;">
+      <div id="modal-roteiro-img" style="width:350px;height:220px;background-size:cover;background-position:center;border-radius:16px;box-shadow:0 4px 24px #0008;margin-bottom:24px;"></div>
+      <div id="modal-roteiro-text" style="color:#fff;text-align:center;font-size:18px;margin-bottom:24px;"></div>
+      <div id="star-rating" style="display:flex;gap:6px;justify-content:center;margin-bottom:24px;cursor:pointer;">
+        <svg class="star" data-value="1" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" data-value="2" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" data-value="3" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" data-value="4" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <svg class="star" data-value="5" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div id="modal-roteiro-text" style="color:#fff;text-align:center;font-size:18px;margin-bottom:24px;"></div>
+      <div style="display:flex;gap:16px;">
+        <button id="baixar-roteiro-btn" style="background:#fff;color:#222;font-weight:bold;padding:10px 28px;border:none;border-radius:8px;cursor:pointer;font-size:18px;">Baixar Roteiro</button>
+        <button id="comprar-btn" style="background:#fe4141;color:#fff;font-weight:bold;padding:10px 28px;border:none;border-radius:8px;cursor:pointer;font-size:18px;">Comprar</button>
+      </div>
+      <button id="fechar-modal-roteiro" style="background:#444;color:#fff;font-weight:bold;padding:8px 22px;border:none;border-radius:8px;cursor:pointer;font-size:16px;margin-top:18px;">Fechar</button>
+    </div>
+  </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+  $(".custom-carousel").owlCarousel({
+    autoWidth: true,
+    loop: true
+  });
+  $(document).ready(function () {
+    $(".custom-carousel .item").click(function () {
+      $(".custom-carousel .item").not($(this)).removeClass("active");
+      $(this).toggleClass("active");
+    });
+  });
+  $(".option").click(function () {
+  $(".option").removeClass("active");
+  $(this).addClass("active");
+});
+
+// Modal de ampliação dos cards de roteirista
+// Removido o evento de click para .option para não abrir modal nem baixar imagem
+
+// Modal de ampliação dos cards de roteiro
+$(document).ready(function(){
+  $('.custom-carousel .item').on('click', function(){
+    var bg = $(this).css('background-image');
+    $('#modal-roteiro-img').css('background-image', bg);
+    var titulo = $(this).find('h3').text();
+    var texto = $(this).find('p').text();
+    $('#modal-roteiro-text').html('<strong>' + titulo + '</strong><br>' + texto);
+    // Resetar estrelas
+    $('#star-rating .star').each(function(){
+      $(this).attr('fill', 'none');
+    });
+    let rating = 0;
+    // Hover nas estrelas
+    $('#star-rating .star').off('mouseenter').on('mouseenter', function(){
+      var val = parseInt($(this).data('value'));
+      $('#star-rating .star').each(function(i){
+        $(this).attr('fill', i < val ? '#FFD700' : 'none');
+      });
+    });
+    // Sair do hover
+    $('#star-rating').off('mouseleave').on('mouseleave', function(){
+      $('#star-rating .star').each(function(i){
+        $(this).attr('fill', i < rating ? '#FFD700' : 'none');
+      });
+    });
+    // Clicar para avaliar
+    $('#star-rating .star').off('click').on('click', function(){
+      rating = parseInt($(this).data('value'));
+      $('#star-rating .star').each(function(i){
+        $(this).attr('fill', i < rating ? '#FFD700' : 'none');
+      });
+      // Aqui você pode adicionar lógica para salvar a avaliação
+    });
+    // Botão baixar: não faz nada
+    $('#baixar-roteiro-btn').off('click').on('click', function(){
+      // Nenhuma ação
+    });
+    // Botão comprar: redireciona para login.html
+    $('#comprar-btn').off('click').on('click', function(){
+      window.location.href = 'login.html';
+    });
+    $('#modal-roteiro').css('display','flex');
+  });
+  $('#fechar-modal-roteiro').on('click', function(){
+    $('#modal-roteiro').hide();
+  });
+  // Fechar modal ao clicar fora do conteúdo
+  $('#modal-roteiro').on('click', function(e){
+    if(e.target === this) $(this).hide();
+  });
+});
+</script>
+
+<!-- INÍCIO DO RODAPÉ ADICIONADO -->
+<style>
+/* RESET E BASE */
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* RODAPÉ */
+.rodape {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 40px;
+    background-color: #1e1e1e;
+    color: #ccc;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.rodape div {
+    flex: 1;
+    min-width: 200px;
+}
+
+.rodape h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.rodape a {
+    display: block;
+    color: #247fe6;
+    text-decoration: none;
+    margin: 5px 0;
+}
+
+.rodape a:hover {
+    text-decoration: underline;
+}
+
+.rodape img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.contato {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+</style>
+
+<div class="rodape">
+  <div class="producao">
+    <h1>Produtores</h1>
+    <p><br>Diego Alves Gomes
+      <br>Geovana Clemente Cruz
+      <br>Livia Mayumi Hayashida
+      <br>Victor do Vale Souza
+    </p>
+  </div>
+  <div class="suporte">
+    <h1>Precisa de Suporte?</h1>
+    <a href="https://www.exemplo.com">E-mail</a>
+    <a href="suporte.html">Fale Conosco</a>
+  </div>
+  <div class="siga-nos">
+    <h1>Siga-nos!</h1>
+    <a href="">
+      <img src="/Whileplay/VIEWS/MEDIA/imagens/instagram.png" alt="icon-instagram" width="100" height="100">
+    </a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gap">
+      <img src="/Whileplay/VIEWS/MEDIA/imagens/tiktok.png" alt="icon-tiktok" width="100" height="100">
+    </a>
+  </div>
+  <p class="contato">
+    Contato: aez.whileplay@gmail.com
+  </p>
+</div>
+<!-- FIM DO RODAPÉ ADICIONADO -->
+</body>
+</html>

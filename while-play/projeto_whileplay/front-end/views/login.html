@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - NewTalent Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: url(/Whileplay/VIEWS/MEDIA/imagens/While\ Play.png) no-repeat left center fixed;
+      background-size: cover;
+      color: #ffffff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 30%;
+      cursor: pointer;
+    }
+
+    .login-container {
+      background: #707070;
+      padding: 2rem;
+      border-radius: 50px;
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(251, 251, 251, 0.2);
+      cursor: auto;
+    }
+
+    .login-container h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #000000;
+    }
+
+    .login-container p {
+      color: #000000;
+      margin-bottom: 2rem;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ffffff;
+      border-radius: 5px;
+      background: #ffffff;
+      color: #000000;
+      font-size: 1rem;
+    }
+
+    .login-container input::placeholder {
+      color: #666666;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 0.8rem;
+      background: linear-gradient(45deg, #060662, #062b50);
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .login-container button:hover {
+      transform: translateY(-2px);
+    }
+
+    .login-container a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .login-container a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 2rem;
+      color: #cccccc;
+      font-size: 0.9rem;
+    }
+
+    .footer a {
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body onclick="handleBackgroundClick(event)">
+  <div class="login-container">
+    <h1>Login</h1>
+    <p>Bem vindo de volta criativo!</p>
+    <form id="loginForm">
+      <input type="email" placeholder="Email" required>
+      <input type="password" placeholder="Password" required>
+      <button type="submit">Logar</button>
+    </form>
+    <a href="recuperar_senha.html">Esqueceu sua senha?</a>
+    <div class="footer"><a href="cadastro.html">Não tem login? Faça cadastro</a>
+    </div>
+  </div>
+
+  <script>
+    function handleBackgroundClick(event) {
+      const container = document.querySelector('.login-container');
+      if (!container.contains(event.target)) {
+        const confirmRedirect = confirm("Deseja voltar para a homepage?");
+        if (confirmRedirect) {
+          window.location.href = "homepage1.html";
+        }
+      }
+    }
+    // Redireciona para roteiros_com_login.html ao logar
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        window.location.href = "/Whileplay/VIEWS/COM logins/roteiros_com_login.html";
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Projeto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fonte Adamina -->
+    <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
+    <!-- Ícones do Material Design -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+    /* Fonte padrão do corpo */
+    body {
+      margin: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: #121212;
+      color: #e0e0e0;
+    }
+    /* Cabeçalhos, links e campos de busca com Adamina */
+    h1, h2, h3, h4, h5, h6,
+    .navbar a,
+    .search-box input {
+      font-family: 'Adamina', serif !important;
+    }
+
+    header {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-container {
+      background-image: url('/Whileplay/VIEWS/MEDIA/imagens/background.png');
+      background-size: cover;
+      background-position: center;
+      padding: 40px 0;
+      width: 100%;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .navbar a {
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 10px 15px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    .search-box {
+      background: white;
+      border-radius: 30px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      padding: 8px;
+      font-size: 16px;
+      font-family: 'Adamina', serif;
+    }
+
+    .search-box span {
+      font-size: 18px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+
+    .user-profile-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .subscription-badge {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #FFD700; /* Cor dourada para indicar premium */
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .subscription-badge .material-icons {
+      font-size: 16px;
+    }
+
+    .profile-icon {
+      background-color: white;
+      color: #007bff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    .profile-icon:hover {
+      background-color: #e0e0e0;
+      transform: scale(1.1);
+    }
+    
+    .profile-icon .material-icons {
+      font-size: 24px;
+    }
+    
+    .verified-badge {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      background-color: #FFD700;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid white;
+    }
+    
+    .verified-badge .material-icons {
+      font-size: 14px;
+      color: #333;
+    }
+    
+    /* Estilo para o dropdown do perfil */
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 200px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    
+    .dropdown-content a {
+      color: #333 !important;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      font-size: 16px;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      border-radius: 0;
+    }
+    
+    .dropdown-content .premium-option {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .dropdown-content .premium-option .material-icons {
+      color: #FFD700;
+      font-size: 16px;
+    }
+    
+    .profile-dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    .dropdown-divider {
+      height: 1px;
+      background-color: #e0e0e0;
+      margin: 5px 0;
+    }
+        /* === ESTILOS DO CONTEÚDO PRINCIPAL === */
+        .main-content {
+            margin-top: 120px; /* Espaçamento para compensar o header fixo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px);
+            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .checkout-card {
+            background: #fff;
+            width: 500px;
+            max-width: 100%;
+            padding: 2.5rem;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+        }
+        
+        .checkout-card .title span {
+            color: #4361EE;
+            font-weight: 700;
+        }
+        
+        .checkout-card .title p {
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 1rem 0;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+        
+        .price-container {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-card {
+            position: relative;
+            padding: 1.2rem;
+            border-radius: 6px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            outline: none;
+            transition: 0.3s ease-in;
+            background: linear-gradient(135deg, #ffffff 60%, #c7d2fe 100%); /* cor mais forte */
+            color: #2a3990; /* azul mais escuro para contraste */
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(67,97,238,0.08);
+        }
+        
+        .price-card label {
+            background: transparent;
+        }
+        
+        .price-card input[type="radio"]:checked ~ label {
+            border: 2px solid #4361EE;
+            background: rgba(67, 97, 238, 0.08);
+            color: #4361EE;
+            outline: none;
+        }
+        
+        .price-card input[type="radio"] {
+            width: 30px;
+            height: auto;
+            border: 0;
+            transform: scale(1.5);
+            z-index: 1;
+        }
+        
+        .price-card .content {
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+            z-index: 1;
+        }
+        
+        .price-card .content span {
+            font-size: 0.75rem;
+        }
+        
+        .detail-info {
+            padding-top: 2rem;
+        }
+        
+        .info {
+            margin-bottom: 1rem;
+        }
+        
+        .info h3 {
+            letter-spacing: 1px;
+        }
+        
+        .info small {
+            font-size: 0.74rem;
+        }
+        
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.2rem;
+        }
+        
+        .input-field label {
+            font-size: 0.85rem;
+            padding-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .input-field input, 
+        .input-field textarea,
+        .input-field select {
+            padding: 0.9rem;
+            border-radius: 6px;
+            width: 100%;
+            border: 1px solid #9EA0A9;
+            font-family: 'Montserrat', sans-serif;
+            transition: border 0.2s ease-in-out;
+        }
+        
+        .input-field input:focus, 
+        .input-field textarea:focus,
+        .input-field select:focus {
+            border: 1px solid #4361EE;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+        
+        .grid {
+            display: flex;
+            gap: 15px;
+            margin-top: 0.5rem;
+            justify-content: space-between;
+        }
+        
+        .file-upload {
+            display: none;
+        }
+        
+        .file-upload-label {
+            display: block;
+            padding: 12px;
+            background-color: #e0e7ff; /* cor mais forte que #f0f2ff */
+            color: #2a3990; /* azul mais escuro para contraste */
+            text-align: center;
+            border: 1px dashed #4361EE;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+        
+        .file-upload-label:hover {
+            background-color: #c7d2fe; /* cor mais forte no hover */
+        }
+        
+        .terms-container {
+            margin-top: 1.8rem;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+        
+        .terms-scroll {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding-right: 10px;
+            font-size: 0.8rem;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .terms-scroll h4 {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: #4361EE;
+            text-align: center;
+        }
+        
+        .terms-scroll h5 {
+            font-size: 0.85rem;
+            margin: 15px 0 8px 0;
+            color: #444;
+        }
+        
+        .terms-scroll p {
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+        }
+        
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+            gap: 8px;
+        }
+        
+        .terms-checkbox input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .terms-checkbox label {
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .btn {
+            margin-top: 1.2rem;
+            width: 100%;
+            padding: 1rem;
+            letter-spacing: 0.8px;
+            background: #4361EE;
+            border: none;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: #3551d1;
+            transform: translateY(-2px);
+            box-shadow: 0px 4px 12px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn:disabled {
+            background: #9EA0A9;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .file-info {
+            font-size: 0.8rem;
+            margin-top: 6px;
+            color: #666;
+        }
+        
+        .upload-container {
+            margin-top: 1rem;
+        }
+        
+        /* Estilização da barra de rolagem para os termos */
+        .terms-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .terms-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .terms-scroll::-webkit-scrollbar-thumb {
+            background: #4361EE;
+            border-radius: 10px;
+        }
+        
+        .terms-scroll::-webkit-scrollbar-thumb:hover {
+            background: #3551d1;
+        }
+
+        /* === RESPONSIVIDADE === */
+        @media (max-width: 768px) {
+            .main-content {
+                margin-top: 140px; /* Mais espaço em telas menores */
+                padding: 10px;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .header-container {
+                padding: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header fixo no topo -->
+ <header>
+    <div class="header-container">
+      <div class="navbar">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Pesquisar">
+          <span onclick="clearSearch()">❌</span>
+        </div>
+
+        <a href="#">Sobre Nós</a>
+        <a href="/Whileplay/VIEWS/Com assinatura/Premios_assinatura.html">Prêmios</a>
+        <a href="/Whileplay/VIEWS/Com assinatura/roteiros_assinatura.html">Roteiro</a>
+        <a href="homepage2_assinatura.html">Homepage</a>
+        <a href="/">Biblioteca</a>
+        <a href="/Whileplay/VIEWS/Com assinatura/personagens_assinatura.html">Personagens</a>
+        <a href="/Whileplay/VIEWS/Com assinatura/Publicar.html">Publicar</a>
+
+        <div class="user-profile-area">
+
+
+          </div>
+          
+          <div class="profile-dropdown">
+            <div class="profile-icon" onclick="window.location.href='perfil_assinatura.html'">
+              <span class="material-icons">person</span>
+              <!-- Badge de verificação na parte inferior direita do ícone -->
+              <div class="verified-badge">
+                <span class="material-icons">verified</span>
+              </div>
+            </div>
+            <div class="dropdown-content">
+              <a href="#" class="premium-option">
+                <span class="material-icons">verified</span>
+                Membro Premium
+              </a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    <!-- Conteúdo principal com margem para compensar o header fixo -->
+    <main class="main-content">
+        <div class="checkout-card">
+            <div class="title">
+                <p><span>Publicar Projeto</span> <br><span style="font-size:1.1rem;font-weight:400;color:#2a3990;">Selecione o tipo de arquivo que deseja disponibilizar para venda</span></p>
+            </div>
+            <div class="price-container">
+                <div class="price-card">
+                    <input name="tipo-projeto" id="personagem" type="radio" checked>
+                    <div class="content">
+                        Personagem
+                        <span>Imagem (PNG)</span>
+                    </div>
+                    <label for="personagem"></label>
+                </div>
+                
+                <div class="price-card">
+                    <input name="tipo-projeto" type="radio" id="roteiro">
+                    <div class="content">
+                        Roteiro
+                        <span>Documento (DOCX)</span>
+                    </div>
+                    <label for="roteiro"></label>
+                </div>
+            </div>
+            
+            <div class="detail-info">
+                <div class="input-field">
+                    <label for="titulo">Título do Projeto</label>
+                    <input type="text" id="titulo" placeholder="Digite o título do seu projeto">
+                </div>
+                
+                <div class="input-field">
+                    <label for="email">E-mail para contato</label>
+                    <input type="email" id="email" placeholder="Digite seu e-mail">
+                </div>
+                
+                <div class="input-field">
+                    <label for="sinopse">Sinopse</label>
+                    <textarea id="sinopse" placeholder="Digite a sinopse do seu projeto" style="min-height:150px;resize:vertical;"></textarea>
+                </div>
+                
+                <div class="upload-container">
+                    <div id="upload-personagem" class="input-field">
+                        <label for="arquivo-personagem">Imagem do Personagem (PNG)</label>
+                        <input type="file" id="arquivo-personagem" class="file-upload" accept=".png">
+                        <label for="arquivo-personagem" class="file-upload-label">Clique para selecionar o arquivo PNG</label>
+                        <div class="file-info">Tamanho máximo: 20MB • Formatos aceitos: PNG</div>
+                    </div>
+                    
+                    <div id="upload-roteiro" class="input-field" style="display:none">
+                        <label for="arquivo-roteiro">Documento do Roteiro (DOCX)</label>
+                        <input type="file" id="arquivo-roteiro" class="file-upload" accept=".docx">
+                        <label for="arquivo-roteiro" class="file-upload-label">Clique para selecionar o arquivo DOCX</label>
+                        <div class="file-info">Tamanho máximo: 100MB • Formatos aceitos: DOCX</div>
+                    </div>
+                </div>
+                
+                <div class="terms-container">
+                    <div class="terms-scroll">
+                        <h4>TERMOS DE COMERCIALIZAÇÃO E VENDA DE DIREITOS</h4>
+                        <p>Ao submeter este projeto à plataforma, você ("Autor") concorda com os seguintes termos e condições:</p>
+                        
+                        <h5>1. DISPONIBILIZAÇÃO PARA VENDA DE DIREITOS</h5>
+                        <p>1.1. O Autor consente expressamente em disponibilizar seu projeto (doravante "Obra") para que terceiros interessados possam adquirir direitos de uso, adaptação, produção ou comercialização mediante compensação financeira.</p>
+                        <p>1.2. A disponibilização da Obra não implica em transferência imediata de direitos, mas na declaração de interesse e consentimento para potenciais negociações futuras.</p>
+                        <p>1.3. O Autor reconhece que a plataforma tornará visível para potenciais compradores: o título da Obra, sua sinopse e o material enviado (personagem ou roteiro).</p>
+                        
+                        <h5>2. COMPENSAÇÃO FINANCEIRA</h5>
+                        <p>2.1. Em caso de transação bem-sucedida para venda de direitos, o Autor receberá 70% (setenta por cento) do valor da transação.</p>
+                        <p>2.2. A plataforma reterá 30% (trinta por cento) como taxa de intermediação, custos operacionais e manutenção do serviço.</p>
+                        <p>2.3. Os pagamentos serão processados em até 30 dias úteis após a confirmação da transação e validação dos dados bancários do Autor.</p>
+                        <p>2.4. Impostos aplicáveis sobre a compensação financeira são de responsabilidade exclusiva do Autor, conforme legislação vigente.</p>
+                        
+                        <h5>3. TITULARIDADE E PROPRIEDADE INTELECTUAL</h5>
+                        <p>3.1. O Autor mantém a titularidade original e todos os direitos sobre a Obra enquanto não houver transação formal de venda de direitos.</p>
+                        <p>3.2. O Autor declara e garante ser o legítimo detentor dos direitos da Obra submetida, que esta é original e não viola direitos de terceiros.</p>
+                        <p>3.3. Caso ocorra a venda dos direitos, o escopo da transferência (total ou parcial, exclusiva ou não-exclusiva) será determinado no contrato específico de cada transação.</p>
+                        <p>3.4. O Autor é responsável por eventuais reclamações de terceiros referentes a plágio ou violação de direitos autorais.</p>
+                        
+                        <h5>4. PAPEL DA PLATAFORMA</h5>
+                        <p>4.1. A plataforma atuará exclusivamente como intermediária para negociações e transações relacionadas à Obra.</p>
+                        <p>4.2. A plataforma não garante a concretização de vendas ou ofertas pelos projetos disponibilizados.</p>
+                        <p>4.3. A plataforma se reserva o direito de remover qualquer Obra que viole seus termos de uso ou que contenha material inapropriado, ofensivo ou ilegal.</p>
+                        <p>4.4. Em caso de disputa entre o Autor e potenciais compradores, a plataforma poderá atuar como mediadora, mas não se responsabiliza pelo resultado da negociação.</p>
+                        
+                        <h5>5. VISIBILIDADE E PROMOÇÃO</h5>
+                        <p>5.1. O Autor autoriza a plataforma a promover sua Obra através de destaque na plataforma, newsletters, redes sociais e outras formas de divulgação.</p>
+                        <p>5.2. A plataforma poderá apresentar estatísticas de visualização e interesse pela Obra ao Autor.</p>
+                        <p>5.3. O Autor pode solicitar a remoção da Obra a qualquer momento, desde que não haja negociação em andamento.</p>
+                        
+                        <h5>6. CONFIDENCIALIDADE</h5>
+                        <p>6.1. A plataforma se compromete a manter em sigilo informações sensíveis do Autor, como dados de contato e bancários.</p>
+                        <p>6.2. As interações entre potenciais compradores e o Autor serão intermediadas pela plataforma até que ambas as partes concordem em negociar diretamente.</p>
+                        
+                        <h5>7. DURAÇÃO E RESCISÃO</h5>
+                        <p>7.1. Estes termos vigoram por tempo indeterminado a partir da submissão da Obra.</p>
+                        <p>7.2. O Autor pode solicitar a remoção da Obra e rescisão destes termos a qualquer momento, mediante notificação por escrito, exceto se houver negociação em andamento.</p>
+                        <p>7.3. A plataforma reserva-se o direito de encerrar a disponibilização da Obra mediante notificação prévia de 30 dias ao Autor.</p>
+                        
+                        <h5>8. DISPOSIÇÕES GERAIS</h5>
+                        <p>8.1. Estes termos constituem o acordo integral entre o Autor e a plataforma em relação à disponibilização da Obra para venda de direitos.</p>
+                        <p>8.2. A plataforma pode atualizar estes termos mediante notificação ao Autor.</p>
+                        <p>8.3. O Autor reconhece que leu, compreendeu e concorda com todos os termos e condições aqui estabelecidos.</p>
+                    </div>
+                    
+                    <div class="terms-checkbox">
+                        <input type="checkbox" id="aceite-termos">
+                        <label for="aceite-termos">Li e concordo com os termos de comercialização de direitos do projeto</label>
+                    </div>
+                </div>
+                
+                <button class="btn" id="submit-btn" disabled>Publicar e Disponibilizar para Venda</button>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Função para limpar o campo de pesquisa
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+        }
+        
+        // Controle da exibição dos campos de upload conforme a seleção
+        document.getElementById('personagem').addEventListener('change', function() {
+            document.getElementById('upload-personagem').style.display = 'flex';
+            document.getElementById('upload-roteiro').style.display = 'none';
+        });
+        
+        document.getElementById('roteiro').addEventListener('change', function() {
+            document.getElementById('upload-personagem').style.display = 'none';
+            document.getElementById('upload-roteiro').style.display = 'flex';
+        });
+        
+        // Mostrar nome do arquivo selecionado
+        document.getElementById('arquivo-personagem').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const fileName = this.files[0].name;
+                this.nextElementSibling.textContent = fileName;
+            }
+        });
+        
+        document.getElementById('arquivo-roteiro').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const fileName = this.files[0].name;
+                this.nextElementSibling.textContent = fileName;
+            }
+        });
+        
+        // Controle do checkbox de termos para habilitar/desabilitar o botão
+        document.getElementById('aceite-termos').addEventListener('change', function() {
+            document.getElementById('submit-btn').disabled = !this.checked;
+        });
+    </script>
+    <!-- INÍCIO DO RODAPÉ ADICIONADO -->
+    <style>
+    /* RESET E BASE */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+
+    /* RODAPÉ */
+    .rodape {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding: 40px;
+        background-color: #1e1e1e;
+        color: #ccc;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .rodape div {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .rodape h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .rodape a {
+        display: block;
+        color: #247fe6;
+        text-decoration: none;
+        margin: 5px 0;
+    }
+
+    .rodape a:hover {
+        text-decoration: underline;
+    }
+
+    .rodape img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+
+    .contato {
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+    </style>
+
+    <div class="rodape">
+      <div class="producao">
+        <h1>Produtores</h1>
+        <p><br>Diego Alves Gomes
+          <br>Geovana Clemente Cruz
+          <br>Livia Mayumi Hayashida
+          <br>Victor do Vale Souza
+        </p>
+      </div>
+      <div class="suporte">
+        <h1>Precisa de Suporte?</h1>
+        <a href="https://www.exemplo.com">E-mail</a>
+        <a href="/Whileplay/VIEWS/Com assinatura/suportePremium.html">Fale Conosco</a>
+      </div>
+      <div class="siga-nos">
+        <h1>Siga-nos!</h1>
+        <a href="">
+          <img src="/Whileplay/VIEWS/MEDIA/imagens/instagram.png" alt="icon-instagram" width="100" height="100">
+        </a>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gap">
+          <img src="/Whileplay/VIEWS/MEDIA/imagens/tiktok.png" alt="icon-tiktok" width="100" height="100">
+        </a>
+      </div>
+      <p class="contato">
+        Contato: aez.whileplay@gmail.com
+      </p>
+    </div>
+    <!-- FIM DO RODAPÉ ADICIONADO -->
+</body>
+</html>

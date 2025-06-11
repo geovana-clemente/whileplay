@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+/* RESET E BASE */
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* RODAPÉ */
+.rodape {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 40px;
+    background-color: #1e1e1e;
+    color: #ccc;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.rodape div {
+    flex: 1;
+    min-width: 200px;
+}
+
+.rodape h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.rodape a {
+    display: block;
+    color: #247fe6;
+    text-decoration: none;
+    margin: 5px 0;
+}
+
+.rodape a:hover {
+    text-decoration: underline;
+}
+
+.rodape img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.contato {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+    </style>
+
+    <div class="rodape">
+    <div class="producao">
+      <h1>Produtores</h1>
+      <p><br>Diego Alves Gomes
+        <br>Geovana Clemente Cruz
+        <br>Livia Mayumi Hayashida
+        <br>Victor do Vale Souza
+      </p>
+    </div>
+    <div class="suporte">
+    <h1>Precisa de Suporte?</h1>
+    <a href="https://www.exemplo.com">E-mail</a>
+    <a href="https://www.exemplo.com">Fale Conosco</a>
+  </div>
+
+  <div class="siga-nos">
+    <h1>Siga-nos!</h1>
+    <a href="">
+      <img src="/VIEWS/MEDIA/imagens/instagram.png" alt="icon-instagram" width="100" height="100">
+    </a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gap">
+      <img src="/VIEWS/MEDIA/imagens/tiktok.png" alt="icon-tiktok" width="100" height="100">
+    </a>
+  </div>
+
+    <p class="contato">
+      Contato: aez.whileplay@gmail.com</p>
+  </div>
+</body>
+</html>

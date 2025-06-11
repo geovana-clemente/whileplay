@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Preços</title>
+    <style>
+        html {
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e;
+        }
+
+        .background {
+            padding: 0 25px 25px;
+            position: relative;
+            width: 100%;
+            background-image: url('/Whileplay/VIEWS/MEDIA/imagens/backgroundclean.png');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .container {
+            margin: 0 auto;
+            padding: 50px 0;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .panel {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 15px 25px;
+            position: relative;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .pricing-table {
+            box-shadow: 0px 10px 13px -6px #ffffff4c, 0px 20px 31px 3px #00000030, 0px 8px 20px 7px #ffffff08;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .pricing-table {
+                flex-direction: row;
+            }
+        }
+
+        .pricing-table * {
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .pricing-plan {
+            border-bottom: 1px solid #4e4e4e;
+            padding: 25px;
+        }
+
+        .pricing-plan:last-child {
+            border-bottom: none;
+        }
+
+        @media (min-width: 768px) {
+            .pricing-plan {
+                border-bottom: none;
+                border-right: 1px solid #4e4e4e;
+                flex-basis: 100%;
+                padding: 25px 50px;
+            }
+
+            .pricing-plan:last-child {
+                border-right: none;
+            }
+        }
+
+        .pricing-img {
+            margin-bottom: 25px;
+            max-width: 100%;
+            filter: brightness(0.9);
+        }
+
+        .pricing-header {
+            color: #ccc;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .pricing-features {
+            color: #4db8ff;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin: 50px 0 25px;
+        }
+
+        .pricing-features-item {
+            border-top: 1px solid #4e4e4e;
+            font-size: 12px;
+            line-height: 1.5;
+            padding: 15px 0;
+            color: #ddd;
+        }
+
+        .pricing-features-item:last-child {
+            border-bottom: 1px solid #4e4e4e;
+        }
+
+        .pricing-price {
+            color: #4db8ff;
+            display: block;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .pricing-button {
+            border: 1px solid #4db8ff;
+            border-radius: 10px;
+            color: #4db8ff;
+            display: inline-block;
+            margin: 25px 0;
+            padding: 15px 35px;
+            text-decoration: none;
+            transition: all 150ms ease-in-out;
+        }
+
+        .pricing-button:hover,
+        .pricing-button:focus {
+            background-color: #263238;
+        }
+
+        .pricing-button.is-featured {
+            background-color: #48aaff;
+            color: #000;
+        }
+
+        .pricing-button.is-featured:hover,
+        .pricing-button.is-featured:active {
+            background-color: #269aff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="container">
+            <div class="panel pricing-table">
+                <!-- Plano Gratuito -->
+                <div class="pricing-plan">
+                    <img src="https://s22.postimg.cc/8mv5gn7w1/paper-plane.png" alt="Plano Gratuito" class="pricing-img">
+                    <h2 class="pricing-header">Plano Free</h2>
+                    <ul class="pricing-features">
+                        <li class="pricing-features-item">Acesso as páginas</li>
+                        <li class="pricing-features-item">Visualizar roteiros e personagens</li>
+                    </ul>
+                    <span class="pricing-price">Plano Atual</span>
+                    <a href="#" class="pricing-button" onclick="window.history.back(); return false;">Continuar plano</a>
+                </div>
+                
+                <!-- Plano Pago (combinando características) -->
+                <div class="pricing-plan">
+                    <img src="https://s28.postimg.cc/ju5bnc3x9/plane.png" alt="Plano Premium" class="pricing-img">
+                    <h2 class="pricing-header">Premium</h2>
+                    <ul class="pricing-features">
+                        <li class="pricing-features-item">Comprar roteiros e personagens</li>
+                        <li class="pricing-features-item">Visualizar biblioteca</li>
+                        <li class="pricing-features-item">Tudo do plano free</li>
+                    </ul>
+                    <span class="pricing-price">49,99</span>
+                    <a href="/Whileplay/VIEWS/Com assinatura/pagamento.html" class="pricing-button is-featured">Pagar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
