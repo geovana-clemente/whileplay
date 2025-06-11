@@ -33,7 +33,7 @@ switch ($request) {
             $controller->deleteAssinaturaByTitle();
             break;
    
-        case (preg_match('/\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-assinatura\/(\d+)/', $request, $matches) ? true : false):
+        case (preg_match('/\/while-play\/projeto_whileplay\/back-end\/update-assinatura\/(\d+)/', $request, $matches) ? true : false):
             $id = $matches[1];
             $controller = new AssinaturaController();
             $controller->showUpdateForm($id);
@@ -62,7 +62,7 @@ switch ($request) {
         $controller = new PagamentoController();
         $controller->deletePagamentoById();
         break;
-     case (preg_match('/\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-pagamento\/(\d+)/', $request, $matches) ? true : false):
+     case (preg_match('/\/while-play\/projeto_whileplay\/back-end\/update-pagamento\/(\d+)/', $request, $matches) ? true : false):
         $id = $matches[1];
         $controller = new PagamentoController();
         $controller->showUpdateForm($id);
@@ -92,7 +92,7 @@ switch ($request) {
         $controller = new RoteiroController();
         $controller->deleteRoteiroById($_POST['id'] ?? null);
         break;
-   case (preg_match('/\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-roteiro\/(\d+)/', $request, $matches) ? true : false):
+   case (preg_match('/\/while-play\/projeto_whileplay\/back-end\/update-roteiro\/(\d+)/', $request, $matches) ? true : false):
         $id = $matches[1];
         $controller = new RoteiroController();
         $controller->showUpdateForm($id);
