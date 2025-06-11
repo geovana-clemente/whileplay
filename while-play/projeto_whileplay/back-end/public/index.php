@@ -9,6 +9,7 @@ error_reporting(E_ALL);
 require_once '../controllers/AssinaturaController.php';
 require_once '../controllers/RoteiroController.php';
 require_once '../controllers/PagamentoController.php';
+require_once '../controllers/PublicarController.php';
 
 // Capturar URL da requisição
 $request = $_SERVER['REQUEST_URI'];
@@ -102,6 +103,33 @@ switch ($request) {
     case '/while_play/update-roteiro':
         $controller = new RoteiroController();
         $controller->updateRoteiro();
+        break;
+    
+    // Publicar Projetos
+    case '/while_play/public/publicar':
+        $controller = new PublicarController();
+        $controller->showForm();
+        break;
+    case '/while_play/save-publicar':
+        $controller = new PublicarController();
+        $controller->savePublicar();
+        break;
+    case '/while_play/list-publicados':
+        $controller = new PublicarController();
+        $controller->listPublicados();
+        break;
+    case '/while_play/delete-publicar':
+        $controller = new PublicarController();
+        $controller->deletePublicarById($_POST['id'] ?? null);
+        break;
+    case (preg_match('/\/while_play\/update-publicar\/(\d+)/', $request, $matches) ? true : false):
+        $id = $matches[1];
+        $controller = new PublicarController();
+        $controller->showUpdateForm($id);
+        break;
+    case '/while_play/update-publicar':
+        $controller = new PublicarController();
+        $controller->updatePublicar();
         break;
     
     default:

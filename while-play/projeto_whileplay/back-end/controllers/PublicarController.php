@@ -10,36 +10,37 @@ class PublicarController {
 
     public function savePublicar() {
         $usuario_id = $_POST['usuario_id'] ?? '';
+        $email = $_POST['email'] ?? '';
         $titulo = $_POST['titulo'] ?? '';
-        $sinopse = $_POST['sinopse'] ?? 0;
+        $sinopse = $_POST['sinopse'] ?? '';
         $tipo = $_POST['tipo'] ?? null;
-        $data_criacao = $_POST['data_criacao'] ?? ''; 
+        $data_criacao = $_POST['data_criacao'] ?? date('Y-m-d');
         $publicado = $_POST['publicado'] ?? '';
 
 
-        // Upload da imagem
+        // Upload do arquivo (PNG ou DOC)
         $arquivo_url = '';
-        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+        if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = '../imagens/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0755, true);
             }
-            $fileTmpPath = $_FILES['imagem']['tmp_name'];
-            $fileName = basename($_FILES['imagem']['name']);
-            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-            $newFileName = uniqid('img_', true) . '.' . $ext;
-            $destPath = $uploadDir . $newFileName;
-
-            if (move_uploaded_file($fileTmpPath, $destPath)) {
-                // Caminho relativo para salvar no banco, adaptado conforme estrutura do projeto
-                $arquivo_url = 'imagens/' . $newFileName;
+            $fileTmpPath = $_FILES['arquivo']['tmp_name'];
+            $fileName = basename($_FILES['arquivo']['name']);
+            $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+            if (in_array($ext, ['png', 'doc', 'docx'])) {
+                $newFileName = uniqid('file_', true) . '.' . $ext;
+                $destPath = $uploadDir . $newFileName;
+                if (move_uploaded_file($fileTmpPath, $destPath)) {
+                    $arquivo_url = 'imagens/' . $newFileName;
+                }
             }
         }
 
         $publicar = new Publicar();
-        $publicar->save($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado);
+        $publicar->save($usuario_id, $email, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado);
 
-        header('Location: /meu_projeto/list-publicados');
+        header('Location: /while_play/list-publicados');
         exit;
     }
 
@@ -50,15 +51,13 @@ class PublicarController {
     }
 
     public function deletePublicarById($id) {
-    if ($id) {
-        $publicar = new Publicar();
-        $publicar->deleteById($id);
+        if ($id) {
+            $publicar = new Publicar();
+            $publicar->deleteById($id);
+        }
+        header('Location: /while_play/list-publicados');
+        exit;
     }
-
-    header('Location: /meu_projeto/list-publicados');
-    exit;
-}
-
 
     public function showUpdateForm($id) {
         $publicar = new Publicar();
@@ -67,43 +66,42 @@ class PublicarController {
     }
 
     public function updatePublicar() {
+        $id = $_POST['id'] ?? '';
         $usuario_id = $_POST['usuario_id'] ?? '';
+        $email = $_POST['email'] ?? '';
         $titulo = $_POST['titulo'] ?? '';
-        $sinopse = $_POST['sinopse'] ?? 0;
+        $sinopse = $_POST['sinopse'] ?? '';
         $tipo = $_POST['tipo'] ?? null;
         $data_criacao = $_POST['data_criacao'] ?? '';
         $publicado = $_POST['publicado'] ?? '';
 
         $publicar = new Publicar();
         $perfilInfo = $publicar->getById($id);
+        $arquivo_url = $perfilInfo['arquivo_url'];
 
-        $arquivo_url = $perfilInfo['arquivo_url']; // manter imagem antiga por padrão
-
-        // Se enviou nova imagem, fazer upload e atualizar caminho
-        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+        // Se enviou novo arquivo, fazer upload e atualizar caminho
+        if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = '../imagens/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0755, true);
             }
-            $fileTmpPath = $_FILES['imagem']['tmp_name'];
-            $fileName = basename($_FILES['imagem']['name']);
-            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-            $newFileName = uniqid('img_', true) . '.' . $ext;
-            $destPath = $uploadDir . $newFileName;
-
-            if (move_uploaded_file($fileTmpPath, $destPath)) {
-                $arquivo_url = 'imagens/' . $newFileName;
-
-                // Opcional: deletar imagem antiga do servidor para evitar lixo
-                if (!empty($perfilInfo['arquivo_url']) && file_exists('../' . $perfilInfo['arquivo_url'])) {
-                    unlink('../' . $perfilInfo['arquivo_url']);
+            $fileTmpPath = $_FILES['arquivo']['tmp_name'];
+            $fileName = basename($_FILES['arquivo']['name']);
+            $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+            if (in_array($ext, ['png', 'doc', 'docx'])) {
+                $newFileName = uniqid('file_', true) . '.' . $ext;
+                $destPath = $uploadDir . $newFileName;
+                if (move_uploaded_file($fileTmpPath, $destPath)) {
+                    $arquivo_url = 'imagens/' . $newFileName;
+                    if (!empty($perfilInfo['arquivo_url']) && file_exists('../' . $perfilInfo['arquivo_url'])) {
+                        unlink('../' . $perfilInfo['arquivo_url']);
+                    }
                 }
             }
         }
 
-        $publicar->update($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado);
-
-        header('Location: /meu_projeto/list-publicados');
+        $publicar->update($id, $usuario_id, $email, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado);
+        header('Location: /while_play/list-publicados');
         exit;
     }
 }
