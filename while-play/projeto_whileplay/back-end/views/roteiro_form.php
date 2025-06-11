@@ -55,7 +55,7 @@
 
     <h1>Criar Novo Roteiro</h1>
 
-    <form action="/while_play/save-roteiro" method="POST" enctype="multipart/form-data">
+    <form action="/while-play/projeto_whileplay/back-end/save-roteiro" method="POST" enctype="multipart/form-data">
         <label for="titulo">Título:</label><br>
         <input type="text" id="titulo" name="titulo" required><br><br>
 
@@ -75,7 +75,7 @@
     </form>
 
     <br>
-    <a href="/while_play/list-roteiros">Ver todos os roteiros</a>
+    <a href="/while-play/projeto_whileplay/back-end/list-roteiros">Ver todos os roteiros</a>
 
 </body>
 </html>

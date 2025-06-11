@@ -5,7 +5,7 @@ require_once '../models/Assinatura.php';
 class AssinaturaController {
 
     public function showForm() {
-        require '../views/assinatura_form.php'; 
+        require '..back-end/views/assinatura_form.php'; 
     }
 
     public function saveAssinatura() {
@@ -19,13 +19,13 @@ class AssinaturaController {
         $assinatura = new Assinatura();
         $assinatura->save($nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
 
-        header('Location: /while_play/list-assinaturas');
+        header('Location: /while-play/projeto_whileplay/back-end/list-assinaturas');
     }
 
     public function listAssinaturas() {
         $assinatura = new Assinatura();
         $assinaturas = $assinatura->getAll();
-        require '../views/assinatura_list.php';
+        require '..back-end/views/assinatura_list.php';
     }
 
     public function deleteAssinaturaByTitle() {
@@ -34,13 +34,13 @@ class AssinaturaController {
             $assinatura = new Assinatura();
             $assinatura->deleteByTitle($nome);
         }
-        header('Location: /while_play/list-assinaturas');
+        header('Location: /while-play/projeto_whileplay/back-end/list-assinaturas');
     }
 
     public function showUpdateForm($id) {
         $assinatura = new Assinatura();
         $assinaturaInfo = $assinatura->getById($id);
-        require '../views/update_assinatura_form.php';
+        require '..back-end/views/update_assinatura_form.php';
     }
 
     public function updateAssinatura() {
@@ -55,6 +55,6 @@ class AssinaturaController {
         $assinatura = new Assinatura();
         $assinatura->update($id, $nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
 
-        header('Location: /while_play/list-assinaturas');
+        header('Location: /while-play/projeto_whileplay/back-end/list-assinaturas');
     }
 }
