@@ -15,91 +15,91 @@ $request = $_SERVER['REQUEST_URI'];
 
 
 switch ($request) {
-    case '/while_play/public/assinatura':
+    case '/while-play/projeto_whileplay/back-end/public/assinatura':
         $controller = new AssinaturaController();
         $controller->showForm();
         break;
-    case '/while_play/save-assinatura':
+    case '/while-play/projeto_whileplay/back-end/save-assinatura':
         $controller = new AssinaturaController();
         $controller->saveAssinatura();                    ;
         break;
-    case '/while_play/list-assinaturas':
+    case '/while-play/projeto_whileplay/back-end/list-assinaturas':
         $controller = new AssinaturaController();
         $controller->listAssinaturas();
         break;
-        case '/while_play/delete-assinatura':
-            require_once '../controllers/AssinaturaController.php';
+        case '/while-play/projeto_whileplay/back-end/delete-assinatura':
             $controller = new AssinaturaController();
             $controller->deleteAssinaturaByTitle();
             break;
    
-        case (preg_match('/\/while_play\/update-assinatura\/(\d+)/', $request, $matches) ? true : false):
+       case (preg_match('/\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-assinatura\/(\d+)/', $request, $matches) ? true : false):
+
             $id = $matches[1];
-            require_once '../controllers/AssinaturaController.php';
             $controller = new AssinaturaController();
             $controller->showUpdateForm($id);
             break;
    
-        case '/while_play/update-assinatura':
-            require_once '../controllers/AssinaturaController.php';
+        case '/while-play/projeto_whileplay/back-end/update-assinatura':
             $controller = new AssinaturaController();
             $controller->updateAssinatura();
             break; 
 
 
             //pagamento
-    case '/while_play/public/pagamento':
+    case '/while-play/projeto_whileplay/back-end/public/pagamento':
         $controller = new PagamentoController();
         $controller->showForm();
         break;
-    case '/while_play/save-pagamento':
+    case '/while-play/projeto_whileplay/back-end/save-pagamento':
         $controller = new PagamentoController();
         $controller->savePagamento();
         break;
-    case '/while_play/list-pagamentos':
+    case '/while-play/projeto_whileplay/back-end/list-pagamentos':
         $controller = new PagamentoController();
         $controller->listPagamentos();
         break;
-    case '/while_play/delete-pagamento':
+    case '/while-play/projeto_whileplay/back-end/delete-pagamento':
         $controller = new PagamentoController();
         $controller->deletePagamentoById();
         break;
-    case (preg_match('/\/while_play\/update-pagamento\/(\d+)/', $request, $matches) ? true : false):
+   case (preg_match('/\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-pagamento\/(\d+)/', $request, $matches) ? true : false):
+
         $id = $matches[1];
         $controller = new PagamentoController();
         $controller->showUpdateForm($id);
         break;
-    case '/while_play/update-pagamento':
+    case '/while-play/projeto_whileplay/back-end/update-pagamento':
         $controller = new PagamentoController();
         $controller->updatePagamento();
         break;
 
     // Roteiros
-    case '/while_play/public/roteiro':
+    case '/while-play/projeto_whileplay/back-end/public/roteiro':
         $controller = new RoteiroController();
         $controller->showForm();
         break;
         $controller = new RoteiroController();
         $controller->showForm();
         break;
-    case '/while_play/save-roteiro':
+    case '/while-play/projeto_whileplay/back-end/save-roteiro':
         $controller = new RoteiroController();
         $controller->saveRoteiro();
         break;
-    case '/while_play/list-roteiros':
+    case '/while-play/projeto_whileplay/back-end/list-roteiros':
         $controller = new RoteiroController();
         $controller->listRoteiros();
         break;
-    case '/while_play/delete-roteiro':
+    case '/while-play/projeto_whileplay/back-end/delete-roteiro':
         $controller = new RoteiroController();
         $controller->deleteRoteiroById($_POST['id'] ?? null);
         break;
-    case (preg_match('/\/while_play\/update-roteiro\/(\d+)/', $request, $matches) ? true : false):
+
+   case (preg_match('/\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-roteiro\/(\d+)/', $request, $matches) ? true : false):
         $id = $matches[1];
         $controller = new RoteiroController();
         $controller->showUpdateForm($id);
         break;
-    case '/while_play/update-roteiro':
+    case '/while-play/projeto_whileplay/back-end/update-roteiro':
         $controller = new RoteiroController();
         $controller->updateRoteiro();
         break;

@@ -46,7 +46,7 @@
 
 <h1>Lista de Pagamentos</h1>
 
-<a href="/while_play/public/pagamento" class = create-btn >Novo Pagamento</a>
+<a href="/while-play/projeto_whileplay/back-end/public/pagamento" class = create-btn >Novo Pagamento</a>
 
 <table>
     <thead>
@@ -69,9 +69,9 @@
                     <td><?php echo htmlspecialchars($pagamento['data_de_vencimento']); ?></td>
                     <td><?php echo htmlspecialchars($pagamento['codigo']); ?></td>
                     <td class="actions">
-                        <a href="/while_play/update-pagamento/<?php echo $pagamento['id_pagamento']; ?>">Editar</a>
+                        <a href="/while-play/projeto_whileplay/back-end/update-pagamento/<?php echo $pagamento['id_pagamento']; ?>">Editar</a>
 
-                        <form action="/while_play/delete-pagamento" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar este pagamento?');" style="display:inline;">
+                        <form action="/while-play/projeto_whileplay/back-end/delete-pagamento" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar este pagamento?');" style="display:inline;">
                             <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
                             <button type="submit">Deletar</button>
                         </form>
