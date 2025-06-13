@@ -36,7 +36,7 @@ class RoteiroController {
         $roteiro = new Roteiro();
         $roteiro->save($titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id);
 
-        header('Location: /while-play/projeto_whileplay/back-end/list-roteiros');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
         exit;
     }
 
@@ -52,7 +52,7 @@ class RoteiroController {
         $roteiro->deleteById($id);
     }
 
-    header('Location: /while-play/projeto_whileplay/back-end/list-roteiros');
+    header('Location: whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
     exit;
 }
 
@@ -99,7 +99,7 @@ class RoteiroController {
 
         $roteiro->update($id, $titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id);
 
-        header('Location: /while-play/projeto_whileplay/back-end/list-roteiros');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
         exit;
     }
 }

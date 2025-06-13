@@ -19,7 +19,7 @@ class AssinaturaController {
         $assinatura = new Assinatura();
         $assinatura->save($nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
 
-        header('Location: /while-play/projeto_whileplay/back-end/list-assinaturas');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
 
     public function listAssinaturas() {
@@ -34,7 +34,7 @@ class AssinaturaController {
             $assinatura = new Assinatura();
             $assinatura->deleteByTitle($nome);
         }
-        header('Location: /while-play/projeto_whileplay/back-end/list-assinaturas');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
 
     public function showUpdateForm($id) {
@@ -55,6 +55,6 @@ class AssinaturaController {
         $assinatura = new Assinatura();
         $assinatura->update($id, $nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
 
-        header('Location: /while-play/projeto_whileplay/back-end/list-assinaturas');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
 }

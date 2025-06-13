@@ -17,7 +17,7 @@ class PagamentoController {
         $pagamento = new Pagamento();
         $pagamento->save($nome_do_cartao, $numero_do_cartao, $data_de_vencimento, $codigo);
 
-        header('Location: /while-play/projeto_whileplay/back-end/list-pagamentos');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-pagamentos');
         exit;
     }
 
@@ -35,7 +35,7 @@ class PagamentoController {
             $pagamento->deleteById($id_pagamento);
         }
 
-        header('Location: /while-play/projeto_whileplay/back-end/list-pagamentos');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-pagamentos');
         exit;
     }
 
@@ -57,7 +57,7 @@ class PagamentoController {
             $pagamento->update($id_pagamento, $nome_do_cartao, $numero_do_cartao, $data_de_vencimento, $codigo);
         }
 
-        header('Location: /while-play/projeto_whileplay/back-end/list-pagamentos');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-pagamentos');
         exit;
     }
 }

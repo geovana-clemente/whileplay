@@ -53,9 +53,9 @@
             <td><?= intval($roteiro['visualizacoes']) ?></td>
             <td><?= intval($roteiro['assinatura_id']) ?></td>
             <td>
-                <a href="/while-play/projeto_whileplay/back-end/update-roteiro/<?= $roteiro['id'] ?>">Atualizar</a>
+                <a href="whileplay/while-play/projeto_whileplay/back-end/update-roteiro/<?= $roteiro['id'] ?>">Atualizar</a>
                 
-                <form action="/while-play/projeto_whileplay/back-end/delete-roteiro" method="POST" style="display:inline;">
+                <form action="whileplay/while-play/projeto_whileplay/back-end/delete-roteiro" method="POST" style="display:inline;">
                     <input type="hidden" name="id" value="<?= $roteiro['id'] ?>" />
                     <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este roteiro?')">Excluir</button>
                 </form>
@@ -68,7 +68,7 @@
     </tbody>
 </table>
 
-<a href="/while-play/projeto_whileplay/back-end/public/roteiro">Novo roteiro</a>
+<a href="whileplay/while-play/projeto_whileplay/back-end/public/roteiro">Novo roteiro</a>
 
 </body>
 </html>
