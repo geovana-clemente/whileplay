@@ -8,12 +8,13 @@ class Publicar {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function save($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado) {
+    // Adicionando campo email
+    public function save($usuario_id, $email, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado) {
         $stmt = $this->pdo->prepare("
-            INSERT INTO publicados (usuario_id, titulo, sinopse, tipo, arquivo_url, data_criacao, publicado)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO publicados (usuario_id, email, titulo, sinopse, tipo, arquivo_url, data_criacao, publicado)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado]);
+        $stmt->execute([$usuario_id, $email, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado]);
     }
 
     public function getAll() {
@@ -27,13 +28,13 @@ class Publicar {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update($id, $usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado) {
+    public function update($id, $usuario_id, $email, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado) {
         $stmt = $this->pdo->prepare("
             UPDATE publicados
-            SET usuario_id = ?, titulo = ?, sinopse = ?, tipo = ?, arquivo_url, data_criacao, publicado = ?
+            SET usuario_id = ?, email = ?, titulo = ?, sinopse = ?, tipo = ?, arquivo_url = ?, data_criacao = ?, publicado = ?
             WHERE id = ?
         ");
-        $stmt->execute([$usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado, $id]);
+        $stmt->execute([$usuario_id, $email, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado, $id]);
     }
 
     public function deleteById($id) {

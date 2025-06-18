@@ -1,3 +1,4 @@
+<?php include __DIR__ . '/auth_check.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -52,6 +53,7 @@
             <th>Título</th>
             <th>Sinopse</th>
             <th>Tipo</th>
+            <th>Email</th>
             <th>Arquivo</th>
             <th>Data de Criação</th>
             <th>Publicado</th>
@@ -66,14 +68,22 @@
             <td><?= htmlspecialchars($item['titulo']) ?></td>
             <td><?= nl2br(htmlspecialchars($item['sinopse'])) ?></td>
             <td><?= htmlspecialchars($item['tipo']) ?></td>
+            <td><?= htmlspecialchars($item['email'] ?? '') ?></td>
             <td>
                 <?php
                     $arquivoPath = '../' . $item['arquivo_url'];
+                    $ext = strtolower(pathinfo($item['arquivo_url'], PATHINFO_EXTENSION));
                 ?>
                 <?php if (!empty($item['arquivo_url']) && file_exists($arquivoPath)): ?>
-                    <img src="/meu_projeto/<?= htmlspecialchars($item['arquivo_url']) ?>" alt="Imagem" />
+                    <?php if (in_array($ext, ['png', 'jpg', 'jpeg', 'gif'])): ?>
+                        <img src="/meu_projeto/<?= htmlspecialchars($item['arquivo_url']) ?>" alt="Imagem" />
+                    <?php elseif (in_array($ext, ['doc', 'docx'])): ?>
+                        <a href="/meu_projeto/<?= htmlspecialchars($item['arquivo_url']) ?>" target="_blank">Baixar Documento</a>
+                    <?php else: ?>
+                        <a href="/meu_projeto/<?= htmlspecialchars($item['arquivo_url']) ?>" target="_blank">Ver Arquivo</a>
+                    <?php endif; ?>
                 <?php else: ?>
-                    Sem imagem
+                    Sem arquivo
                 <?php endif; ?>
             </td>
             <td><?= date('d/m/Y H:i', strtotime($item['data_criacao'])) ?></td>
@@ -88,7 +98,7 @@
         </tr>
         <?php endforeach; ?>
     <?php else: ?>
-        <tr><td colspan="8">Nenhuma publicação cadastrada.</td></tr>
+        <tr><td colspan="9">Nenhuma publicação cadastrada.</td></tr>
     <?php endif; ?>
     </tbody>
 </table>

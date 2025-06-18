@@ -27,7 +27,7 @@ class Personagem {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update( $id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem) {
+    public function update($id, $id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem) {
         $stmt = $this->pdo->prepare("
             UPDATE personagens
             SET id_sobre = ?, mais_bem_avaliados = ?, lançados_recentemente = ?, caminho_imagem = ?

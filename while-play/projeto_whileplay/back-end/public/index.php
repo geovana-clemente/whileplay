@@ -81,9 +81,6 @@ switch ($request) {
         $controller = new RoteiroController();
         $controller->showForm();
         break;
-        $controller = new RoteiroController();
-        $controller->showForm();
-        break;
     case 'whileplay/while-play/projeto_whileplay/back-end/save-roteiro':
         $controller = new RoteiroController();
         $controller->saveRoteiro();
@@ -108,117 +105,108 @@ switch ($request) {
 
 
     case '/while_play/public/Perfil':
-        $controller = new PerfilControllar();
+        $controller = new PerfilController();
         $controller->showForm();
         break;
     case '/while_play/save-Perfil':
-        $controller = new PerfilControllar();
-        $controller->savePerfil();                    ;
+        $controller = new PerfilController();
+        $controller->savePerfil();
         break;
     case '/while_play/list-assinaturas':
-        $controller = new PerfilControllar();
-        $controller->listPerfil();
+        $controller = new PerfilController();
+        $controller->listPerfils();
         break;
-        case '/while_play/delete-Perfil':
-            require_once '../controllers/PerfilControllar.php';
-            $controller = new PerfilControllar();
-            $controller->deletePerfilByTitle();
-            break;
-   
-        case (preg_match('/\/while_play\/update-Perfil\/(\d+)/', $request, $matches) ? true : false):
-            $id = $matches[1];
-            require_once '../controllers/PerfilControllar.php';
-            $controller = new PerfilControllar();
-            $controller->showUpdateForm($id);
-            break;
-   
-        case '/while_play/update-Perfil':
-            require_once '../controllers/PerfilControllar.php';
-            $controller = new PerfilControllar();
-            $controller->updatePerfil();
-            break;
-
-
-            //publicar
-        case '/while_play/public/publicar':
-            $controller = new publicarController();
-            $controller->showForm();
-            break;
-        case '/while_play/save-publicar':
-            $controller = new publicarController();
-            $controller->savepublicar();
-            break;
-        case '/while_play/list-publicar':
-            $controller = new publicarController();
-            $controller->listpublicar();
-            break;
-        case '/while_play/delete-publicar':
-            $controller = new publicarController();
-            $controller->deletepublicarById();
-            break;
-        case (preg_match('/\/while_play\/update-publicar\/(\d+)/', $request, $matches) ? true : false):
-            $id = $matches[1];
-            $controller = new publicarController();
-            $controller->showUpdateForm($id);
-            break;
-        case '/while_play/update-publicar':
-            $controller = new publicarController();
-            $controller->updatePublicar();
-            break;
-
-        // Personagens
-        case '/while_play/public/personagens':
-            $controller = new PersonagensController();
-            $controller->showForm();
-            break;
-        case '/while_play/save-personagens':
-            $controller = new PersonagensController();
-            $controller->savePersonagens();
-            break;
-        case '/while_play/list-roteiros':
-            $controller = new PersonagensController();
-            $controller->listPersonagens();
-            break;
-        case '/while_play/delete-personagens':
-            $controller = new PersonagensController();
-            $controller->deletePersonagensById($_POST['id'] ?? null);
-            break;
-        case (preg_match('/\/while_play\/update-personagens\/(\d+)/', $request, $matches) ? true : false):
-            $id = $matches[1];
-            $controller = new PersonagensController();
-            $controller->showUpdateForm($id);
-            break;
-        case '/while_play/update-personagens':
-            $controller = new PersonagensController();
-            $controller->updateRoteiro();
-            break;
-
-    // suporte
-        case '/while_play/public/suporte':
-            $controller = new SuporteController();
-            $controller->showForm();
-            break;
-        case '/while_play/save-suporte':
-            $controller = new SuporteController();
-            $controller->saveSuporte();
-            break;
-        case '/while_play/list-suporte':
-            $controller = new SuporteController();
-            $controller->listSuporte();
-            break;
-        case '/while_play/delete-suporte':
-            $controller = new SuporteController();
-            $controller->deletePagamentoById();
-            break;
-        case (preg_match('/\/while_play\/update-suporte\/(\d+)/', $request, $matches) ? true : false):
-            $id = $matches[1];
-            $controller = new SuporteController();
-            $controller->showUpdateForm($id);
-            break;
-        case '/while_play/update-suporte':
-            $controller = new SuporteController();
-            $controller->updateSuporte();
-            break;
+    case '/while_play/delete-Perfil':
+        $controller = new PerfilController();
+        $controller->deletePerfilById($_POST['id'] ?? null);
+        break;
+    case (preg_match('/\/while_play\/update-Perfil\/(\d+)/', $request, $matches) ? true : false):
+        $id = $matches[1];
+        $controller = new PerfilController();
+        $controller->showUpdateForm($id);
+        break;
+    case '/while_play/update-Perfil':
+        $controller = new PerfilController();
+        $controller->updatePerfil();
+        break;
+    // Publicar
+    case '/while_play/public/publicar':
+        $controller = new PublicarController();
+        $controller->showForm();
+        break;
+    case '/while_play/save-publicar':
+        $controller = new PublicarController();
+        $controller->savePublicar();
+        break;
+    case '/while_play/list-publicar':
+        $controller = new PublicarController();
+        $controller->listPublicados();
+        break;
+    case '/while_play/delete-publicar':
+        $controller = new PublicarController();
+        $controller->deletePublicarById($_POST['id'] ?? null);
+        break;
+    case (preg_match('/\/while_play\/update-publicar\/(\d+)/', $request, $matches) ? true : false):
+        $id = $matches[1];
+        $controller = new PublicarController();
+        $controller->showUpdateForm($id);
+        break;
+    case '/while_play/update-publicar':
+        $controller = new PublicarController();
+        $controller->updatePublicar();
+        break;
+    // Personagens
+    case '/while_play/public/personagens':
+        $controller = new PersonagemController();
+        $controller->showForm();
+        break;
+    case '/while_play/save-personagens':
+        $controller = new PersonagemController();
+        $controller->savePersonagem();
+        break;
+    case '/while_play/list-personagens':
+        $controller = new PersonagemController();
+        $controller->listPersonagens();
+        break;
+    case '/while_play/delete-personagens':
+        $controller = new PersonagemController();
+        $controller->deletePersonagemById($_POST['id'] ?? null);
+        break;
+    case (preg_match('/\/while_play\/update-personagens\/(\d+)/', $request, $matches) ? true : false):
+        $id = $matches[1];
+        $controller = new PersonagemController();
+        $controller->showUpdateForm($id);
+        break;
+    case '/while_play/update-personagens':
+        $controller = new PersonagemController();
+        $controller->updatePersonagem();
+        break;
+    // Suporte
+    case '/while_play/public/suporte':
+        $controller = new SuporteController();
+        $controller->showForm();
+        break;
+    case '/while_play/save-suporte':
+        $controller = new SuporteController();
+        $controller->saveSuporte();
+        break;
+    case '/while_play/list-suporte':
+        $controller = new SuporteController();
+        $controller->listSuportes();
+        break;
+    case '/while_play/delete-suporte':
+        $controller = new SuporteController();
+        $controller->deleteSuporteByTitle();
+        break;
+    case (preg_match('/\/while_play\/update-suporte\/(\d+)/', $request, $matches) ? true : false):
+        $id = $matches[1];
+        $controller = new SuporteController();
+        $controller->showUpdateForm($id);
+        break;
+    case '/while_play/update-suporte':
+        $controller = new SuporteController();
+        $controller->updateSuporte();
+        break;
         
         default:
             http_response_code(404);

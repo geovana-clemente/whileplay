@@ -37,7 +37,7 @@
             width: 100%;
             font-size: 16px;
         }
-        a {000
+        a {
             display: block;
             margin: 15px auto;
             text-align: center;
