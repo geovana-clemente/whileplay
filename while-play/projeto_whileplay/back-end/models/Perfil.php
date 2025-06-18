@@ -33,7 +33,7 @@ class Perfil {
             SET nome_completo = ?, username = ?, email = ?, senha = ?, biografia, foto_url = ?, data_criacao = ?
             WHERE id = ?
         ");
-        $stmt->execute([$nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacrao, $id]);
+        $stmt->execute([$nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao, $id]);
     }
 
     public function deleteById($id) {

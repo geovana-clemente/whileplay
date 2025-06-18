@@ -67,6 +67,7 @@ class PerfilController {
     }
 
     public function updatePerfil() {
+        $id = $_POST['id'] ?? null;
         $nome_completo = $_POST['nome_completo'] ?? '';
         $username = $_POST['username'] ?? '';
         $email = $_POST['email'] ?? 0;
@@ -101,7 +102,7 @@ class PerfilController {
             }
         }
 
-        $perfil->update($nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao);
+        $perfil->update($id, $nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao);
 
         header('Location: /meu_projeto/list-perfils');
         exit;
