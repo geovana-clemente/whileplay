@@ -5,7 +5,7 @@ require_once '../models/Pagamento.php';
 class PagamentoController {
 
     public function showForm() {
-        require '../views/pagamento_form.php'; 
+        require '..back-end/views/pagamento_form.php'; 
     }
 
     public function savePagamento() {
@@ -17,14 +17,14 @@ class PagamentoController {
         $pagamento = new Pagamento();
         $pagamento->save($nome_do_cartao, $numero_do_cartao, $data_de_vencimento, $codigo);
 
-        header('Location: /while_play/list-pagamentos');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-pagamentos');
         exit;
     }
 
     public function listPagamentos() {
         $pagamento = new Pagamento();
         $pagamentos = $pagamento->getAll();
-        require '../views/pagamento_list.php';
+        require '..back-end/views/pagamento_list.php';
     }
 
     public function deletePagamentoById() {
@@ -35,14 +35,14 @@ class PagamentoController {
             $pagamento->deleteById($id_pagamento);
         }
 
-        header('Location: /while_play/list-pagamentos');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-pagamentos');
         exit;
     }
 
     public function showUpdateForm($id) {
         $pagamento = new Pagamento();
         $pagamentoInfo = $pagamento->getById($id);
-        require '../views/update_pagamento_form.php';
+        require '..back-end/views/update_pagamento_form.php';
     }
 
     public function updatePagamento() {
@@ -57,7 +57,7 @@ class PagamentoController {
             $pagamento->update($id_pagamento, $nome_do_cartao, $numero_do_cartao, $data_de_vencimento, $codigo);
         }
 
-        header('Location: /while_play/list-pagamentos');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-pagamentos');
         exit;
     }
 }

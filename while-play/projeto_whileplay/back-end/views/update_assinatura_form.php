@@ -54,7 +54,7 @@
 
 <h1>Atualizar Assinatura</h1>
 
-<form action="/while_play/update-assinatura" method="POST">
+<form action="whileplay/while-play/projeto_whileplay/back-end/update-assinatura" method="POST">
     <input type="hidden" name="id" value="<?= htmlspecialchars($assinaturaInfo['id']) ?>">
 
     <label for="nome">Nome:</label>
@@ -78,7 +78,7 @@
     <input type="submit" value="Atualizar">
 </form>
 
-<a href="/while_play/list-assinaturas">Voltar para a lista</a>
+<a href="whileplay/while-play/projeto_whileplay/back-end/list-assinaturas">Voltar para a lista</a>
 
 </body>
 </html>

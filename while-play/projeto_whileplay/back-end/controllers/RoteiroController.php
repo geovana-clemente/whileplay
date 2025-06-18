@@ -5,7 +5,7 @@ require_once '../models/Roteiro.php';
 class RoteiroController {
 
     public function showForm() {
-        require '../views/roteiro_form.php'; 
+        require '..back-end/views/roteiro_form.php'; 
     }
 
     public function saveRoteiro() {
@@ -36,14 +36,14 @@ class RoteiroController {
         $roteiro = new Roteiro();
         $roteiro->save($titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id);
 
-        header('Location: /while_play/list-roteiros');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
         exit;
     }
 
     public function listRoteiros() {
         $roteiro = new Roteiro();
         $roteiros = $roteiro->getAll();
-        require '../views/roteiro_list.php';
+        require '..back-end/views/roteiro_list.php';
     }
 
     public function deleteRoteiroById($id) {
@@ -52,7 +52,7 @@ class RoteiroController {
         $roteiro->deleteById($id);
     }
 
-    header('Location: /while_play/list-roteiros');
+    header('Location: whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
     exit;
 }
 
@@ -60,7 +60,7 @@ class RoteiroController {
     public function showUpdateForm($id) {
         $roteiro = new Roteiro();
         $roteiroInfo = $roteiro->getById($id);
-        require '../views/update_roteiro_form.php';
+        require '..back-end/views/update_roteiro_form.php';
     }
 
     public function updateRoteiro() {
@@ -99,7 +99,7 @@ class RoteiroController {
 
         $roteiro->update($id, $titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id);
 
-        header('Location: /while_play/list-roteiros');
+        header('Location: whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
         exit;
     }
 }

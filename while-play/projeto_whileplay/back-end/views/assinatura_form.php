@@ -59,7 +59,7 @@
 
     <h1>Assinaturas</h1>
 
-    <form action="/while_play/save-assinatura" method="POST">
+    <form action="whileplay/while-play/projeto_whileplay/back-end/save-assinatura" method="POST">
         <label for="nome">Nome:</label><br>
         <input type="text" id="nome" name="nome" required><br><br>
 
@@ -81,7 +81,7 @@
         <input type="submit" value="Salvar Assinatura">
     </form>
 
-    <a href="/while_play/list-assinaturas"><h4>Ver todas as assinaturas</h4></a>
+    <a href="whileplay/while-play/projeto_whileplay/back-end/list-assinaturas"><h4>Ver todas as assinaturas</h4></a>
 
 </body>
 </html>

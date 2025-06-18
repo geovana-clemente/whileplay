@@ -29,7 +29,7 @@
 
     <h1>Cadastro de Pagamento</h1>
 
-    <form action="/while_play/save-pagamento" method="POST" autocomplete="off">
+    <form action="whileplay/while-play/projeto_whileplay/back-end/save-pagamento" method="POST" autocomplete="off">
         <label for="id_assinatura">ID da Assinatura:</label>
         <input type="number" id="id_assinatura" name="id_assinatura" required placeholder="Digite o ID da assinatura">
 
@@ -48,7 +48,7 @@
         <input type="submit" value="Salvar Pagamento">
 
     </form>
-<a href="/while_play/list-pagamentos"><h4>Ver todos os pagamentos</h4></a>
+<a href="whileplay/while-play/projeto_whileplay/back-end/list-pagamentos"><h4>Ver todos os pagamentos</h4></a>
 
 </body>
 </html>
