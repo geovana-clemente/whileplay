@@ -70,7 +70,7 @@
         <input type="text" id="endereco" name="endereco" required><br><br>
 
         <label for="cep">CEP:</label><br>
-        <input type="text" id="cep" name="cep" pattern="\d{5}-?\d{3}" title="Formato esperado: 00000-000"><br><br>
+        <input type="text" id="cep" name="cep" pattern="\d{5}-?\d{3}" title="Formato esperadoo:o 00000-000"><br><br>
 
         <label for="cpf">CPF:</label><br>
         <input type="text" id="cpf" name="cpf" required pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Formato esperado: 000.000.000-00"><br><br>
