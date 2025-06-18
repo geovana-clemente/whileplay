@@ -66,15 +66,15 @@
                     $imgPath = '../' . $personagem['caminho_imagem'];
                 ?>
                 <?php if (!empty($personagem['caminho_imagem']) && file_exists($imgPath)): ?>
-                    <img src="/meu_projeto/<?= htmlspecialchars($personagem['caminho_imagem']) ?>" alt="Imagem do personagem" />
+                    <img src="/GitHub/whileplay/while-play/projeto_whileplay/back-end/<?= htmlspecialchars($personagem['caminho_imagem']) ?>" alt="Imagem do personagem" />
                 <?php else: ?>
                     Sem imagem
                 <?php endif; ?>
             </td>
             <td><?= date('d/m/Y H:i', strtotime($personagem['created_at'])) ?></td>
             <td>
-                <a href="/meu_projeto/update-personagem/<?= $personagem['id_sobre'] ?>">Atualizar</a>
-                <form action="/meu_projeto/delete-personagem" method="POST" style="display:inline;">
+                <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-personagem/<?= $personagem['id_sobre'] ?>">Atualizar</a>
+                <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-personagem" method="POST" style="display:inline;">
                     <input type="hidden" name="id" value="<?= $personagem['id_sobre'] ?>" />
                     <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este personagem?')">Excluir</button>
                 </form>
@@ -87,7 +87,7 @@
     </tbody>
 </table>
 
-<a href="/meu_projeto/public/personagem">Novo Personagem</a>
+<a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/personagem">Novo Personagem</a>
 
 </body>
 </html>

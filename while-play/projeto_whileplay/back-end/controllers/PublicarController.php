@@ -39,7 +39,7 @@ class PublicarController {
         $publicar = new Publicar();
         $publicar->save($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado);
 
-        header('Location: /meu_projeto/list-publicados');
+        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicados');
         exit;
     }
 
@@ -55,7 +55,7 @@ class PublicarController {
         $publicar->deleteById($id);
     }
 
-    header('Location: /meu_projeto/list-publicados');
+    header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicados');
     exit;
 }
 
@@ -103,7 +103,7 @@ class PublicarController {
 
         $publicar->update($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado);
 
-        header('Location: /meu_projeto/list-publicados');
+        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicados');
         exit;
     }
 }

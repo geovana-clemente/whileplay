@@ -50,7 +50,7 @@
 
 <h2 style="text-align:center;">Atualizar Pagamento</h2>
 
-<form action="whileplay/while-play/projeto_whileplay/back-end/update-pagamento" method="POST">
+<form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-pagamento" method="POST">
 
     <label for="id_pagamento">ID do Pagamento:</label>
     <input type="hidden" name="id_pagamento" value="<?php echo htmlspecialchars($pagamentoInfo['id_pagamento']); ?>">
@@ -70,7 +70,7 @@
     <input type="submit" value="Atualizar Pagamento">
 </form>
 
-<a href="whileplay/while-play/projeto_whileplay/back-end/list-pagamentos">Voltar para a lista de pagamentos</a>
+<a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-pagamentos">Voltar para a lista de pagamentos</a>
 
 </body>
 </html>

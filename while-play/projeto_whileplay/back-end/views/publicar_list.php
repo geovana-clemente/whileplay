@@ -71,7 +71,7 @@
                     $arquivoPath = '../' . $item['arquivo_url'];
                 ?>
                 <?php if (!empty($item['arquivo_url']) && file_exists($arquivoPath)): ?>
-                    <img src="/meu_projeto/<?= htmlspecialchars($item['arquivo_url']) ?>" alt="Imagem" />
+                    <img src="/GitHub/whileplay/while-play/projeto_whileplay/back-end/<?= htmlspecialchars($item['arquivo_url']) ?>" alt="Imagem" />
                 <?php else: ?>
                     Sem imagem
                 <?php endif; ?>
@@ -79,8 +79,8 @@
             <td><?= date('d/m/Y H:i', strtotime($item['data_criacao'])) ?></td>
             <td><?= $item['publicado'] ? 'Sim' : 'Não' ?></td>
             <td>
-                <a href="/meu_projeto/update-publicar/<?= $item['id'] ?>">Atualizar</a>
-                <form action="/meu_projeto/delete-publicar" method="POST" style="display:inline;">
+                <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-publicar/<?= $item['id'] ?>">Atualizar</a>
+                <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-publicar" method="POST" style="display:inline;">
                     <input type="hidden" name="id" value="<?= $item['id'] ?>" />
                     <button type="submit" onclick="return confirm('Deseja excluir esta publicação?')">Excluir</button>
                 </form>
@@ -93,7 +93,7 @@
     </tbody>
 </table>
 
-<a href="/meu_projeto/public/publicar">Nova Publicação</a>
+<a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/publicar">Nova Publicação</a>
 
 </body>
 </html>

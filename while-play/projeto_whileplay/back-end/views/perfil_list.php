@@ -70,15 +70,15 @@
                     $fotoPath = '../' . $perfil['foto_url'];
                 ?>
                 <?php if (!empty($perfil['foto_url']) && file_exists($fotoPath)): ?>
-                    <img src="/meu_projeto/<?= htmlspecialchars($perfil['foto_url']) ?>" alt="Foto de perfil" />
+                    <img src="/GitHub/whileplay/while-play/projeto_whileplay/back-end/<?= htmlspecialchars($perfil['foto_url']) ?>" alt="Foto de perfil" />
                 <?php else: ?>
                     Sem foto
                 <?php endif; ?>
             </td>
             <td><?= date('d/m/Y H:i', strtotime($perfil['data_criacao'])) ?></td>
             <td>
-                <a href="/meu_projeto/update-perfil/<?= $perfil['id'] ?>">Atualizar</a>
-                <form action="/meu_projeto/delete-perfil" method="POST" style="display:inline;">
+                <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-perfil/<?= $perfil['id'] ?>">Atualizar</a>
+                <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-perfil" method="POST" style="display:inline;">
                     <input type="hidden" name="id" value="<?= $perfil['id'] ?>" />
                     <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este perfil?')">Excluir</button>
                 </form>
@@ -91,7 +91,7 @@
     </tbody>
 </table>
 
-<a href="/meu_projeto/public/perfil">Criar Novo Perfil</a>
+<a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/perfil">Criar Novo Perfil</a>
 
 </body>
 </html>

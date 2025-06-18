@@ -16,7 +16,7 @@ class SuporteController {
         $suporte = new Suporte();
         $suporte->save($usuario_id, $mensagem, $data_envio);
 
-        header('Location: /meu_projeto/list-suportes');
+        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-suportes');
     }
 
     public function listSuportes() {
@@ -31,7 +31,7 @@ class SuporteController {
             $suporte = new Suporte();
             $suporte->deleteByTitle($usuario_id);
         }
-        header('Location: /meu_projeto/list-suportes');
+        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-suportes');
     }
 
     public function showUpdateForm($id) {
@@ -49,6 +49,6 @@ class SuporteController {
         $suporte = new Suporte();
         $suporte->update($id, $usuario_id, $mensagem, $data_envio);
 
-        header('Location: /meu_projeto/list-suportes');
+        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-suportes');
     }
 }

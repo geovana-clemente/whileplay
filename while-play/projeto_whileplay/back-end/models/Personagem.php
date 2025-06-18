@@ -8,36 +8,43 @@ class Personagem {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function save($id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem) {
+    // Salvar personagem
+    public function save($id_sobre, $mais_bem_avaliados, $lancados_recentemente, $caminho_imagem) {
         $stmt = $this->pdo->prepare("
-            INSERT INTO personagens (id_sobre, mais_bem_avaliados$, lançados_recentemente, caminho_imagem)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO personagens (id_sobre, mais_bem_avaliados, lancados_recentemente, caminho_imagem)
+            VALUES (?, ?, ?, ?)
         ");
-        $stmt->execute([$id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem]);
+        $stmt->execute([$id_sobre, $mais_bem_avaliados, $lancados_recentemente, $caminho_imagem]);
     }
 
+    // Listar todos
     public function getAll() {
         $stmt = $this->pdo->query("SELECT * FROM personagens");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Buscar por ID
     public function getById($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM personagens WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update( $id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem) {
+    // Atualizar personagem
+    public function update($id, $id_sobre, $mais_bem_avaliados, $lancados_recentemente, $caminho_imagem) {
         $stmt = $this->pdo->prepare("
             UPDATE personagens
-            SET id_sobre = ?, mais_bem_avaliados = ?, lançados_recentemente = ?, caminho_imagem = ?
+            SET id_sobre = ?, mais_bem_avaliados = ?, lancados_recentemente = ?, caminho_imagem = ?
             WHERE id = ?
         ");
-        $stmt->execute([$id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem, $id]);
+        $stmt->execute([$id_sobre, $mais_bem_avaliados, $lancados_recentemente, $caminho_imagem, $id]);
     }
 
+    // Deletar por ID
     public function deleteById($id) {
         $stmt = $this->pdo->prepare("DELETE FROM personagens WHERE id = ?");
         $stmt->execute([$id]);
     }
 }
+
+

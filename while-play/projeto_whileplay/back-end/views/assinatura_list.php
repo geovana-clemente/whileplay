@@ -74,9 +74,9 @@
                 <td><?= htmlspecialchars($assinatura['cpf']) ?></td>
                 <td><?= htmlspecialchars($assinatura['data_assinatura']) ?></td>
                 <td>
-                    <a href="whileplay/while-play/projeto_whileplay/back-end/update-assinatura/<?= $assinatura['id'] ?>">Atualizar</a>
+                    <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-assinatura/<?= $assinatura['id'] ?>">Atualizar</a>
 
-                    <form action="whileplay/while-play/projeto_whileplay/back-end/delete-assinatura" method="POST" style="display:inline;">
+                    <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-assinatura" method="POST" style="display:inline;">
                         <input type="hidden" name="nome" value="<?= $assinatura['nome'] ?>">
                         <button type="submit" onclick="return confirm('Tem certeza que deseja excluir esta assinatura?')">Excluir</button>
                     </form>
@@ -87,7 +87,7 @@
     </table>
 
     <br>
-   <a href="whileplay/while-play/projeto_whileplay/back-end/public/assinatura">Nova assinatura</a>
+   <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/assinatura">Nova assinatura</a>
 
 
 </body>

@@ -8,30 +8,43 @@ class Suporte {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    // Salvar suporte
     public function save($usuario_id, $mensagem, $data_envio) {
-        $stmt = $this->pdo->prepare("INSERT INTO suportes (usuario_id, mensagem, data_envio) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $this->pdo->prepare("
+            INSERT INTO suportes (usuario_id, mensagem, data_envio)
+            VALUES (?, ?, ?)
+        ");
         $stmt->execute([$usuario_id, $mensagem, $data_envio]);
     }
 
+    // Buscar todos
     public function getAll() {
         $stmt = $this->pdo->query("SELECT * FROM suportes");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Deletar por usuário
     public function deleteByTitle($usuario_id) {
         $stmt = $this->pdo->prepare("DELETE FROM suportes WHERE usuario_id = ?");
         $stmt->execute([$usuario_id]);
     }
 
+    // Buscar por ID
     public function getById($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM suportes WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Atualizar suporte
     public function update($id, $usuario_id, $mensagem, $data_envio) {
-        $stmt = $this->pdo->prepare("UPDATE suportes SET usuario_id = ?, mensagem = ?, data_envio = ? WHERE id = ?");
+        $stmt = $this->pdo->prepare("
+            UPDATE suportes
+            SET usuario_id = ?, mensagem = ?, data_envio = ?
+            WHERE id = ?
+        ");
         $stmt->execute([$usuario_id, $mensagem, $data_envio, $id]);
     }
 }
+?>
 

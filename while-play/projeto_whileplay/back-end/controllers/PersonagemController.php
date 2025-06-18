@@ -36,7 +36,7 @@ class PersonagemController {
         $personagem = new Personagem();
         $personagem->save($id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem);
 
-        header('Location: /meu_projeto/list-personagens');
+        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-personagens');
         exit;
     }
 
@@ -52,7 +52,7 @@ class PersonagemController {
         $personagem->deleteById($id);
     }
 
-    header('Location: /meu_projeto/list-personagens');
+    header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-personagens');
     exit;
 }
 
@@ -98,7 +98,7 @@ class PersonagemController {
 
         $personagem->update($id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem);
 
-        header('Location: /meu_projeto/list-personagens');
+        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-personagens');
         exit;
     }
 }

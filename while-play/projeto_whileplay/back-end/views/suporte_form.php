@@ -58,7 +58,7 @@
 </head>
 <body>
 
-    <form action="/meu_projeto/save-suporte" method="POST">
+    <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/save-suporte" method="POST">
         <h2>Formulário de Suporte</h2>
 
         <label for="usuario_id">ID do Usuário:</label>
@@ -73,7 +73,7 @@
         <button type="submit">Enviar</button>
     </form>
 
-    <a class="back-link" href="/meu_projeto/list-suportes">← Voltar para Lista de Suporte</a>
+    <a class="back-link" href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-suportes">← Voltar para Lista de Suporte</a>
 
 </body>
 </html>

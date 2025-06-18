@@ -8,34 +8,39 @@ class Publicar {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    // Salvar publicação
     public function save($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado) {
         $stmt = $this->pdo->prepare("
             INSERT INTO publicados (usuario_id, titulo, sinopse, tipo, arquivo_url, data_criacao, publicado)
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         $stmt->execute([$usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado]);
     }
 
+    // Buscar todos
     public function getAll() {
         $stmt = $this->pdo->query("SELECT * FROM publicados");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Buscar por ID
     public function getById($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM publicados WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Atualizar publicação
     public function update($id, $usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado) {
         $stmt = $this->pdo->prepare("
             UPDATE publicados
-            SET usuario_id = ?, titulo = ?, sinopse = ?, tipo = ?, arquivo_url, data_criacao, publicado = ?
+            SET usuario_id = ?, titulo = ?, sinopse = ?, tipo = ?, arquivo_url = ?, data_criacao = ?, publicado = ?
             WHERE id = ?
         ");
         $stmt->execute([$usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado, $id]);
     }
 
+    // Deletar por ID
     public function deleteById($id) {
         $stmt = $this->pdo->prepare("DELETE FROM publicados WHERE id = ?");
         $stmt->execute([$id]);
