@@ -64,6 +64,7 @@ class PersonagemController {
     }
 
     public function updatePersonagem() {
+        $id = $_POST['id'] ?? '';
         $id_sobre = $_POST['id_sobre'] ?? '';
         $mais_bem_avaliados = $_POST['mais_bem_avaliados'] ?? '';
         $lançados_recentemente = $_POST['lançados_recentemente'] ?? 0;
@@ -96,7 +97,7 @@ class PersonagemController {
             }
         }
 
-        $personagem->update($id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem);
+        $personagem->update($id, $id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem);
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-personagens');
         exit;

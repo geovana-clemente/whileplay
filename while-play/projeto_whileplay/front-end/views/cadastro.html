@@ -111,10 +111,11 @@
   <div class="login-container">
     <h1>Cadastro</h1>
     <p>Crie sua conta e comece agora!</p>
-    <form id="cadastroForm">
-      <input type="text" placeholder="Nome completo" required>
-      <input type="email" placeholder="Email" required>
-      <input type="password" placeholder="Senha" required>
+    <form id="cadastroForm" action="/while_play/cadastro" method="POST">
+      <input type="text" name="nome" placeholder="Nome completo" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Senha" required>
+      <input type="password" name="password_confirm" placeholder="Confirme a senha" required>
       <button type="submit">Cadastrar</button>
     </form>
     <div class="footer">
@@ -123,6 +124,28 @@
   </div>
 
   <script>
+    // Exibe mensagem de erro/sucesso se houver parâmetro na URL
+    document.addEventListener('DOMContentLoaded', function() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('erro') === 'senhas') {
+        alert('As senhas não coincidem!');
+      }
+      if (params.get('erro') === 'email') {
+        alert('Email já cadastrado!');
+      }
+      if (params.get('erro') === 'bd') {
+        alert('Erro ao cadastrar usuário. Tente novamente.');
+      }
+      if (params.get('erro') === 'nome') {
+        alert('Digite um nome válido (mínimo 3 letras).');
+      }
+      if (params.get('erro') === 'emailinvalido') {
+        alert('Digite um email válido.');
+      }
+      if (params.get('erro') === 'senhapequena') {
+        alert('A senha deve ter pelo menos 6 caracteres.');
+      }
+    });
     function handleBackgroundClick(event) {
       const container = document.querySelector('.login-container');
       if (!container.contains(event.target)) {
@@ -132,13 +155,6 @@
         }
       }
     }
-    // Redireciona para login.html ao cadastrar
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('cadastroForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        window.location.href = "login.html";
-      });
-    });
   </script>
 </body>
 </html>

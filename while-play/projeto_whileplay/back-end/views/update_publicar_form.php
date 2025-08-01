@@ -76,24 +76,35 @@
     <label for="titulo">Título:</label>
     <input type="text" id="titulo" name="titulo" value="<?= htmlspecialchars($publicarInfo['titulo']) ?>" required>
 
+    <label for="email">E-mail:</label>
+    <input type="email" id="email" name="email" value="<?= htmlspecialchars($publicarInfo['email'] ?? '') ?>" required>
+
     <label for="sinopse">Sinopse:</label>
     <textarea id="sinopse" name="sinopse" rows="4" required><?= htmlspecialchars($publicarInfo['sinopse']) ?></textarea>
 
     <label for="tipo">Tipo:</label>
-    <input type="text" id="tipo" name="tipo" value="<?= htmlspecialchars($publicarInfo['tipo']) ?>" required>
+    <select id="tipo" name="tipo" required>
+        <option value="roteiro" <?= ($publicarInfo['tipo'] == 'roteiro') ? 'selected' : '' ?>>Roteiro</option>
+        <option value="personagem" <?= ($publicarInfo['tipo'] == 'personagem') ? 'selected' : '' ?>>Personagem</option>
+        <option value="outro" <?= ($publicarInfo['tipo'] == 'outro') ? 'selected' : '' ?>>Outro</option>
+    </select>
 
     <label for="data_criacao">Data de Criação:</label>
     <input type="date" id="data_criacao" name="data_criacao" value="<?= htmlspecialchars($publicarInfo['data_criacao']) ?>" required>
 
-    <label>Imagem Atual:</label>
+    <label>Arquivo Atual:</label>
     <?php if (!empty($publicarInfo['arquivo_url'])): ?>
+<<<<<<< HEAD
         <img src="/GitHub/whileplay/while-play/projeto_whileplay/back-end/<?= htmlspecialchars($publicarInfo['arquivo_url']) ?>" alt="Imagem da Publicação" class="current-image">
+=======
+        <a href="/meu_projeto/<?= htmlspecialchars($publicarInfo['arquivo_url']) ?>" target="_blank">Ver arquivo atual</a>
+>>>>>>> 9695a197319bc3fcf7ccf52e0f98dbd6385d44b1
     <?php else: ?>
-        <p>Sem imagem disponível.</p>
+        <p>Sem arquivo disponível.</p>
     <?php endif; ?>
 
-    <label for="imagem">Alterar Imagem:</label>
-    <input type="file" id="imagem" name="imagem" accept="image/*">
+    <label for="arquivo">Alterar Arquivo (PNG, DOC, DOCX):</label>
+    <input type="file" id="arquivo" name="arquivo" accept=".png,.doc,.docx">
 
     <label for="publicado">Publicado:</label>
     <select id="publicado" name="publicado" required>

@@ -111,9 +111,9 @@
   <div class="login-container">
     <h1>Login</h1>
     <p>Bem vindo de volta criativo!</p>
-    <form id="loginForm">
-      <input type="email" placeholder="Email" required>
-      <input type="password" placeholder="Password" required>
+    <form id="loginForm" action="/while_play/login" method="POST">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
       <button type="submit">Logar</button>
     </form>
     <a href="recuperar_senha.html">Esqueceu sua senha?</a>
@@ -122,6 +122,16 @@
   </div>
 
   <script>
+    // Exibe mensagem de erro se houver parâmetro na URL
+    document.addEventListener('DOMContentLoaded', function() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('erro')) {
+        alert('Email ou senha inválidos!');
+      }
+      if (params.get('cadastro') === 'ok') {
+        alert('Cadastro realizado com sucesso! Faça login.');
+      }
+    });
     function handleBackgroundClick(event) {
       const container = document.querySelector('.login-container');
       if (!container.contains(event.target)) {
@@ -131,13 +141,6 @@
         }
       }
     }
-    // Redireciona para roteiros_com_login.html ao logar
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        window.location.href = "/Whileplay/VIEWS/COM logins/roteiros_com_login.html";
-      });
-    });
   </script>
 </body>
 </html>
