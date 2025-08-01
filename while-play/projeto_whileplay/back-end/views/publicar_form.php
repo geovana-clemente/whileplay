@@ -45,11 +45,7 @@
 
     <h2>Nova Publicação</h2>
 
-<<<<<<< HEAD
-    <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/save-publicar" method="POST" enctype="multipart/form-data">
-=======
     <form action="/while_play/save-publicar" method="POST" enctype="multipart/form-data">
->>>>>>> 9695a197319bc3fcf7ccf52e0f98dbd6385d44b1
         <label for="usuario_id">ID do Usuário:</label>
         <input type="number" name="usuario_id" id="usuario_id" required>
 
