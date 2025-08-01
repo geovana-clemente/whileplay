@@ -68,7 +68,11 @@
     </tbody>
 </table>
 
+<<<<<<< HEAD
 <a href="/while-play/projeto_whileplay/back-end//public/roteiro">Novo roteiro</a>
+=======
+<a href="/while-play/projeto_whileplay/back-end/public/roteiro">Novo roteiro</a>
+>>>>>>> 715621e6d8a4db004afe063c377e17aa713a1758
 
 </body>
 </html>

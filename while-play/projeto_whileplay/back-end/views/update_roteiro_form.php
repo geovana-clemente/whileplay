@@ -55,7 +55,7 @@
 
     <h1>Atualizar Roteiro</h1>
 
-    <form action="/while_play/update-roteiro" method="POST" enctype="multipart/form-data">
+    <form action="/while-play/projeto_whileplay/back-end/update-roteiro" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($roteiroInfo['id']); ?>">
 
         <label for="titulo">Título:</label><br>
@@ -80,7 +80,7 @@
     </form>
 
     <br>
-    <a href="/while_play/list-roteiros">Voltar para a lista de roteiros</a>
+    <a href="/while-play/projeto_whileplay/back-end/list-roteiros">Voltar para a lista de roteiros</a>
 
 </body>
 </html>

@@ -27,13 +27,21 @@ switch ($request) {
         $controller = new AssinaturaController();
         $controller->listAssinaturas();
         break;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 715621e6d8a4db004afe063c377e17aa713a1758
         case '/while-play/projeto_whileplay/back-end/delete-assinatura':
             $controller = new AssinaturaController();
             $controller->deleteAssinaturaByTitle();
             break;
    
+<<<<<<< HEAD
        case (preg_match('/\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-assinatura\/(\d+)/', $request, $matches) ? true : false):
 
+=======
+        case (preg_match('/\/while-play\/projeto_whileplay\/back-end\/update-assinatura\/(\d+)/', $request, $matches) ? true : false):
+>>>>>>> 715621e6d8a4db004afe063c377e17aa713a1758
             $id = $matches[1];
             $controller = new AssinaturaController();
             $controller->showUpdateForm($id);
@@ -62,8 +70,12 @@ switch ($request) {
         $controller = new PagamentoController();
         $controller->deletePagamentoById();
         break;
+<<<<<<< HEAD
    case (preg_match('/\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-pagamento\/(\d+)/', $request, $matches) ? true : false):
 
+=======
+     case (preg_match('/\/while-play\/projeto_whileplay\/back-end\/update-pagamento\/(\d+)/', $request, $matches) ? true : false):
+>>>>>>> 715621e6d8a4db004afe063c377e17aa713a1758
         $id = $matches[1];
         $controller = new PagamentoController();
         $controller->showUpdateForm($id);
@@ -93,8 +105,12 @@ switch ($request) {
         $controller = new RoteiroController();
         $controller->deleteRoteiroById($_POST['id'] ?? null);
         break;
+<<<<<<< HEAD
 
    case (preg_match('/\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-roteiro\/(\d+)/', $request, $matches) ? true : false):
+=======
+   case (preg_match('/\/while-play\/projeto_whileplay\/back-end\/update-roteiro\/(\d+)/', $request, $matches) ? true : false):
+>>>>>>> 715621e6d8a4db004afe063c377e17aa713a1758
         $id = $matches[1];
         $controller = new RoteiroController();
         $controller->showUpdateForm($id);
