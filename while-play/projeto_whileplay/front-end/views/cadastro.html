@@ -14,7 +14,7 @@
     }
 
     body {
-      background: url(/Whileplay/VIEWS/MEDIA/imagens/While\ Play.png) no-repeat left center fixed;
+      background: url(/while-play/projeto_whileplay/front-end/public/MEDIA/imagens/While\ Play.png) no-repeat left center fixed;
       background-size: cover;
       color: #ffffff;
       height: 100vh;
@@ -111,7 +111,7 @@
   <div class="login-container">
     <h1>Cadastro</h1>
     <p>Crie sua conta e comece agora!</p>
-    <form id="cadastroForm" action="/while_play/cadastro" method="POST">
+    <form id="cadastroForm" action="/while-play/projeto_whileplay/front-end/views/cadastro.html" method="POST">
       <input type="text" name="nome" placeholder="Nome completo" required>
       <input type="email" name="email" placeholder="Email" required>
       <input type="password" name="password" placeholder="Senha" required>
@@ -119,7 +119,7 @@
       <button type="submit">Cadastrar</button>
     </form>
     <div class="footer">
-      <a href="login.html">Já tem conta?</a>
+      <a href="/while-play/projeto_whileplay/front-end/views/login.html">Já tem conta?</a>
     </div>
   </div>
 
@@ -151,7 +151,7 @@
       if (!container.contains(event.target)) {
         const confirmRedirect = confirm("Deseja voltar para a homepage?");
         if (confirmRedirect) {
-          window.location.href = "/homepage.html";
+          window.location.href = "/while-play/projeto_whileplay/front-end/views/homepage1.html";
         }
       }
     }
