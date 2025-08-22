@@ -1,5 +1,4 @@
 <!-- ../views/publicar_form.php -->
-<?php include __DIR__ . '/auth_check.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
