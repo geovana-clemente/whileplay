@@ -7,17 +7,12 @@
 
   <!-- Fonte Adamina -->
   <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
-  <!-- Fonte personalizada CreatoDisplay -->
+  <!-- Ícones do Material Design -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
-    @font-face {
-      font-family: 'CreatoDisplay';
-      src: url('/Whileplay/VIEWS/MEDIA/FONTE/creato_display/CreatoDisplay-ExtraBoldItalic.otf') format('opentype');
-      font-weight: normal;
-      font-style: normal;
-    }
     body {
       margin: 0;
-      font-family: 'CreatoDisplay', 'Adamina', serif;
+      font-family: 'Adamina', serif;
     }
 
     header {
@@ -27,7 +22,7 @@
     }
 
     .header-container {
-      background-image: url('/VIEWS/MEDIA/imagens/background.png');
+      background-image: url('../public/MEDIA/imagens/background.png');
       background-size: cover;
       background-position: center;
       padding: 40px 0;
@@ -79,28 +74,6 @@
       margin-left: 8px;
     }
 
-    .user-profile-area {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .subscription-badge {
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
-      padding: 5px 10px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      color: #FFD700; /* Cor dourada para indicar premium */
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .subscription-badge .material-icons {
-      font-size: 16px;
-    }
-
     .profile-icon {
       background-color: white;
       color: #007bff;
@@ -113,55 +86,29 @@
       cursor: pointer;
       transition: background 0.3s, transform 0.2s;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      position: relative;
     }
-
     .profile-icon:hover {
       background-color: #e0e0e0;
       transform: scale(1.1);
     }
-    
     .profile-icon .material-icons {
       font-size: 24px;
     }
-    
-    .verified-badge {
-      position: absolute;
-      bottom: -5px;
-      right: -5px;
-      background-color: #FFD700;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 2px solid white;
-    }
-    
-    .verified-badge .material-icons {
-      font-size: 14px;
-      color: #333;
-    }
-    
-    /* Estilo para o dropdown do perfil */
     .profile-dropdown {
       position: relative;
       display: inline-block;
     }
-    
     .dropdown-content {
       display: none;
       position: absolute;
       right: 0;
       background-color: white;
-      min-width: 200px;
+      min-width: 160px;
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
       z-index: 1;
       border-radius: 8px;
       margin-top: 10px;
     }
-    
     .dropdown-content a {
       color: #333 !important;
       padding: 12px 16px;
@@ -170,31 +117,12 @@
       text-align: left;
       font-size: 16px;
     }
-    
     .dropdown-content a:hover {
       background-color: #f1f1f1;
       border-radius: 0;
     }
-    
-    .dropdown-content .premium-option {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    
-    .dropdown-content .premium-option .material-icons {
-      color: #FFD700;
-      font-size: 16px;
-    }
-    
     .profile-dropdown:hover .dropdown-content {
       display: block;
-    }
-    
-    .dropdown-divider {
-      height: 1px;
-      background-color: #e0e0e0;
-      margin: 5px 0;
     }
   </style>
 </head>
@@ -208,33 +136,20 @@
           <span onclick="clearSearch()">❌</span>
         </div>
 
-        <a href="#">Sobre Nós</a>
-        <a href="#">Prêmios</a>
-        <a href="#">Roteiro</a>
-        <a href="#">Homepage</a>
-        <a href="#">Biblioteca</a>
-        <a href="#">Personagens</a>
-        <a href="#">Publicar</a>
+  <a href="sobrenos_assinatura.html">Sobre Nós</a>
+  <a href="Premios_assinatura.html">Prêmios</a>
+  <a href="roteiros_assinatura.html">Roteiro</a>
+  <a href="homepage2_assinatura.html">Homepage</a>
+  <a href="perfil_assinatura.html">Biblioteca</a>
+  <a href="personagens_assinatura.html">Personagens</a>
+  <a href="publicar.html">Publicar</a>
 
-        <div class="user-profile-area">
-
-
+        <div class="profile-dropdown">
+          <div class="profile-icon">
+            <span class="material-icons">person</span>
           </div>
-          
-          <div class="profile-dropdown">
-            <div class="profile-icon">
-              <span class="material-icons">person</span>
-              <!-- Badge de verificação na parte inferior direita do ícone -->
-              <div class="verified-badge">
-                <span class="material-icons">verified</span>
-              </div>
-            </div>
-            <div class="dropdown-content">
-              <a href="#" class="premium-option">
-                <span class="material-icons">verified</span>
-                Membro Premium
-              </a>
-
+          <div class="dropdown-content">
+            <!-- Adicione opções de perfil aqui se desejar -->
           </div>
         </div>
       </div>
