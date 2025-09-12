@@ -59,8 +59,8 @@
     <h1>Assinaturas</h1>
 
     <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/save-assinatura" method="POST">
-        <label for="nome">Nome:</label><br>
-        <input type="text" id="nome" name="nome" required><br><br>
+    <label for="usuario_id">ID do Usuário:</label><br>
+    <input type="text" id="usuario_id" name="usuario_id" required><br><br>
 
         <label for="cidade">Cidade:</label><br>
         <input type="text" id="cidade" name="cidade" required><br><br>
