@@ -146,6 +146,14 @@
         alert('A senha deve ter pelo menos 6 caracteres.');
       }
     });
+
+    // Redireciona para login.html após cadastro
+    document.getElementById('cadastroForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      // Aqui você pode adicionar validação ou requisição AJAX se necessário
+      // Se for apenas front-end, redireciona direto:
+      window.location.href = 'login.html';
+    });
     function handleBackgroundClick(event) {
       const container = document.querySelector('.login-container');
       if (!container.contains(event.target)) {
