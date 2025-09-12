@@ -3,6 +3,11 @@ require_once '../models/Perfil.php';
 
 class PerfilController {
 
+    // Exibir formulário de criação de perfil
+    public function showForm() {
+        include __DIR__ . '/../views/perfil_form.php';
+    }
+
     // Salvar novo perfil
     public function savePerfil() {
         try {

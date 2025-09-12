@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Lista de Pagamentos</title>
     <style>
+
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
         table {
             border-collapse: collapse;
             width: 90%;

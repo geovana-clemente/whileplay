@@ -17,17 +17,17 @@ class PublicarController {
         $publicado = $_POST['publicado'] ?? '';
 
 
-        // Upload da imagem
+        // Upload do arquivo (imagem ou roteiro)
         $arquivo_url = '';
-        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+        if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = '../imagens/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0755, true);
             }
-            $fileTmpPath = $_FILES['imagem']['tmp_name'];
-            $fileName = basename($_FILES['imagem']['name']);
+            $fileTmpPath = $_FILES['arquivo']['tmp_name'];
+            $fileName = basename($_FILES['arquivo']['name']);
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-            $newFileName = uniqid('img_', true) . '.' . $ext;
+            $newFileName = uniqid('arq_', true) . '.' . $ext;
             $destPath = $uploadDir . $newFileName;
 
             if (move_uploaded_file($fileTmpPath, $destPath)) {
