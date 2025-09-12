@@ -1,3 +1,4 @@
+<?php include __DIR__ . '/auth_check.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -59,8 +60,8 @@
     <h1>Assinaturas</h1>
 
     <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/save-assinatura" method="POST">
-        <label for="nome">Nome:</label><br>
-        <input type="text" id="nome" name="nome" required><br><br>
+    <label for="nome">Nome:</label><br>
+    <input type="text" id="nome" name="nome" required><br><br>
 
         <label for="cidade">Cidade:</label><br>
         <input type="text" id="cidade" name="cidade" required><br><br>
