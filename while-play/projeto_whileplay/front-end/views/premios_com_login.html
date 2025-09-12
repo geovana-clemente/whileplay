@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prêmios Cinematográficos</title>
+  
+  <!-- Ícones do Material Design -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Fonte Adamina -->
   <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -348,37 +351,90 @@
       cursor: pointer;
       margin-left: 8px;
     }
-    .login-button {
+        .profile-icon {
       background-color: white;
       color: #007bff;
-      padding: 12px 26px;
-      border: none;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
-      transition: background 0.3s;
-      font-family: 'Adamina', serif;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-    .login-button:hover {
+
+    .profile-icon:hover {
       background-color: #e0e0e0;
+      transform: scale(1.1);
+    }
+    
+    .profile-icon .material-icons {
+      font-size: 24px;
+    }
+    
+    /* Estilo para o dropdown do perfil (opcional) */
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    
+    .dropdown-content a {
+      color: #333 !important;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      font-size: 16px;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      border-radius: 0;
+    }
+    
+    .profile-dropdown:hover .dropdown-content {
+      display: block;
     }
   </style>
 </head>
 <body>
-  <header>
+      <header>
     <div class="header-container">
       <div class="navbar">
         <div class="search-box">
           <input type="text" id="searchInput" placeholder="Pesquisar">
           <span onclick="clearSearch()">❌</span>
         </div>
-        <a href="sobrenos.html">Sobre Nós</a>
-        <a href="premios_semlogin.html">Prêmios</a>
-        <a href="homepage1.html">Homepage</a>
-        <a href="roteiros_com_login.html">Roteiro</a>
-        <a href="Personagens_sem_login.html">Personagens</a>
-        <button class="login-button" onclick="window.location.href='login.html'">Login</button>
+
+  <a href="sobrenos.html">Sobre Nós</a>
+  <a href="premios_com_login.html">Prêmios</a>
+  <a href="roteiros_com_login.html">Roteiro</a>
+  <a href="homepage2_com_login.html">Homepage</a>
+  <a href="Personagens_com_login.html">Personagens</a>
+  <a href="assinatura.html">Assinatura</a>
+        
+        <!-- Substituindo o botão de login por um ícone de perfil -->
+        <div class="profile-dropdown">
+          <div class="profile-icon">
+            <span class="material-icons">person</span>
+          </div>
+          <div class="dropdown-content">
+          </div>
+        </div>
       </div>
     </div>
   </header>
