@@ -9,7 +9,7 @@ class AssinaturaController {
     }
 
     public function saveAssinatura() {
-        $nome = $_POST['nome'] ?? '';
+        $usuario_id = $_POST['usuario_id'] ?? '';
         $cidade = $_POST['cidade'] ?? '';
         $endereco = $_POST['endereco'] ?? '';
         $cep = $_POST['cep'] ?? '';
@@ -17,7 +17,7 @@ class AssinaturaController {
         $data_assinatura = $_POST['data_assinatura'] ?? date('Y-m-d');
 
         $assinatura = new Assinatura();
-        $assinatura->save($nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
+        $assinatura->save($usuario_id, $cidade, $endereco, $cep, $cpf, $data_assinatura);
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
@@ -28,11 +28,11 @@ class AssinaturaController {
         require '../views/assinatura_list.php';
     }
 
-    public function deleteAssinaturaByTitle() {
-        $nome = $_POST['nome'] ?? null;
-        if ($nome) {
+    public function deleteAssinaturaByUserId() {
+        $usuario_id = $_POST['usuario_id'] ?? null;
+        if ($usuario_id) {
             $assinatura = new Assinatura();
-            $assinatura->deleteByTitle($nome);
+            $assinatura->deleteByUserId($usuario_id);
         }
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
@@ -45,7 +45,7 @@ class AssinaturaController {
 
     public function updateAssinatura() {
         $id = $_POST['id'];
-        $nome = $_POST['nome'] ?? '';
+        $usuario_id = $_POST['usuario_id'] ?? '';
         $cidade = $_POST['cidade'] ?? '';
         $endereco = $_POST['endereco'] ?? '';
         $cep = $_POST['cep'] ?? '';
@@ -53,7 +53,7 @@ class AssinaturaController {
         $data_assinatura = $_POST['data_assinatura'] ?? '';
 
         $assinatura = new Assinatura();
-        $assinatura->update($id, $nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
+        $assinatura->update($id, $usuario_id, $cidade, $endereco, $cep, $cpf, $data_assinatura);
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
