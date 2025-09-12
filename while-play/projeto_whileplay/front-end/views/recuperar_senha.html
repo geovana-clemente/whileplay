@@ -143,7 +143,19 @@
       if (params.get('senha') === 'alterada') {
         alert('Senha alterada com sucesso! Faça login.');
       }
+
+      // Adiciona redirecionamento após submit do formulário
+      const form = document.getElementById('recoveryForm');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          // Aguarda o envio do formulário e redireciona
+          setTimeout(function() {
+            window.location.href = 'login.html';
+          }, 300);
+        });
+      }
     });
+
     function handleBackgroundClick(event) {
       const container = document.querySelector('.recovery-container');
       if (!container.contains(event.target)) {
