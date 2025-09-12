@@ -45,12 +45,12 @@ class AssinaturaController {
 
     public function updateAssinatura() {
         $id = $_POST['id'];
-        $nome = $_POST['nome'];
-        $cidade = $_POST['cidade'];
-        $endereco = $_POST['endereco'];
-        $cep = $_POST['cep'];
-        $cpf = $_POST['cpf'];
-        $data_assinatura = $_POST['data_assinatura'];
+        $nome = $_POST['nome'] ?? '';
+        $cidade = $_POST['cidade'] ?? '';
+        $endereco = $_POST['endereco'] ?? '';
+        $cep = $_POST['cep'] ?? '';
+        $cpf = $_POST['cpf'] ?? '';
+        $data_assinatura = $_POST['data_assinatura'] ?? '';
 
         $assinatura = new Assinatura();
         $assinatura->update($id, $nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
