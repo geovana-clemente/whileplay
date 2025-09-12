@@ -1,5 +1,4 @@
-<?php include __DIR__ . '/auth_check.php'; ?>
-<!DOCTYPE html>
+z<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />

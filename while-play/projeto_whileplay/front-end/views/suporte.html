@@ -113,9 +113,9 @@ body {
 }
 
 .container p {
-
   text-align: center;
   margin: 0 auto;
+  margin-top: 40px; /* Adicionado para descer o texto */
   width: 100%;
   color: #ffffff;
   font-size: 18px;   
@@ -177,14 +177,13 @@ body {
       <div class="navbar">
         <div class="search-box">
           <input type="text" id="searchInput" placeholder="Pesquisar">
-          <span onclick="clearSearch()">❌</span>
+          <span onclick="clearSearch(ReadableStreamDefaultReader)">❌</span>
         </div>
-        <a href="#">Assinatura</a>
-        <a href="#">Sobre Nós</a>
-        <a href="#">Perfil</a>
-        <a href="#">Prêmios</a>
-        <a href="#">Suporte</a>
-        <a href="#">Roteiro</a>
+        <a href="assinatura.html">Assinatura</a>
+        <a href="sobrenos.html">Sobre Nós</a>
+        <a href="perfil.html">Perfil</a>
+        <a href="prêmios_com_login.html">Prêmios</a>
+        <a href="roteiros_com_login.html">Roteiro</a>
         <button class="login-button">Logout</button>
       </div>
     </div>

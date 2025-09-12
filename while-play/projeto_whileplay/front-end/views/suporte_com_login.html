@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suporte Premium</title>
-     <!-- Fonte Adamina -->
-    <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
-    <!-- Ícones do Material Design -->
+    <title>Suporte</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
 </head>
 <body>
   <style>
-    /* BÁSICO */
+    /* RESET BÁSICO */
 * {
   margin: 0;
   padding: 0;
@@ -26,40 +23,127 @@ body {
   color: #fff;
 }
 
-/* CABEÇALHO */
-header {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  /* CABEÇALHO */
+  header {
+    width: 100%;
+    font-family: 'Adamina', serif;
+  }
+  
+  .header-container {
+    background-image: url('../MEDIA/imagens/background.png');
+    background-size: cover;
+    background-position: center;
+    padding: 40px 0;
+    width: 100%;
+  }
+
+/* NAVEGAÇÃO */
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0 20px;
 }
 
-.header-container {
-  background-image: url('../MEDIA/imagens/background.png');
-  background-size: cover;
-  background-position: center;
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 12px 18px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.navbar a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+/* BARRA DE PESQUISA */
+.search-box {
+  background: white;
+  border-radius: 30px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 18px;
   font-family: 'Adamina', serif;
-  padding: 40px 0;
-  width: 100%;
 }
 
-/* NAVBAR */
+.search-box span {
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+/* BOTÃO LOGIN */
+.login-button {
+  background-color: white;
+  color: #007bff;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  font-family: 'Adamina', serif;
+  transition: background 0.3s;
+}
+
+.login-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Container */
+.container {
+    background:rgb(48, 48, 48);
+    border: 1px solid #ccc; 
+    border-radius: 12px;
+    font-family: Arial, sans-serif;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 25px;
+    color: #fff;
+    text-align: center;
+  }
+
+  .container p {
+    margin: 16px 0;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .container a {
+    color: #80d8ff;
+    text-decoration: none;
+  }
+
+  /* NAVBAR */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   padding: 0 40px;
-  font-size: 14px;
+  font-size: 18px;
   gap: 20px;
 }
 
 .navbar a {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: white;
+  color: #ffffff;
   text-decoration: none;
   font-weight: bold;
   font-size: 18px;
-  padding: 10px 14px;
+  padding: 10px 15px;
   transition: background 0.3s, color 0.3s;
 }
 
@@ -219,7 +303,7 @@ header {
   right: 0;
   background-color: white;
   min-width: 200px;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px #00000033;
   z-index: 1;
   border-radius: 8px;
   margin-top: 10px;
@@ -255,122 +339,83 @@ header {
   margin: 5px 0;
 }
 
-/* CONTAINER */
-.container {
-  background: rgb(48, 48, 48);
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  font-family: Arial, sans-serif;
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 25px;
-  color: #fff;
-  text-align: center;
-}
-
-.container p {
-  margin: 16px 0;
-  font-size: 17px;
-  line-height: 1.6;
-}
-
-.container a {
-  color: #80d8ff;
-  text-decoration: none;
-}
-
 /* RODAPÉ */
 .rodape {
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  padding: 40px;
-  background-color: #1e1e1e;
-  color: #ccc;
-  flex-wrap: wrap;
-  gap: 30px;
-  border: 5px solid rgb(32, 32, 32);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 40px;
+    background-color: #1e1e1e;
+    color: #ccc;
+    flex-wrap: wrap;
+    gap: 30px;
+    border: 5px solidrgb(32, 32, 32);
 }
 
 .rodape div {
-  flex: 1;
-  min-width: 200px;
+    flex: 1;
+    min-width: 200px;
 }
 
 .rodape h1 {
-  font-size: 20px;
-  margin-bottom: 10px;
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 
 .rodape a {
-  display: block;
-  color: #247fe6;
-  text-decoration: none;
-  margin: 5px 0;
+    display: block;
+    color: #247fe6;
+    text-decoration: none;
+    margin: 5px 0;
 }
 
 .rodape a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .rodape img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
 }
 
 .contato {
-  width: 100%;
-  text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
 }
 
   </style>
-<header>
- <div class="header-container">
-  <div class="navbar">
+    <header>
+        <div class="header-container">
+      <div class="navbar">
         <div class="search-box">
           <input type="text" id="searchInput" placeholder="Pesquisar">
           <span onclick="clearSearch(ReadableStreamDefaultReader)">❌</span>
         </div>
-
-        <a href="sobrenos_assinatura.html">Sobre Nós</a>
-        <a href="premios_assinatura.html">Prêmios</a>
-        <a href="roteiros_assinatura.html">Roteiro</a>
-        <a href="homepage2_assinatura.html">Homepage</a>
-        <a href="biblioteca.html">Biblioteca</a>
-        <a href="personagens_assinatura.html">Personagens</a>
-        <a href="publicar.html">Publicar</a>
-
-        <div class="user-profile-area">
+        <a href="sobrenos_com_login.html">Sobre Nós</a>
+        <a href="prêmios_com_login.html">Prêmios</a>
+        <a href="roteiros_com_login.html">Roteiro</a>
+        <a href="homepage2_com_login.html">Homepage</a>
+        <a href="personagens_com_login.html">Personagens</a>
+        <a href="assinatura.html">Assinatura</a>
+        <div class="profile-dropdown">
+          <div class="profile-icon" onclick="window.location.href='./perfil_com_login.html'">
+            <span class="material-icons">person</span>
           </div>
-          
-          <div class="profile-dropdown">
-  <div class="profile-icon">
-    <a href="perfil_assinatura.html">
-      <span class="material-icons">person</span>
-      <div class="verified-badge">
-        <span class="material-icons">verified</span>
-      </div>
-    </a>
-  </div>
-  <div class="dropdown-content">
-    <a href="#" class="premium-option">
-      <span class="material-icons">verified</span>
-      Membro Premium
-    </a>
-  </div>
-</div> 
+          <div class="dropdown-content">
+          </div>
+        </div>
       </div>
     </div>
-    
+
   <script>
     function clearSearch() {
-      document.getElementById('searchInput').value = '';
+      document.getElementById("searchInput").value = ""; 
     }
   </script>
-</header>
+    </header>
 
 
   <div class="logo">
@@ -399,7 +444,7 @@ Conte com a gente para tornar sua jornada ainda mais tranquila!
     <div class="suporte">
     <h1>Precisa de Suporte?</h1>
     <a href="https://www.google.com.br/">E-mail</a>
-    <a href="suporte_assinatura.html">Fale Conosco</a>
+    <a href="suporte_com_login.html">Fale Conosco</a>
   </div>
 
   <div class="siga-nos">
