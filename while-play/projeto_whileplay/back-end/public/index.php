@@ -192,4 +192,31 @@ switch ($request) {
         echo $request;
         echo "Página não encontrada.";
         break;
+
+    // Publicar
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/publicar':
+        $controller = new PublicarController();
+        $controller->showForm();
+        break;
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/save-publicar':
+        $controller = new PublicarController();
+        $controller->savePublicar();
+        break;
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicars':
+        $controller = new PublicarController();
+        $controller->listPublicars();
+        break;
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-publicar':
+        $controller = new PublicarController();
+        $controller->deletePublicarById($_POST['id'] ?? null);
+        break;
+    case (preg_match('/\/GitHub\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-publicar\/(\d+)/', $request, $matches) ? true : false):
+        $id = $matches[1];
+        $controller = new PublicarController();
+        $controller->showUpdateForm($id);
+        break;
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-publicar':
+        $controller = new PublicarController();
+        $controller->updatePublicar();
+        break;
 } 
