@@ -8,13 +8,9 @@ class Assinatura {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    // Substituí 'nome' por 'usuario_id'
-    public function save($usuario_id, $cidade, $endereco, $cep, $cpf, $data_assinatura) {
-        $stmt = $this->pdo->prepare("
-            INSERT INTO assinaturas (usuario_id, cidade, endereco, cep, cpf, data_assinatura) 
-            VALUES (?, ?, ?, ?, ?, ?)
-        ");
-        $stmt->execute([$usuario_id, $cidade, $endereco, $cep, $cpf, $data_assinatura]);
+    public function save($nome, $cidade, $endereco, $cep, $cpf, $data_assinatura) {
+        $stmt = $this->pdo->prepare("INSERT INTO assinaturas (nome, cidade, endereco, cep, cpf, data_assinatura) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$nome, $cidade, $endereco, $cep, $cpf, $data_assinatura]);
     }
 
     public function getAll() {
@@ -22,10 +18,9 @@ class Assinatura {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Substituí 'nome' por 'usuario_id'
-    public function deleteByUserId($usuario_id) {
-        $stmt = $this->pdo->prepare("DELETE FROM assinaturas WHERE usuario_id = ?");
-        $stmt->execute([$usuario_id]);
+    public function deleteByTitle($nome) {
+        $stmt = $this->pdo->prepare("DELETE FROM assinaturas WHERE nome = ?");
+        $stmt->execute([$nome]);
     }
 
     public function getById($id) {
@@ -34,13 +29,8 @@ class Assinatura {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Substituí 'nome' por 'usuario_id'
-    public function update($id, $usuario_id, $cidade, $endereco, $cep, $cpf, $data_assinatura) {
-        $stmt = $this->pdo->prepare("
-            UPDATE assinaturas 
-            SET usuario_id = ?, cidade = ?, endereco = ?, cep = ?, cpf = ?, data_assinatura = ? 
-            WHERE id = ?
-        ");
-        $stmt->execute([$usuario_id, $cidade, $endereco, $cep, $cpf, $data_assinatura, $id]);
+    public function update($id, $nome, $cidade, $endereco, $cep, $cpf, $data_assinatura) {
+        $stmt = $this->pdo->prepare("UPDATE assinaturas SET nome = ?, cidade = ?, endereco = ?, cep = ?, cpf = ?, data_assinatura = ? WHERE id = ?");
+        $stmt->execute([$nome, $cidade, $endereco, $cep, $cpf, $data_assinatura, $id]);
     }
 }
