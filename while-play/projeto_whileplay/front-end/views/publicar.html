@@ -647,6 +647,12 @@
         document.getElementById('aceite-termos').addEventListener('change', function() {
             document.getElementById('submit-btn').disabled = !this.checked;
         });
+        
+        // Adicionar evento de clique no botão de publicar para redirecionar para perfil_assinatura.html
+        document.getElementById('submit-btn').addEventListener('click', function(event) {
+            event.preventDefault(); // Previne o envio do formulário
+            window.location.href = 'perfil_assinatura.html'; // Redireciona para a página de perfil assinatura
+        });
     </script>
     <!-- INÍCIO DO RODAPÉ ADICIONADO -->
     <style>

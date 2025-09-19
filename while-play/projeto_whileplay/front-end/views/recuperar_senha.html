@@ -148,10 +148,9 @@
       const form = document.getElementById('recoveryForm');
       if (form) {
         form.addEventListener('submit', function(e) {
-          // Aguarda o envio do formulário e redireciona
-          setTimeout(function() {
-            window.location.href = 'login.html';
-          }, 300);
+          e.preventDefault(); // Previne o envio do formulário
+          // Redireciona imediatamente para login.html
+          window.location.href = 'login.html';
         });
       }
     });
