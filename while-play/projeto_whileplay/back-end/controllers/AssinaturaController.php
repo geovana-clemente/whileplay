@@ -57,27 +57,5 @@ class AssinaturaController {
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
-
-    public function saveRoteiro() {
-        $titulo = $_POST['titulo'] ?? '';
-        $categoria = $_POST['categoria'] ?? '';
-        $caminho_imagem = $_POST['caminho_imagem'] ?? '';
-        $visualizacoes = $_POST['visualizacoes'] ?? 0;
-        $assinatura_id = $_POST['assinatura_id'] ?? null;
-
-        // Verifique se o assinatura_id existe
-        $pdo = new PDO(/* suas configs de conexão */);
-        $stmt = $pdo->prepare("SELECT id FROM assinaturas WHERE id = ?");
-        $stmt->execute([$assinatura_id]);
-        if ($stmt->rowCount() == 0) {
-            // Mostre um erro ou redirecione com mensagem
-            die("Assinatura não encontrada! Informe um ID válido.");
-        }
-
-        // Agora pode salvar normalmente
-        $roteiro = new Roteiro();
-        $roteiro->save($titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id);
-
-        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
-    }
 }
+
