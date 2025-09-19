@@ -11,10 +11,18 @@ class PublicarController {
     public function savePublicar() {
         $usuario_id = $_POST['usuario_id'] ?? '';
         $titulo = $_POST['titulo'] ?? '';
-        $sinopse = $_POST['sinopse'] ?? 0;
-        $tipo = $_POST['tipo'] ?? null;
-        $data_criacao = $_POST['data_criacao'] ?? ''; 
+        $sinopse = $_POST['sinopse'] ?? '';
+        $tipo = $_POST['tipo'] ?? '';
+        $data_criacao = $_POST['data_criacao'] ?? '';
         $publicado = $_POST['publicado'] ?? '';
+
+        // Validação do usuario_id
+        $pdo = new PDO('mysql:host=localhost;dbname=while_play', 'root', '');
+        $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE id = ?");
+        $stmt->execute([$usuario_id]);
+        if ($stmt->rowCount() == 0) {
+            die("Erro: Usuário não encontrado. Informe um ID de usuário válido.");
+        }
 
 
         // Upload do arquivo (imagem ou roteiro)
