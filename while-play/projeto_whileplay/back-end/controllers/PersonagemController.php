@@ -23,7 +23,8 @@ class PersonagemController {
             }
             $fileTmpPath = $_FILES['imagem']['tmp_name'];
             $fileName = basename($_FILES['imagem']['name']);
-            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+            $stmt = $pdo->prepare("SELECT * FROM personagens WHERE personagem_id = :id");
+            // $ext = pathinfo($fileName, PATHINFO_EXTENSION);
             $newFileName = uniqid('img_', true) . '.' . $ext;
             $destPath = $uploadDir . $newFileName;
 

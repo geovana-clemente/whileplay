@@ -66,44 +66,100 @@ class PublicarController {
         require '../views/update_publicar_form.php';
     }
 
+
     public function updatePublicar() {
-        $usuario_id = $_POST['usuario_id'] ?? '';
-        $titulo = $_POST['titulo'] ?? '';
-        $sinopse = $_POST['sinopse'] ?? 0;
-        $tipo = $_POST['tipo'] ?? null;
-        $data_criacao = $_POST['data_criacao'] ?? '';
-        $publicado = $_POST['publicado'] ?? '';
+    $id = $_POST['id'] ?? null;
 
-        $publicar = new Publicar();
-        $perfilInfo = $publicar->getById($id);
+    if ($id === null) {
+        die('ID não fornecido para atualização.');
+    }
 
-        $arquivo_url = $perfilInfo['arquivo_url']; // manter imagem antiga por padrão
+    $usuario_id = $_POST['usuario_id'] ?? '';
+    $titulo = $_POST['titulo'] ?? '';
+    $sinopse = $_POST['sinopse'] ?? '';
+    $tipo = $_POST['tipo'] ?? '';
+    $data_criacao = $_POST['data_criacao'] ?? '';
+    $publicado = $_POST['publicado'] ?? '';
 
-        // Se enviou nova imagem, fazer upload e atualizar caminho
-        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = '../imagens/';
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0755, true);
-            }
-            $fileTmpPath = $_FILES['imagem']['tmp_name'];
-            $fileName = basename($_FILES['imagem']['name']);
-            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-            $newFileName = uniqid('img_', true) . '.' . $ext;
-            $destPath = $uploadDir . $newFileName;
+    $publicar = new Publicar();
+    $perfilInfo = $publicar->getById($id);
 
-            if (move_uploaded_file($fileTmpPath, $destPath)) {
-                $arquivo_url = 'imagens/' . $newFileName;
+    if (!$perfilInfo) {
+        die("Publicação com ID $id não encontrada.");
+    }
 
-                // Opcional: deletar imagem antiga do servidor para evitar lixo
-                if (!empty($perfilInfo['arquivo_url']) && file_exists('../' . $perfilInfo['arquivo_url'])) {
-                    unlink('../' . $perfilInfo['arquivo_url']);
-                }
-            }
+    // Manter imagem antiga por padrão
+    $arquivo_url = $perfilInfo['arquivo_url'];
+
+    // Se enviou nova imagem
+    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = '../imagens/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
         }
 
-        $publicar->update($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado);
+        $fileTmpPath = $_FILES['imagem']['tmp_name'];
+        $fileName = basename($_FILES['imagem']['name']);
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+        $newFileName = uniqid('img_', true) . '.' . $ext;
+        $destPath = $uploadDir . $newFileName;
 
-        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicados');
-        exit;
+        if (move_uploaded_file($fileTmpPath, $destPath)) {
+            $arquivo_url = 'imagens/' . $newFileName;
+
+            // Deletar imagem antiga (opcional)
+            $oldPath = '../' . $perfilInfo['arquivo_url'];
+            if (!empty($perfilInfo['arquivo_url']) && file_exists($oldPath)) {
+                unlink($oldPath);
+            }
+        }
     }
+
+    // Atualiza os dados no banco
+    $publicar->update($id, $usuario_id, $titulo, $sinopse, $tipo, $data_criacao, $arquivo_url, $publicado);
+
+    // Redirecionar após salvar
+    header('Location: /');
+    exit;
+    // public function updatePublicar() {
+    //     $usuario_id = $_POST['usuario_id'] ?? '';
+    //     $titulo = $_POST['titulo'] ?? '';
+    //     $sinopse = $_POST['sinopse'] ?? 0;
+    //     $tipo = $_POST['tipo'] ?? null;
+    //     $data_criacao = $_POST['data_criacao'] ?? '';
+    //     $publicado = $_POST['publicado'] ?? '';
+
+    //     $publicar = new Publicar();
+    //     $perfilInfo = $publicar->getById($id);
+
+    //     $arquivo_url = $perfilInfo['arquivo_url']; // manter imagem antiga por padrão
+
+    //     // Se enviou nova imagem, fazer upload e atualizar caminho
+    //     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+    //         $uploadDir = '../imagens/';
+    //         if (!is_dir($uploadDir)) {
+    //             mkdir($uploadDir, 0755, true);
+    //         }
+    //         $fileTmpPath = $_FILES['imagem']['tmp_name'];
+    //         $fileName = basename($_FILES['imagem']['name']);
+    //         $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+    //         $newFileName = uniqid('img_', true) . '.' . $ext;
+    //         $destPath = $uploadDir . $newFileName;
+
+    //         if (move_uploaded_file($fileTmpPath, $destPath)) {
+    //             $arquivo_url = 'imagens/' . $newFileName;
+
+    //             // Opcional: deletar imagem antiga do servidor para evitar lixo
+    //             if (!empty($perfilInfo['arquivo_url']) && file_exists('../' . $perfilInfo['arquivo_url'])) {
+    //                 unlink('../' . $perfilInfo['arquivo_url']);
+    //             }
+    //         }
+    //     }
+
+    //     $publicar->update($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado);
+
+    //     header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicados');
+    //     exit;
+    // }
+}
 }

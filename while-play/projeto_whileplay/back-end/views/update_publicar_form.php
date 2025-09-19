@@ -64,9 +64,11 @@
 </head>
 <body>
 
+
 <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-publicar" method="POST" enctype="multipart/form-data">
     <h2>Atualizar Publicação</h2>
 
+    
     <!-- Campo oculto para identificar a publicação -->
     <input type="hidden" name="id" value="<?= htmlspecialchars($publicarInfo['id']) ?>">
 
