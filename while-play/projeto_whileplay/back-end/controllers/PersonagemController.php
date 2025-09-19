@@ -3,10 +3,11 @@
 require_once '../models/Personagem.php';
 
 class PersonagemController {
-
     public function showForm() {
         require '../views/personagens_form.php';
     }
+    
+
 
     public function savePersonagem() {
         $id_sobre = $_POST['id_sobre'] ?? '';

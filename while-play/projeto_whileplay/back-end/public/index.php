@@ -13,6 +13,8 @@ require_once '../controllers/PerfilController.php';
 require_once '../controllers/PublicarController.php';
 require_once '../controllers/PersonagemController.php';
 require_once '../controllers/SuporteController.php';
+require_once '../config/database.php'; // onde você define o $pdo
+
 
 
 // Capturar URL da requisição
