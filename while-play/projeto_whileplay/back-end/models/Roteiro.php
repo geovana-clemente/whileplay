@@ -41,11 +41,3 @@ class Roteiro {
         $stmt->execute([$id]);
     }
 }
-
-
-
-
-
-
-
-
