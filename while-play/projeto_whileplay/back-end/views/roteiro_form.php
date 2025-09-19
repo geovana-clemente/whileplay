@@ -49,6 +49,8 @@
         a:hover {
             text-decoration: underline;
         }
+
+        
     </style>
 </head>
 <body>
@@ -73,6 +75,18 @@
 
         <input type="submit" value="Salvar Roteiro">
     </form>
+
+    <!-- Exemplo de campo no formulário -->
+<label for="assinatura_id">Assinatura:</label>
+<select name="assinatura_id" id="assinatura_id" required>
+    <?php
+    $pdo = new PDO('mysql:host=localhost;dbname=while_play', 'root', '');
+    $assinaturas = $pdo->query("SELECT id, usuario FROM assinaturas")->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($assinaturas as $assinatura) {
+        echo "<option value=\"{$assinatura['id']}\">{$assinatura['id']} - {$assinatura['usuario']}</option>";
+    }
+    ?>
+</select>
 
     <br>
     <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-roteiros">Ver todos os roteiros</a>

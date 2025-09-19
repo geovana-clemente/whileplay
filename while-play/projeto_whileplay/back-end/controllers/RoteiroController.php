@@ -11,26 +11,16 @@ class RoteiroController {
     public function saveRoteiro() {
         $titulo = $_POST['titulo'] ?? '';
         $categoria = $_POST['categoria'] ?? '';
+        $caminho_imagem = $_POST['caminho_imagem'] ?? '';
         $visualizacoes = $_POST['visualizacoes'] ?? 0;
         $assinatura_id = $_POST['assinatura_id'] ?? null;
 
-        // Upload da imagem
-        $caminho_imagem = '';
-        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = '../imagens/';
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0755, true);
-            }
-            $fileTmpPath = $_FILES['imagem']['tmp_name'];
-            $fileName = basename($_FILES['imagem']['name']);
-            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-            $newFileName = uniqid('img_', true) . '.' . $ext;
-            $destPath = $uploadDir . $newFileName;
-
-            if (move_uploaded_file($fileTmpPath, $destPath)) {
-                // Caminho relativo para salvar no banco, adaptado conforme estrutura do projeto
-                $caminho_imagem = 'imagens/' . $newFileName;
-            }
+        // Validação: só salva se o assinatura_id existir na tabela assinaturas
+        $pdo = new PDO('mysql:host=localhost;dbname=while_play', 'root', '');
+        $stmt = $pdo->prepare("SELECT id FROM assinaturas WHERE id = ?");
+        $stmt->execute([$assinatura_id]);
+        if ($stmt->rowCount() == 0) {
+            die("Erro: Assinatura não encontrada. Informe um ID de assinatura válido.");
         }
 
         $roteiro = new Roteiro();
@@ -103,5 +93,7 @@ class RoteiroController {
         exit;
     }
 }
+?>
+
 
 
