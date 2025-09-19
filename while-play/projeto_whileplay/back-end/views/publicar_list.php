@@ -74,9 +74,6 @@
                     $ext = strtolower(pathinfo($item['arquivo_url'], PATHINFO_EXTENSION));
                 ?>
                 <?php if (!empty($item['arquivo_url']) && file_exists($arquivoPath)): ?>
-<<<<<<< HEAD
-                    <img src="/GitHub/whileplay/while-play/projeto_whileplay/back-end/<?= htmlspecialchars($item['arquivo_url']) ?>" alt="Imagem" />
-=======
                     <?php if (in_array($ext, ['png', 'jpg', 'jpeg', 'gif'])): ?>
                         <img src="/meu_projeto/<?= htmlspecialchars($item['arquivo_url']) ?>" alt="Imagem" />
                     <?php elseif (in_array($ext, ['doc', 'docx'])): ?>
@@ -84,7 +81,6 @@
                     <?php else: ?>
                         <a href="/meu_projeto/<?= htmlspecialchars($item['arquivo_url']) ?>" target="_blank">Ver Arquivo</a>
                     <?php endif; ?>
->>>>>>> 9695a197319bc3fcf7ccf52e0f98dbd6385d44b1
                 <?php else: ?>
                     Sem arquivo
                 <?php endif; ?>
@@ -106,7 +102,7 @@
     </tbody>
 </table>
 
-<a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/publicar">Nova Publicação</a>
+<a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/views/publicar_form.php">Nova Publicação</a>
 
 </body>
 </html>
