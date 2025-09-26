@@ -681,7 +681,12 @@ $(document).ready(function(){
     });
     // Botão baixar: não faz nada
     $('#baixar-roteiro-btn').off('click').on('click', function(){
-      // Nenhuma ação
+      const link = document.createElement('a');
+      link.href = '../public/MEDIA/Pdf-roteiros-e-personagens/Imagem_personagem-WhilePlay.pdf';
+      link.download = 'Imagem_personagem-WhilePlay.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     });
     // Botão comprar: redireciona para pagamento.html
     $('#comprar-btn').off('click').on('click', function(){
