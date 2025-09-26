@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header Largo e no Topo</title>
+
+  <!-- Fonte Adamina -->
+  <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
+  
+  <!-- Ícones do Material Design -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Adamina', serif;
+    }
+
+    header {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-container {
+  background-image: url('../public/MEDIA/imagens/background.png');
+      background-size: cover;
+      background-position: center;
+      padding: 40px 0;
+      width: 100%;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .navbar a {
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 10px 15px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    .search-box {
+      background: white;
+      border-radius: 30px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      padding: 8px;
+      font-size: 16px;
+      font-family: 'Adamina', serif;
+    }
+
+    .search-box span {
+      font-size: 18px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+
+    .profile-icon {
+      background-color: white;
+      color: #007bff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .profile-icon:hover {
+      background-color: #e0e0e0;
+      transform: scale(1.1);
+    }
+    
+    .profile-icon .material-icons {
+      font-size: 24px;
+    }
+    
+    /* Estilo para o dropdown do perfil (opcional) */
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    
+    .dropdown-content a {
+      color: #333 !important;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      font-size: 16px;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      border-radius: 0;
+    }
+    
+    .profile-dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+
+    /* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #111; /* azul claro */
+  color: white;
+}
+
+/* Container central */
+.container {
+  background-color: #111;
+  margin: 30px auto;
+  padding: 100px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 1100px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+/* Títulos cursivos */
+h1, h2 {
+  font-family: "Brush Script MT", cursive;
+  text-align: center;
+  margin: 25px 0;
+  font-size: 32px;
+}
+
+/* Grid de cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+/* Cards */
+.card {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 10px;
+  border-style: solid
+border-width: 2px
+  border-color: #C9DBFF;
+  text-align: center;
+  color: black;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.card a {
+  text-decoration: none;
+  color: #3b6ff5;
+  font-weight: bold;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="navbar">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Pesquisar">
+          <span onclick="clearSearch()">❌</span>
+        </div>
+
+  <a href="sobrenos.html">Sobre Nós</a>
+  <a href="premios_com_login.html">Prêmios</a>
+  <a href="roteiros_com_login.html">Roteiro</a>
+  <a href="homepage2_com_login.html">Homepage</a>
+  <a href="Personagens_com_login.html">Personagens</a>
+  <a href="assinatura.html">Assinatura</a>
+        
+        <!-- Substituindo o botão de login por um ícone de perfil -->
+        <div class="profile-dropdown">
+          <div class="profile-icon">
+            <span class="material-icons">person</span>
+          </div>
+          <div class="dropdown-content">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <script>
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+    }
+  </script> 
+  <!-- Conteúdo principal -->
+  <main class="container">
+    <h1>Seu acervo de roteiros</h1>
+    <div class="grid">
+      <div class="card">
+        <img src="../public/MEDIA/imagens/princesa-de-desenho-animado-bonita-vestindo-um-vestido-bonito.jpg" alt="Capa roteiro">
+        <h3>Título: Romance</h3>
+        <a href="#">Ler o roteiro →</a>
+      </div>
+      <div class="card">
+        <img src="capa2.png" alt="Capa roteiro">
+        <h3>Título: Romance</h3>
+        <a href="#">Ler o roteiro →</a>
+      </div>
+      <div class="card">
+        <img src="capa3.png" alt="Capa roteiro">
+        <h3>Título: Romance</h3>
+        <a href="#">Ler o roteiro →</a>
+      </div>
+      <div class="card">
+        <img src="capa4.png" alt="Capa roteiro">
+        <h3>Título: Romance</h3>
+        <a href="#">Ler o roteiro →</a>
+      </div>
+    </div>
+
+    <h2>Lidos recentemente</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="capa1.png" alt="Capa roteiro">
+        <h3>Título: Romance</h3>
+        <a href="#">Ler o roteiro →</a>
+      </div>
+      <div class="card">
+        <img src="capa2.png" alt="Capa roteiro">
+        <h3>Título: Romance</h3>
+        <a href="#">Ler o roteiro →</a>
+      </div>
+      <div class="card">
+        <img src="capa3.png" alt="Capa roteiro">
+        <h3>Título: Romance</h3>
+        <a href="#">Ler o roteiro →</a>
+      </div>
+      <div class="card">
+        <img src="capa4.png" alt="Capa roteiro">
+        <h3>Título: Romance</h3>
+        <a href="#">Ler o roteiro →</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
+
+
+</body>
+</html>

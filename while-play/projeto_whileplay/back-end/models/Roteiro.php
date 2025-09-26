@@ -9,11 +9,28 @@ class Roteiro {
     }
 
     public function save($titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id) {
+        // ✅ 1. Valida se o assinatura_id existe na tabela assinaturas
+        if ($assinatura_id !== null) {
+            $check = $this->pdo->prepare("SELECT id FROM assinaturas WHERE id = ?");
+            $check->execute([$assinatura_id]);
+
+            if ($check->rowCount() === 0) {
+                throw new Exception("Erro: assinatura_id {$assinatura_id} não existe na tabela assinaturas.");
+            }
+        }
+
+        // ✅ 2. Faz o INSERT com segurança
         $stmt = $this->pdo->prepare("
             INSERT INTO roteiros (titulo, categoria, caminho_imagem, visualizacoes, assinatura_id) 
             VALUES (?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id]);
+        $stmt->execute([
+            $titulo,
+            $categoria,
+            $caminho_imagem,
+            $visualizacoes,
+            $assinatura_id // pode ser NULL se não tiver assinatura
+        ]);
     }
 
     public function getAll() {
@@ -28,6 +45,16 @@ class Roteiro {
     }
 
     public function update($id, $titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id) {
+        
+        if ($assinatura_id !== null) {
+            $check = $this->pdo->prepare("SELECT id FROM assinaturas WHERE id = ?");
+            $check->execute([$assinatura_id]);
+
+            if ($check->rowCount() === 0) {
+                throw new Exception("Erro: assinatura_id {$assinatura_id} não existe na tabela assinaturas.");
+            }
+        }
+
         $stmt = $this->pdo->prepare("
             UPDATE roteiros 
             SET titulo = ?, categoria = ?, caminho_imagem = ?, visualizacoes = ?, assinatura_id = ?
