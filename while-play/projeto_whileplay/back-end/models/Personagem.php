@@ -3,15 +3,14 @@
 class Personagem {
     private $pdo;
 
-    public function __construct() {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=while_play', 'root', '');
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
     public function save($id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem) {
         $stmt = $this->pdo->prepare("
-            INSERT INTO personagens (id_sobre, mais_bem_avaliados$, lançados_recentemente, caminho_imagem)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO personagens (id_sobre, mais_bem_avaliados, lançados_recentemente, caminho_imagem)
+            VALUES (?, ?, ?, ?)
         ");
         $stmt->execute([$id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem]);
     }
@@ -27,14 +26,14 @@ class Personagem {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update( $id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem) {
-        $stmt = $this->pdo->prepare("
-            UPDATE personagens
-            SET id_sobre = ?, mais_bem_avaliados = ?, lançados_recentemente = ?, caminho_imagem = ?
-            WHERE id = ?
-        ");
-        $stmt->execute([$id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem, $id]);
-    }
+    public function update($id, $id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem) {
+    $stmt = $this->pdo->prepare("
+        UPDATE personagens
+        SET id_sobre = ?, mais_bem_avaliados = ?, lançados_recentemente = ?, caminho_imagem = ?
+        WHERE id = ?
+    ");
+    $stmt->execute([$id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem, $id]);
+}
 
     public function deleteById($id) {
         $stmt = $this->pdo->prepare("DELETE FROM personagens WHERE id = ?");

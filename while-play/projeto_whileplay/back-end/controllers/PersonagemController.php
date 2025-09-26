@@ -1,13 +1,22 @@
 <?php
 
 require_once '../models/Personagem.php';
+require_once '../config/database.php';
+
+$database = new Database();
+$pdo = $database->getConnection();
 
 class PersonagemController {
+    private $pdo;
+
+    
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
+
     public function showForm() {
         require '../views/personagens_form.php';
     }
-    
-
 
     public function savePersonagem() {
         $id_sobre = $_POST['id_sobre'] ?? '';
@@ -24,8 +33,7 @@ class PersonagemController {
             }
             $fileTmpPath = $_FILES['imagem']['tmp_name'];
             $fileName = basename($_FILES['imagem']['name']);
-            $stmt = $pdo->prepare("SELECT * FROM personagens WHERE personagem_id = :id");
-            // $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
             $newFileName = uniqid('img_', true) . '.' . $ext;
             $destPath = $uploadDir . $newFileName;
 
@@ -35,7 +43,7 @@ class PersonagemController {
             }
         }
 
-        $personagem = new Personagem();
+        $personagem = new Personagem($this->pdo);
         $personagem->save($id_sobre, $mais_bem_avaliados, $lançados_recentemente, $caminho_imagem);
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-personagens');

@@ -3,9 +3,8 @@
 class Pagamento {
     private $pdo;
 
-    public function __construct() {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=while_play', 'root', '');
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
     // Salvar um novo pagamento (sem passar id, pois é auto_increment)
