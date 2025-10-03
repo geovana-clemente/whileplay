@@ -3,13 +3,14 @@
 class Assinatura {
     private $pdo;
 
+
     public function __construct() {
         $this->pdo = new PDO('mysql:host=localhost;dbname=while_play', 'root', '');
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function save($usuario, $cidade, $endereco, $cep, $cpf, $data_assinatura) {
-        $stmt = $this->pdo->prepare("INSERT INTO assinaturas (usuario, cidade, endereco, cep, cpf, data_assinatura) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $this->pdo->prepare("INSERT INTO assinaturas (usuario_id, cidade, endereco, cep, cpf, data_assinatura) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->execute([$usuario, $cidade, $endereco, $cep, $cpf, $data_assinatura]);
     }
 
