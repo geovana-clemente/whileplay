@@ -12,6 +12,7 @@ class AssinaturaController
 
     public function saveAssinatura()
     {
+        $usuario_id = $_POST['usuario_id'] ?? null;
         $nome = $_POST['nome'] ?? '';
         $cidade = $_POST['cidade'] ?? '';
         $endereco = $_POST['endereco'] ?? '';
@@ -20,7 +21,7 @@ class AssinaturaController
         $data_assinatura = $_POST['data_assinatura'] ?? date('Y-m-d');
 
         $assinatura = new Assinatura();
-        $assinatura->save($nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
+        $assinatura->save($usuario_id, $nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
@@ -52,6 +53,7 @@ class AssinaturaController
     public function updateAssinatura()
     {
         $id = $_POST['id'];
+        $usuario_id = $_POST['usuario_id'] ?? null;
         $nome = $_POST['nome'] ?? '';
         $cidade = $_POST['cidade'] ?? '';
         $endereco = $_POST['endereco'] ?? '';
@@ -60,7 +62,7 @@ class AssinaturaController
         $data_assinatura = $_POST['data_assinatura'] ?? '';
 
         $assinatura = new Assinatura();
-        $assinatura->update($id, $nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
+        $assinatura->update($id, $usuario_id, $nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
