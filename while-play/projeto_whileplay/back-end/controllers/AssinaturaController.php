@@ -9,7 +9,7 @@ class AssinaturaController {
     }
 
     public function saveAssinatura() {
-        $nome = $_POST['nome'] ?? '';
+        $usuario = $_POST['usuario'] ?? '';
         $cidade = $_POST['cidade'] ?? '';
         $endereco = $_POST['endereco'] ?? '';
         $cep = $_POST['cep'] ?? '';
@@ -17,7 +17,7 @@ class AssinaturaController {
         $data_assinatura = $_POST['data_assinatura'] ?? date('Y-m-d');
 
         $assinatura = new Assinatura();
-        $assinatura->save($nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
+        $assinatura->save($usuario, $cidade, $endereco, $cep, $cpf, $data_assinatura);
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
@@ -29,10 +29,10 @@ class AssinaturaController {
     }
 
     public function deleteAssinaturaByTitle() {
-        $nome = $_POST['nome'] ?? null;
-        if ($nome) {
+        $usuario = $_POST['usuario'] ?? null;
+        if ($usuario) {
             $assinatura = new Assinatura();
-            $assinatura->deleteByTitle($nome);
+            $assinatura->deleteByTitle($usuario);
         }
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
@@ -45,7 +45,7 @@ class AssinaturaController {
 
     public function updateAssinatura() {
         $id = $_POST['id'];
-        $nome = $_POST['nome'] ?? '';
+        $usuario = $_POST['usuario'] ?? '';
         $cidade = $_POST['cidade'] ?? '';
         $endereco = $_POST['endereco'] ?? '';
         $cep = $_POST['cep'] ?? '';
@@ -53,7 +53,7 @@ class AssinaturaController {
         $data_assinatura = $_POST['data_assinatura'] ?? '';
 
         $assinatura = new Assinatura();
-        $assinatura->update($id, $nome, $cidade, $endereco, $cep, $cpf, $data_assinatura);
+        $assinatura->update($id, $usuario, $cidade, $endereco, $cep, $cpf, $data_assinatura);
 
         require_once '../models/Publicacao.php';
 
@@ -71,6 +71,3 @@ exit;
     }
 }
 ?>
-<!-- Exemplo de campo correto -->
-<input type="text" name="usuario" ...>
-

@@ -56,7 +56,7 @@
     <table border="1">
         <thead>
             <tr>
-                <th>Nome</th>
+                <th>Usuario</th>
                 <th>Cidade</th>
                 <th>Endereço</th>
                 <th>CEP</th>
@@ -68,7 +68,7 @@
         <tbody>
         <?php foreach ($assinaturas as $assinatura): ?>
             <tr>
-                <td><?= htmlspecialchars($assinatura['nome']) ?></td>
+                <td><?= htmlspecialchars($assinatura['usuario']) ?></td>
                 <td><?= htmlspecialchars($assinatura['cidade']) ?></td>
                 <td><?= htmlspecialchars($assinatura['endereco']) ?></td>
                 <td><?= htmlspecialchars($assinatura['cep']) ?></td>
@@ -78,7 +78,7 @@
                     <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-assinatura/<?= $assinatura['id'] ?>">Atualizar</a>
 
                     <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-assinatura" method="POST" style="display:inline;">
-                        <input type="hidden" name="nome" value="<?= $assinatura['nome'] ?>">
+                        <input type="hidden" name="usuario" value="<?= $assinatura['usuario'] ?>">
                         <button type="submit" onclick="return confirm('Tem certeza que deseja excluir esta assinatura?')">Excluir</button>
                     </form>
                 </td>

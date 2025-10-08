@@ -57,8 +57,8 @@
 <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-assinatura" method="POST">
     <input type="hidden" name="id" value="<?= htmlspecialchars($assinaturaInfo['id']) ?>">
 
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($assinaturaInfo['nome']) ?>" required><br><br>
+    <label for="usuario">Usuario:</label>
+    <input type="text" id="usuario" name="usuario" value="<?= htmlspecialchars($assinaturaInfo['usuario']) ?>" required><br><br>
 
     <label for="cidade">Cidade:</label>
     <input type="text" id="cidade" name="cidade" value="<?= htmlspecialchars($assinaturaInfo['cidade']) ?>" required><br><br>
