@@ -112,7 +112,7 @@
   <div class="login-container">
     <h1>Login</h1>
     <p>Bem vindo de volta criativo!</p>
-    <form id="loginForm">
+    <form id="loginForm" action="../../back-end/login" method="POST">
       <input type="email" name="email" placeholder="Email" required>
       <input type="password" name="password" placeholder="Password" required>
       <button type="submit">Logar</button>
@@ -123,20 +123,22 @@
   </div>
 
   <script>
-    // Exibe mensagem de erro se houver parâmetro na URL
+    // Exibe mensagem de erro/sucesso se houver parâmetro na URL
     document.addEventListener('DOMContentLoaded', function() {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('erro')) {
+      
+      if (params.get('erro') === 'campos') {
+        alert('Preencha todos os campos!');
+      } else if (params.get('erro') === 'invalido') {
         alert('Email ou senha inválidos!');
       }
-      if (params.get('cadastro') === 'ok') {
+      
+      if (params.get('success') === 'cadastro') {
         alert('Cadastro realizado com sucesso! Faça login.');
       }
-      // Adiciona redirecionamento ao login
-      document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        window.location.href = 'homepage2_com_login.html';
-      });
+      
+      // O formulário agora submete para o back-end
+      // Não precisamos mais interceptar o submit
     });
     function handleBackgroundClick(event) {
       const container = document.querySelector('.login-container');

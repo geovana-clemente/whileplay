@@ -18,16 +18,12 @@ require_once '../controllers/PerfilController.php';
 require_once '../controllers/PublicarController.php';
 require_once '../controllers/PersonagemController.php';
 require_once '../controllers/SuporteController.php';
-require_once '../controllers/UserControllerV2.php'; // Novo controller híbrido
+require_once '../controllers/UserController.php';
 require_once '../config/database.php';
 
-// Criar conexão com o banco de dados (opcional, o UserControllerV2 tem fallback)
-try {
-    $database = new Database();
-    $pdo = $database->getConnection();
-} catch (Exception $e) {
-    $pdo = null; // MySQL não disponível, usar fallback
-}
+// Criar conexão com o banco de dados
+$database = new Database();
+$pdo = $database->getConnection();
 
 // Capturar URL da requisição
 $request = $_SERVER['REQUEST_URI'];
@@ -71,12 +67,6 @@ switch ($request) {
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/check-auth':
         $controller = new UserController();
         $controller->checkAuth();
-        break;
-        
-    case '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/system-status':
-    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/system-status':
-        $controller = new UserController();
-        $controller->getSystemStatus();
         break;
     
     // ==================== ROTAS DE ASSINATURA ====================
@@ -225,19 +215,16 @@ switch ($request) {
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-perfils':
         // Implementação temporária para listar perfis
-        header('Content-Type: application/json');
-        echo json_encode(['message' => 'Funcionalidade de listar perfis será implementada em breve', 'status' => 'pending']);
+        echo json_encode(['message' => 'Funcionalidade de listar perfis será implementada em breve']);
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-perfil':
         // Implementação temporária para deletar perfil
-        header('Content-Type: application/json');
-        echo json_encode(['message' => 'Funcionalidade de deletar perfil será implementada em breve', 'status' => 'pending']);
+        echo json_encode(['message' => 'Funcionalidade de deletar perfil será implementada em breve']);
         break;
     case (preg_match('/\/GitHub\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-perfil\/(\d+)/', $request, $matches) ? true : false):
         $id = $matches[1];
         // Implementação temporária para formulário de atualização
-        header('Content-Type: application/json');
-        echo json_encode(['message' => "Formulário de atualização para perfil ID $id será implementado em breve", 'status' => 'pending', 'id' => $id]);
+        echo json_encode(['message' => "Formulário de atualização para perfil ID $id será implementado em breve"]);
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-perfil':
         $controller = new PerfilController($pdo);
@@ -255,8 +242,7 @@ switch ($request) {
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicars':
         // Implementação temporária para listar publicações
-        header('Content-Type: application/json');
-        echo json_encode(['message' => 'Funcionalidade de listar publicações será implementada em breve', 'status' => 'pending']);
+        echo json_encode(['message' => 'Funcionalidade de listar publicações será implementada em breve']);
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-publicar':
         $controller = new PublicarController($pdo);

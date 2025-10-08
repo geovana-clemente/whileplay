@@ -1,4 +1,12 @@
 RewriteEngine On
+
+# Rotas de autenticação
+RewriteRule ^register/?$ public/auth_router.php [L]
+RewriteRule ^login/?$ public/auth_router.php [L]
+RewriteRule ^logout/?$ public/auth_router.php [L]
+RewriteRule ^check-auth/?$ public/auth_router.php [L]
+
+# Outras rotas
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ public/index.php [L]

@@ -18,16 +18,12 @@ require_once '../controllers/PerfilController.php';
 require_once '../controllers/PublicarController.php';
 require_once '../controllers/PersonagemController.php';
 require_once '../controllers/SuporteController.php';
-require_once '../controllers/UserControllerV2.php'; // Novo controller híbrido
+require_once '../controllers/UserController.php';
 require_once '../config/database.php';
 
-// Criar conexão com o banco de dados (opcional, o UserControllerV2 tem fallback)
-try {
-    $database = new Database();
-    $pdo = $database->getConnection();
-} catch (Exception $e) {
-    $pdo = null; // MySQL não disponível, usar fallback
-}
+// Criar conexão com o banco de dados
+$database = new Database();
+$pdo = $database->getConnection();
 
 // Capturar URL da requisição
 $request = $_SERVER['REQUEST_URI'];
@@ -71,12 +67,6 @@ switch ($request) {
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/check-auth':
         $controller = new UserController();
         $controller->checkAuth();
-        break;
-        
-    case '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/system-status':
-    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/system-status':
-        $controller = new UserController();
-        $controller->getSystemStatus();
         break;
     
     // ==================== ROTAS DE ASSINATURA ====================

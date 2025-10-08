@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste do Sistema de Autenticação</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        form { margin: 10px 0; }
+        input { margin: 5px; padding: 8px; width: 200px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Teste do Sistema de Autenticação WhilePlay</h1>
+        
+        <div class="section info">
+            <h2>Status da Conexão</h2>
+            <p id="connectionStatus">Verificando...</p>
+        </div>
+        
+        <div class="section">
+            <h2>Teste de Cadastro</h2>
+            <form action="../../back-end/register" method="POST">
+                <input type="text" name="nome" placeholder="Nome completo" required><br>
+                <input type="email" name="email" placeholder="Email" required><br>
+                <input type="password" name="password" placeholder="Senha" required><br>
+                <input type="password" name="password_confirm" placeholder="Confirme a senha" required><br>
+                <button type="submit">Cadastrar Usuário Teste</button>
+            </form>
+        </div>
+        
+        <div class="section">
+            <h2>Teste de Login</h2>
+            <form action="../../back-end/login" method="POST">
+                <input type="email" name="email" placeholder="Email" required><br>
+                <input type="password" name="password" placeholder="Senha" required><br>
+                <button type="submit">Fazer Login</button>
+            </form>
+        </div>
+        
+        <div class="section">
+            <h2>Status da Autenticação</h2>
+            <div id="authStatus">Verificando...</div>
+            <button onclick="checkAuthStatus()">Verificar Status</button>
+            <button onclick="logout()">Logout</button>
+        </div>
+        
+        <div class="section">
+            <h2>Links de Teste</h2>
+            <p><a href="cadastro.html">Página de Cadastro</a></p>
+            <p><a href="login.html">Página de Login</a></p>
+            <p><a href="homepage1.html">Homepage (sem login)</a></p>
+            <p><a href="homepage2_com_login.html">Homepage (com login)</a></p>
+        </div>
+    </div>
+    
+    <script>
+        // Verificar conexão com o back-end
+        function checkConnection() {
+            fetch('../../back-end/check-auth')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('connectionStatus').innerHTML = 
+                        '<span style="color: green;">✓ Conexão com back-end funcionando!</span>';
+                    checkAuthStatus();
+                })
+                .catch(error => {
+                    document.getElementById('connectionStatus').innerHTML = 
+                        '<span style="color: red;">✗ Erro na conexão com back-end: ' + error.message + '</span>';
+                });
+        }
+        
+        // Verificar status de autenticação
+        function checkAuthStatus() {
+            fetch('../../back-end/check-auth')
+                .then(response => response.json())
+                .then(data => {
+                    const statusDiv = document.getElementById('authStatus');
+                    if (data.logged) {
+                        statusDiv.innerHTML = `
+                            <div style="color: green;">
+                                ✓ Usuário logado!<br>
+                                ID: ${data.user.id}<br>
+                                Nome: ${data.user.nome}<br>
+                                Email: ${data.user.email}
+                            </div>
+                        `;
+                    } else {
+                        statusDiv.innerHTML = '<div style="color: orange;">Usuário não está logado</div>';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('authStatus').innerHTML = 
+                        '<div style="color: red;">Erro ao verificar status: ' + error.message + '</div>';
+                });
+        }
+        
+        // Fazer logout
+        function logout() {
+            if (confirm('Deseja fazer logout?')) {
+                window.location.href = '../../back-end/logout';
+            }
+        }
+        
+        // Verificar mensagens de erro/sucesso na URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            
+            if (params.get('erro')) {
+                alert('Erro: ' + params.get('erro'));
+            }
+            
+            if (params.get('success')) {
+                alert('Sucesso: ' + params.get('success'));
+            }
+            
+            checkConnection();
+        });
+    </script>
+</body>
+</html>

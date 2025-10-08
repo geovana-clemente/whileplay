@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Rotas - WhilePlay</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460; }
+        .warning { background-color: #fff3cd; border-color: #ffeaa7; color: #856404; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; }
+        button:hover { background: #0056b3; }
+        .route-test { margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 5px; }
+        .status { font-weight: bold; }
+        .loading { color: #ffc107; }
+        .ok { color: #28a745; }
+        .fail { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Teste de Rotas do Sistema WhilePlay</h1>
+        
+        <div class="section info">
+            <h2>Status do Sistema</h2>
+            <div id="systemStatus">Verificando...</div>
+        </div>
+        
+        <div class="section">
+            <h2>Rotas de Autenticação</h2>
+            <div class="route-test">
+                <strong>/check-auth</strong> - <span id="auth-status" class="status loading">Testando...</span>
+                <div id="auth-result"></div>
+            </div>
+            
+            <h3>Formulários de Teste</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>Cadastro</h4>
+                    <form id="testRegister" style="display: flex; flex-direction: column; gap: 10px;">
+                        <input type="text" name="nome" placeholder="Nome Teste" value="Usuário Teste" required>
+                        <input type="email" name="email" placeholder="Email" value="teste@whileplay.com" required>
+                        <input type="password" name="password" placeholder="Senha" value="123456" required>
+                        <input type="password" name="password_confirm" placeholder="Confirme a senha" value="123456" required>
+                        <button type="submit">Testar Cadastro</button>
+                    </form>
+                </div>
+                
+                <div>
+                    <h4>Login</h4>
+                    <form id="testLogin" style="display: flex; flex-direction: column; gap: 10px;">
+                        <input type="email" name="email" placeholder="Email" value="teste@whileplay.com" required>
+                        <input type="password" name="password" placeholder="Senha" value="123456" required>
+                        <button type="submit">Testar Login</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <button onclick="testLogout()">Testar Logout</button>
+                <button onclick="checkAuthStatus()">Verificar Status Auth</button>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Outras Rotas do Sistema</h2>
+            <div id="otherRoutes">
+                <button onclick="testRoute('/assinatura', 'GET')">Testar Assinatura</button>
+                <button onclick="testRoute('/pagamento', 'GET')">Testar Pagamento</button>
+                <button onclick="testRoute('/roteiro', 'GET')">Testar Roteiro</button>
+                <button onclick="testRoute('/personagem', 'GET')">Testar Personagem</button>
+                <button onclick="testRoute('/perfil', 'GET')">Testar Perfil</button>
+                <button onclick="testRoute('/publicar', 'GET')">Testar Publicar</button>
+                <button onclick="testRoute('/suporte', 'GET')">Testar Suporte</button>
+            </div>
+            <div id="routeResults"></div>
+        </div>
+        
+        <div class="section">
+            <h2>Log de Teste</h2>
+            <div id="testLog" style="background: #000; color: #0f0; padding: 10px; border-radius: 5px; font-family: monospace; height: 200px; overflow-y: scroll;"></div>
+            <button onclick="clearLog()">Limpar Log</button>
+        </div>
+    </div>
+    
+    <script>
+        // Funções de log
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('testLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                'info': '#0ff',
+                'success': '#0f0',
+                'error': '#f00',
+                'warning': '#ff0'
+            };
+            logDiv.innerHTML += `<div style="color: ${colors[type] || '#0ff'}">[${timestamp}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function clearLog() {
+            document.getElementById('testLog').innerHTML = '';
+        }
+        
+        // Testar status de autenticação
+        function checkAuthStatus() {
+            log('Verificando status de autenticação...', 'info');
+            fetch('../check-auth', { method: 'GET', credentials: 'same-origin' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('auth-status').className = 'status ok';
+                    document.getElementById('auth-status').textContent = 'OK';
+                    document.getElementById('auth-result').innerHTML = 
+                        `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    log(`Auth status: ${data.logged ? 'Logado' : 'Não logado'}`, 'success');
+                })
+                .catch(error => {
+                    document.getElementById('auth-status').className = 'status fail';
+                    document.getElementById('auth-status').textContent = 'ERRO';
+                    document.getElementById('auth-result').innerHTML = `Erro: ${error.message}`;
+                    log(`Erro ao verificar auth: ${error.message}`, 'error');
+                });
+        }
+        
+        // Testar logout
+        function testLogout() {
+            log('Testando logout...', 'info');
+            window.location.href = '../logout';
+        }
+        
+        // Testar rota genérica
+        function testRoute(route, method = 'GET') {
+            log(`Testando rota: ${route} (${method})`, 'info');
+            const fullUrl = `../public${route}`;
+            
+            fetch(fullUrl, { method: method, credentials: 'same-origin' })
+                .then(response => {
+                    log(`Rota ${route}: Status ${response.status}`, response.ok ? 'success' : 'warning');
+                    return response.text();
+                })
+                .then(data => {
+                    const resultsDiv = document.getElementById('routeResults');
+                    resultsDiv.innerHTML += `
+                        <div class="route-test">
+                            <strong>${route}</strong>: <span class="ok">Resposta recebida</span>
+                            <details><summary>Ver resposta</summary><pre>${data.substring(0, 500)}...</pre></details>
+                        </div>
+                    `;
+                })
+                .catch(error => {
+                    log(`Erro na rota ${route}: ${error.message}`, 'error');
+                    const resultsDiv = document.getElementById('routeResults');
+                    resultsDiv.innerHTML += `
+                        <div class="route-test">
+                            <strong>${route}</strong>: <span class="fail">Erro - ${error.message}</span>
+                        </div>
+                    `;
+                });
+        }
+        
+        // Event listeners para formulários
+        document.getElementById('testRegister').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            log('Testando cadastro...', 'info');
+            
+            fetch('../register', {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                log(`Cadastro: Status ${response.status}`, response.ok ? 'success' : 'warning');
+                if (response.redirected) {
+                    log(`Redirecionado para: ${response.url}`, 'info');
+                }
+                return response.text();
+            })
+            .catch(error => {
+                log(`Erro no cadastro: ${error.message}`, 'error');
+            });
+        });
+        
+        document.getElementById('testLogin').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            log('Testando login...', 'info');
+            
+            fetch('../login', {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                log(`Login: Status ${response.status}`, response.ok ? 'success' : 'warning');
+                if (response.redirected) {
+                    log(`Redirecionado para: ${response.url}`, 'info');
+                }
+                return response.text();
+            })
+            .catch(error => {
+                log(`Erro no login: ${error.message}`, 'error');
+            });
+        });
+        
+        // Inicializar testes ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            log('Sistema de teste iniciado', 'success');
+            checkAuthStatus();
+            
+            // Teste básico de conectividade
+            fetch('../check-auth')
+                .then(response => {
+                    document.getElementById('systemStatus').innerHTML = 
+                        '<span style="color: green;">✓ Sistema online e respondendo</span>';
+                    log('Sistema online', 'success');
+                })
+                .catch(error => {
+                    document.getElementById('systemStatus').innerHTML = 
+                        '<span style="color: red;">✗ Sistema offline ou com erro</span>';
+                    log('Sistema offline', 'error');
+                });
+        });
+    </script>
+</body>
+</html>

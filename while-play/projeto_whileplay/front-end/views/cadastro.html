@@ -111,7 +111,7 @@
   <div class="login-container">
     <h1>Cadastro</h1>
     <p>Crie sua conta e comece agora!</p>
-    <form id="cadastroForm" action="/while-play/projeto_whileplay/front-end/views/cadastro.html" method="POST">
+    <form id="cadastroForm" action="../../back-end/register" method="POST">
   <input type="text" name="nome" placeholder="Nome completo" required>
   <input type="email" name="email" placeholder="Email" required>
   <input type="password" name="password" placeholder="Senha" required>
@@ -147,13 +147,8 @@
       }
     });
 
-    // Redireciona para login.html após cadastro
-    document.getElementById('cadastroForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      // Aqui você pode adicionar validação ou requisição AJAX se necessário
-      // Se for apenas front-end, redireciona direto:
-      window.location.href = 'login.html';
-    });
+    // O formulário agora submete para o back-end
+    // Não precisamos mais interceptar o submit
     function handleBackgroundClick(event) {
       const container = document.querySelector('.login-container');
       if (!container.contains(event.target)) {
