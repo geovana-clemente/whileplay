@@ -2,13 +2,16 @@
 
 require_once '../models/Assinatura.php';
 
-class AssinaturaController {
+class AssinaturaController
+{
 
-    public function showForm() {
-        require '../views/assinatura_form.php'; 
+    public function showForm()
+    {
+        require '../views/assinatura_form.php';
     }
 
-    public function saveAssinatura() {
+    public function saveAssinatura()
+    {
         $usuario = $_POST['usuario'] ?? '';
         $cidade = $_POST['cidade'] ?? '';
         $endereco = $_POST['endereco'] ?? '';
@@ -22,13 +25,15 @@ class AssinaturaController {
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
 
-    public function listAssinaturas() {
+    public function listAssinaturas()
+    {
         $assinatura = new Assinatura();
         $assinaturas = $assinatura->getAll();
         require '../views/assinatura_list.php';
     }
 
-    public function deleteAssinaturaByTitle() {
+    public function deleteAssinaturaByTitle()
+    {
         $usuario = $_POST['usuario'] ?? null;
         if ($usuario) {
             $assinatura = new Assinatura();
@@ -37,13 +42,15 @@ class AssinaturaController {
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
 
-    public function showUpdateForm($id) {
+    public function showUpdateForm($id)
+    {
         $assinatura = new Assinatura();
         $assinaturaInfo = $assinatura->getById($id);
         require '../views/update_assinatura_form.php';
     }
 
-    public function updateAssinatura() {
+    public function updateAssinatura()
+    {
         $id = $_POST['id'];
         $usuario = $_POST['usuario'] ?? '';
         $cidade = $_POST['cidade'] ?? '';
@@ -54,18 +61,6 @@ class AssinaturaController {
 
         $assinatura = new Assinatura();
         $assinatura->update($id, $usuario, $cidade, $endereco, $cep, $cpf, $data_assinatura);
-
-        require_once '../models/Publicacao.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = intval($_POST['id'] ?? 0);
-    if ($id > 0) {
-        $publicacao = new Publicacao();
-        $publicacao->delete($id);
-    }
-}
-header('Location: publicar_list.php');
-exit;
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
     }
