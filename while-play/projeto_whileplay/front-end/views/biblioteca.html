@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Header Largo e no Topo</title>
+  <title>Acervo de Roteiros</title>
 
   <!-- Fonte Adamina -->
   <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
@@ -12,11 +12,20 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>
-    body {
+    /* ===== RESET ===== */
+    * {
       margin: 0;
-      font-family: 'Adamina', serif;
+      padding: 0;
+      box-sizing: border-box;
     }
 
+    body {
+      font-family: 'Adamina', serif;
+      background-color: #111;
+      color: white;
+    }
+
+    /* ===== HEADER ===== */
     header {
       width: 100%;
       margin: 0;
@@ -24,7 +33,7 @@
     }
 
     .header-container {
-  background-image: url('../public/MEDIA/imagens/background.png');
+      background-image: url('../public/MEDIA/imagens/background.png');
       background-size: cover;
       background-position: center;
       padding: 40px 0;
@@ -98,8 +107,7 @@
     .profile-icon .material-icons {
       font-size: 24px;
     }
-    
-    /* Estilo para o dropdown do perfil (opcional) */
+
     .profile-dropdown {
       position: relative;
       display: inline-block;
@@ -111,7 +119,7 @@
       right: 0;
       background-color: white;
       min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
       z-index: 1;
       border-radius: 8px;
       margin-top: 10px;
@@ -128,92 +136,121 @@
     
     .dropdown-content a:hover {
       background-color: #f1f1f1;
-      border-radius: 0;
     }
     
     .profile-dropdown:hover .dropdown-content {
       display: block;
     }
 
+    /* ===== CONTEÚDO PRINCIPAL ===== */
+    .container {
+      background-color: #111;
+      margin: 30px auto;
+      padding: 40px 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 1200px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
 
-    /* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    h1, h2 {
+      font-family: "Brush Script MT", cursive;
+      text-align: center;
+      margin: 25px 0;
+      font-size: 36px;
+    }
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #111; /* azul claro */
-  color: white;
-}
+    /* ===== GRID DE CARDS ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px; /* espaçamento maior entre os cards */
+      margin-bottom: 30px;
+    }
 
-/* Container central */
-.container {
-  background-color: #111;
-  margin: 30px auto;
-  padding: 100px;
-  border-radius: 10px;
-  width: 100%;
-  max-width: 1100px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.7);
-}
+    .card {
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 20px;
+      border: 2px solid #C9DBFF;
+      text-align: center;
+      color: black;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-/* Títulos cursivos */
-h1, h2 {
-  font-family: "Brush Script MT", cursive;
-  text-align: center;
-  margin: 25px 0;
-  font-size: 32px;
-}
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+    }
 
-/* Grid de cards */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 25px;
-  margin-bottom: 30px;
-}
+    .card img {
+      width: 100%;
+      height: 200px; /* imagens maiores */
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
 
-/* Cards */
-.card {
-  background-color: #fff;
-  border-radius: 20px;
-  padding: 10px;
-  border-style: solid;
-border-width: 2px;
-  border-color: #C9DBFF;
-  text-align: center;
-  color: black;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.6);
-}
+    /* ===== EFEITO DE SINOPSE AO PASSAR O MOUSE ===== */
+    .sinopse-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+    }
 
-.card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 15px;
-  margin-bottom: 10px;
-}
+    .toggle-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #3b6ff5;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
 
-.card h3 {
-  margin-bottom: 8px;
-  font-size: 16px;
-}
+    .toggle-link:hover {
+      color: #1e40af;
+    }
 
-.card a {
-  text-decoration: none;
-  color: #3b6ff5;
-  font-weight: bold;
-}
+    .seta {
+      display: inline-block;
+      transition: transform 0.4s ease;
+    }
 
+    .sinopse {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+      border-radius: 10px;
+      margin-top: 8px;
+      padding: 0 10px;
+      text-align: justify;
+      font-size: 14px;
+      line-height: 1.5;
+      transition: all 0.4s ease;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+      width: 90%;
+    }
+
+    .sinopse-container:hover .sinopse {
+      max-height: 180px; /* maior para cards maiores */
+      opacity: 1;
+      padding: 10px;
+    }
+
+    .sinopse-container:hover .seta {
+      transform: rotate(90deg);
+    }
   </style>
 </head>
 <body>
@@ -226,53 +263,68 @@ border-width: 2px;
           <span onclick="clearSearch()">❌</span>
         </div>
 
-  <a href="sobrenos.html">Sobre Nós</a>
-  <a href="premios_com_login.html">Prêmios</a>
-  <a href="roteiros_com_login.html">Roteiro</a>
-  <a href="homepage2_com_login.html">Homepage</a>
-  <a href="Personagens_com_login.html">Personagens</a>
-  <a href="assinatura.html">Assinatura</a>
+        <a href="sobrenos.html">Sobre Nós</a>
+        <a href="premios_com_login.html">Prêmios</a>
+        <a href="roteiros_com_login.html">Roteiro</a>
+        <a href="homepage2_com_login.html">Homepage</a>
+        <a href="Personagens_com_login.html">Personagens</a>
+        <a href="assinatura.html">Assinatura</a>
         
-        <!-- Substituindo o botão de login por um ícone de perfil -->
         <div class="profile-dropdown">
           <div class="profile-icon">
             <span class="material-icons">person</span>
           </div>
-          <div class="dropdown-content">
-          </div>
+          <div class="dropdown-content"></div>
         </div>
       </div>
     </div>
   </header>
 
-  <script>
-    function clearSearch() {
-      document.getElementById('searchInput').value = '';
-    }
-  </script> 
-  <!-- Conteúdo principal -->
   <main class="container">
     <h1>Seu acervo de roteiros</h1>
     <div class="grid">
       <div class="card">
         <img src="../public/MEDIA/imagens/princesa-de-desenho-animado-bonita-vestindo-um-vestido-bonito.jpg" alt="Capa roteiro">
         <h3>Título: A Princesa Encantada</h3>
-        <a href="#">Ler o roteiro →</a>
+        <div class="sinopse-container">
+          <a href="#" class="toggle-link">Ler o roteiro <span class="seta">➤</span></a>
+          <div class="sinopse">
+            Uma princesa curiosa e corajosa descobre um reino escondido e precisa decidir entre o amor e o dever.
+          </div>
+        </div>
       </div>
+
       <div class="card">
         <img src="../public/MEDIA/imagens/Mulhermaravilha.jpg" alt="Capa roteiro">
-        <h3>Título: Mulher Maravilha </h3>
-        <a href="#">Ler o roteiro →</a>
+        <h3>Título: Mulher Maravilha</h3>
+        <div class="sinopse-container">
+          <a href="#" class="toggle-link">Ler o roteiro <span class="seta">➤</span></a>
+          <div class="sinopse">
+            Diana enfrenta novos desafios enquanto tenta equilibrar sua vida entre o mundo humano e o dos deuses.
+          </div>
+        </div>
       </div>
+
       <div class="card">
         <img src="../public/MEDIA/imagens/Smurfs.jpg" alt="Capa roteiro">
         <h3>Título: Os Smurfs</h3>
-        <a href="#">Ler o roteiro →</a>
+        <div class="sinopse-container">
+          <a href="#" class="toggle-link">Ler o roteiro <span class="seta">➤</span></a>
+          <div class="sinopse">
+            Uma aventura divertida onde os Smurfs enfrentam Gargamel e descobrem o verdadeiro valor da amizade.
+          </div>
+        </div>
       </div>
+
       <div class="card">
         <img src="../public/MEDIA/imagens/Branca de Neve.jpg" alt="Capa roteiro">
         <h3>Título: Branca de Neve</h3>
-        <a href="#">Ler o roteiro →</a>
+        <div class="sinopse-container">
+          <a href="#" class="toggle-link">Ler o roteiro <span class="seta">➤</span></a>
+          <div class="sinopse">
+            Uma reimaginação moderna do clássico conto, com uma princesa determinada e uma vilã enigmática.
+          </div>
+        </div>
       </div>
     </div>
 
@@ -281,28 +333,53 @@ border-width: 2px;
       <div class="card">
         <img src="../public/MEDIA/imagens/Tiana.png" alt="Capa roteiro">
         <h3>Título: A Princesa e o Sapo</h3>
-        <a href="#">Ler o roteiro →</a>
+        <div class="sinopse-container">
+          <a href="#" class="toggle-link">Ler o roteiro <span class="seta">➤</span></a>
+          <div class="sinopse">
+            Uma jovem sonhadora descobre que o amor verdadeiro pode vir das formas mais inesperadas.
+          </div>
+        </div>
       </div>
+
       <div class="card">
         <img src="../public/MEDIA/imagens/Rapunzel.jpg" alt="Capa roteiro">
         <h3>Título: Rapunzel</h3>
-        <a href="#">Ler o roteiro →</a>
+        <div class="sinopse-container">
+          <a href="#" class="toggle-link">Ler o roteiro <span class="seta">➤</span></a>
+          <div class="sinopse">
+            Uma jovem de longos cabelos dourados foge da torre e descobre o mundo que sempre sonhou conhecer.
+          </div>
+        </div>
       </div>
+
       <div class="card">
         <img src="../public/MEDIA/imagens/Coraline.jpg" alt="Capa roteiro">
         <h3>Título: Coraline</h3>
-        <a href="#">Ler o roteiro →</a>
+        <div class="sinopse-container">
+          <a href="#" class="toggle-link">Ler o roteiro <span class="seta">➤</span></a>
+          <div class="sinopse">
+            Coraline encontra uma porta secreta que leva a um mundo paralelo — mas nem tudo é o que parece.
+          </div>
+        </div>
       </div>
+
       <div class="card">
-        <img src="../public/MEDIA/imagens/Hoteltransylvania.jpg alt="Capa roteiro">
+        <img src="../public/MEDIA/imagens/Hoteltransylvania.jpg" alt="Capa roteiro">
         <h3>Título: Hotel Transylvania</h3>
-        <a href="#">Ler o roteiro →</a>
+        <div class="sinopse-container">
+          <a href="#" class="toggle-link">Ler o roteiro <span class="seta">➤</span></a>
+          <div class="sinopse">
+            Um hotel cheio de monstros, diversão e confusões quando um humano inesperado chega por engano.
+          </div>
+        </div>
       </div>
     </div>
   </main>
-</body>
-</html>
 
-
+  <script>
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+    }
+  </script>
 </body>
 </html>
