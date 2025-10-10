@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage Premium</title>
-    <!-- Ícones do Material Design -->
-  <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
-  <!-- Ícones do Material Design -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homepage Premium</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Adamina&family=Playfair+Display:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   
   <!-- Ícones do Material Design -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+
 <body>
-    <style>
+  <style>
 /* BÁSICO */
 * {
   margin: 0;
@@ -27,8 +23,7 @@
 
 body {
   margin: 0;
-  font-family: 'Adamina', serif;
-  font-style: bold;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
   text-shadow: 1px 1px 2px #0000004d;
   color: #e0e0e0;
@@ -58,7 +53,7 @@ header {
 }
 
 .header-container {
-  font-family: 'Adamina', serif;
+  font-family: 'Poppins', sans-serif;
   padding: 40px 0;
   width: 100%;
 }
@@ -75,7 +70,7 @@ header {
 }
 
 .navbar a {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #ffffff;
   text-decoration: none;
   font-weight: bold;
@@ -89,48 +84,28 @@ header {
   border-radius: 8px;
 }
 
-.navbar button.logout-button {
-  margin-left: auto;
-  font-size: 14px;
-  padding: 10px 20px;
-}
-
-.navbar-left,
-.navbar-center,
-.navbar-right {
+/* BARRA DE PESQUISA */
+.search-box {
+  background: white;
+  border-radius: 30px;
+  padding: 10px 15px;
   display: flex;
   align-items: center;
-  gap: 15px;
 }
 
-.navbar-center {
-  flex-grow: 1;
-  justify-content: center;
-  flex-wrap: wrap;
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
 }
 
-/*BARRA DE PESQUISA */
-.search-box {
-      background: white;
-      border-radius: 30px;
-      padding: 10px 15px;
-      display: flex;
-      align-items: center;
-    }
-
-    .search-box input {
-      border: none;
-      outline: none;
-      padding: 8px;
-      font-size: 16px;
-      font-family: 'Adamina', serif;
-    }
-
-    .search-box span {
-      font-size: 18px;
-      cursor: pointer;
-      margin-left: 8px;
-    }
+.search-box span {
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 8px;
+}
 
 /* BOTÃO LOGIN */
 .logout-button {
@@ -142,7 +117,7 @@ header {
   font-weight: bold;
   font-size: 20px;
   cursor: pointer;
-  font-family: 'Adamina', serif;
+  font-family: 'Poppins', sans-serif;
   transition: background 0.3s;
 }
 
@@ -270,32 +245,24 @@ header {
   display: block;
 }
 
-.dropdown-divider {
-  height: 1px;
-  background-color: #e0e0e0;
-  margin: 5px 0;
-}
-
-/* GRID CONTAINER */
-.grid-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 /* TÍTULOS */
 .container-titulos {
   color: aliceblue;
-  grid-column: 1 / 3; 
-  font-size: 18px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  text-align: center;
 }
-h2 {
-    font-size: 20px;
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
 }
+
 h1 {
   color: #a0c9f5;
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 20px;
+  color: #eaeaea;
 }
 
 /* CONTAINERS ROTEIROS */
@@ -328,24 +295,6 @@ h1 {
   background-color: rgb(101, 101, 101);
 }
 
-h3 {
-  margin-bottom: 10px;
-  font-size: 24px;
-  color: aliceblue;
-}
-
-p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: aliceblue;
-}
-
-/* RESPONSIVO */
-@media screen and (max-width: 768px) {
-  .container-roteiros {
-    grid-template-columns: 1fr; /* Altera para uma coluna em telas menores */
-  }
-}
 /* RODAPÉ */
 .rodape {
   display: flex;
@@ -380,9 +329,10 @@ p {
   text-decoration: underline;
 }
 
+/* ÍCONES REDUZIDOS */
 .rodape img {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   margin-right: 10px;
 }
 
@@ -392,106 +342,94 @@ p {
   margin-top: 20px;
   font-size: 14px;
 }
+  </style>
 
-    </style>
-    <header>
- <div class="header-container">
+  <header>
+    <div class="header-container">
       <div class="navbar">
         <div class="search-box">
           <input type="text" id="searchInput" placeholder="Pesquisar">
           <span onclick="clearSearch()">❌</span>
         </div>
 
-  <a href="sobrenos_assinatura.html">Sobre Nós</a>
-  <a href="Premios_assinatura.html">Prêmios</a>
-  <a href="roteiros_assinatura.html">Roteiro</a>
-  <a href="homepage2_assinatura.html">Homepage</a>
-  <a href="perfil_assinatura.html">Biblioteca</a>
-  <a href="personagens_assinatura.html">Personagens</a>
-  <a href="publicar.html">Publicar</a>
+        <a href="sobrenos_assinatura.html">Sobre Nós</a>
+        <a href="Premios_assinatura.html">Prêmios</a>
+        <a href="roteiros_assinatura.html">Roteiro</a>
+        <a href="homepage2_assinatura.html">Homepage</a>
+        <a href="perfil_assinatura.html">Biblioteca</a>
+        <a href="personagens_assinatura.html">Personagens</a>
+        <a href="publicar.html">Publicar</a>
 
-        <div class="user-profile-area">
+        <div class="profile-dropdown">
+          <div class="profile-icon" onclick="window.location.href='perfil_assinatura.html'">
+            <a href="perfil_assinatura.html">
+              <span class="material-icons">person</span>
+              <div class="verified-badge">
+                <span class="material-icons">verified</span>
+              </div>
+            </a>
           </div>
-          
-          <div class="profile-dropdown">
-  <div class="profile-icon" onclick="window.location.href='perfil_assinatura.html'">
-  <a href="perfil_assinatura.html">
-      <span class="material-icons">person</span>
-      <div class="verified-badge">
-        <span class="material-icons">verified</span>
-      </div>
-    </a>
-  </div>
-  <div class="dropdown-content">
-    <a href="#" class="premium-option">
-      <span class="material-icons">verified</span>
-      Membro Premium
-    </a>
-  </div>
-</div>
+          <div class="dropdown-content">
+            <a href="#" class="premium-option">
+              <span class="material-icons">verified</span>
+              Membro Premium
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    
 
-  <script>
-    function clearSearch() {
-      document.getElementById('searchInput').value = '';
-    }
-  </script>
-  <div class="grid-container">
-          <div class="container-titulos">
-            <img src="/while-play/projeto_whileplay/front-end/public/MEDIA/imagens/Logo-AEZ.png" alt="Logo-AEZ" style="max-width: 150px; margin-bottom: 20px;">
-            <img src="../public/MEDIA/imagens/Logo-AEZ.png" alt="Logo-AEZ" style="max-width: 150px; margin-bottom: 20px;">
-            <h1>Transforme suas Ideias em Filmes</h1>
-           <h2>O Site que Dará Vida a seus Personagens e Roteiros</h2>
-        </div>
-        </div>
-          
-          <div class="container-roteiros">
-        <div class="container-texto1">
+    <script>
+      function clearSearch() {
+        document.getElementById('searchInput').value = '';
+      }
+    </script>
+
+    <div class="grid-container">
+      <div class="container-titulos">
+        <img src="../public/MEDIA/imagens/Logo-AEZ.png" alt="Logo-AEZ" style="max-width: 150px; margin-bottom: 20px;">
+        <h1>Transforme suas Ideias em Filmes</h1>
+        <h2>O Site que Dará Vida a seus Personagens e Roteiros</h2>
+      </div>
+    </div>
+
+    <div class="container-roteiros">
+      <div class="container-texto1">
         <h3>O dia D 2077</h3>
-        <p> O Dia D é um filme de 2004 que conta a preparação para a invasão da Normandia, que ocorreu em 6 de junho de 1944. O filme mostra os desafios enfrentados pelo Comandante Supremo Aliado na Europa, Dwight D. Eisenhower. </p>
-        </div>
-        <div class="container-texto2">
-            <h3>O rato sabido</h3>
-            <p>O rato sabido - Ratatouille é uma animação da Disney sobre um ratinho que sonha em ser chef de cozinha. </p>
-        </div>
-        <div class="container-texto3">
-            <h3>Amizade entre amigos</h3>
-            <p>Amizade entre amigos: Em 1989, algumas semanas antes da queda do muro de Berlim, três jovens italianos decidem visitar o Leste Europeu à procura de aventura e partem em uma jornada que mudará suas vidas para sempre.</p>
-        </div>
-          </div>
-
-<div class="rodape">
-    <div class="producao">
-      <h1>Produtores</h1>
-      <p><br>Diego Alves Gomes
-        <br>Geovana Clemente Cruz
-        <br>Livia Mayumi Hayashida
-        <br>Victor do Vale Souza
-      </p>
+        <p>O Dia D é um filme de 2004 que conta a preparação para a invasão da Normandia, que ocorreu em 6 de junho de 1944...</p>
+      </div>
+      <div class="container-texto2">
+        <h3>O rato sabido</h3>
+        <p>O rato sabido - Ratatouille é uma animação da Disney sobre um ratinho que sonha em ser chef de cozinha.</p>
+      </div>
+      <div class="container-texto3">
+        <h3>Amizade entre amigos</h3>
+        <p>Amizade entre amigos: Em 1989, algumas semanas antes da queda do muro de Berlim...</p>
+      </div>
     </div>
-    <div class="suporte">
-    <h1>Precisa de Suporte?</h1>
-    <a href="https://www.google.com.br/">E-mail</a>
-    <a href="/while-play/projeto_whileplay/front-end/views/suporte_assinatura.html">Fale Conosco</a>
-  <a href="suporte_assinatura.html">Fale Conosco</a>
-  </div>
 
-  <div class="siga-nos">
-    <h1>Siga-nos!</h1>
-    <a href="">
-      <img src="/while-play/projeto_whileplay/front-end/public/MEDIA/imagens/instagram.png" alt="icon-instagram" width="100" height="100">
-  <img src="../public/MEDIA/imagens/instagram.png" alt="icon-instagram" width="100" height="100">
-    </a>
-    <a href="">
-      <img src="/while-play/projeto_whileplay/front-end/public/MEDIA/imagens/tiktok.png" alt="icon-tiktok" width="100" height="100">
-  <img src="../public/MEDIA/imagens/tiktok.png" alt="icon-tiktok" width="100" height="100">
-    </a>
-  </div>
+    <div class="rodape">
+      <div class="producao">
+        <h1>Produtores</h1>
+        <p><br>Diego Alves Gomes<br>Geovana Clemente Cruz<br>Livia Mayumi Hayashida<br>Victor do Vale Souza</p>
+      </div>
+      <div class="suporte">
+        <h1>Precisa de Suporte?</h1>
+        <a href="https://www.google.com.br/">E-mail</a>
+        <a href="suporte_assinatura.html">Fale Conosco</a>
+      </div>
 
-    <p class="contato">
-      Contato: aez.whileplay@gmail.com</p>
-  </div>
+      <div class="siga-nos">
+        <h1>Siga-nos!</h1>
+        <a href="">
+          <img src="../public/MEDIA/imagens/instagram.png" alt="icon-instagram">
+        </a>
+        <a href="">
+          <img src="../public/MEDIA/imagens/tiktok.png" alt="icon-tiktok">
+        </a>
+      </div>
+
+      <p class="contato">Contato: aez.whileplay@gmail.com</p>
+    </div>
 </body>
 </html>
