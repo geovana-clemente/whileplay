@@ -7,10 +7,12 @@ class Roteiro {
         $this->pdo = new PDO('mysql:host=localhost;dbname=while_play', 'root', '');
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
+
     private function validarAssinatura($assinatura_id) {
         if (empty($assinatura_id)) {
             throw new Exception("Erro: assinatura_id é obrigatório (não pode ser vazio ou nulo).");
         }
+
         $check = $this->pdo->prepare("SELECT id FROM assinaturas WHERE id = ?");
         $check->execute([$assinatura_id]);
 
