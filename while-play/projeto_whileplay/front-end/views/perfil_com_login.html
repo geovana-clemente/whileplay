@@ -9,61 +9,51 @@
 </head>
 <body>
   <style>
-    /* RESET BÁSICO */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: "Roboto", sans-serif;
-    font-size: 16px;
-    background-color: #222222;
-    color: #fff;
-  }
-  
-  /* CABEÇALHO */
-header {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.header-container {
-  background-image: url('../public/MEDIA/imagens/background.png');
-  background-size: cover;
-  background-position: center;
-  font-family: 'Adamina', serif;
-  padding: 40px 0;
-  width: 100%;
-}
-
-/* NAVBAR */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 0 40px;
-  font-size: 18px;
-  gap: 20px;
-}
-
-.navbar a {
-  font-family: 'Adamina', serif;
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 18px;
-  padding: 10px 15px;
-  transition: background 0.3s, color 0.3s;
-}
-
-.navbar a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-}
+    /* Fonte padrão do corpo */
+     /* RESET BÁSICO */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+        background-color: #222222;
+        color: #fff;
+      }
+      header {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .header-container {
+        background-image: url('../public/MEDIA/imagens/background.png');
+        background-size: cover;
+        background-position: center;
+        padding: 40px 0;
+        width: 100%;
+      }
+      .navbar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 0 20px;
+      }
+      .navbar a {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 10px 15px;
+        transition: background 0.3s, color 0.3s;
+      }
+      .navbar a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+      }
 
 .navbar button.logout-button {
   margin-left: auto;

@@ -23,52 +23,50 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Roboto", sans-serif;
-  font-size: 16px;
-  background-color: #000;
-  color: #fff;
-}
-
-/* Cabeçalho personalizado */
-header {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Adamina', serif;
-}
-
-.header-container {
-  background-image: url('/while-play/projeto_whileplay/front-end/public/MEDIA/imagens/background.png');
-  background-size: cover;
-  background-position: center;
-  padding: 40px 0;
-  width: 100%;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 0 20px;
-}
-
-.navbar a {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 22px; /* AUMENTADO */
-  padding: 12px 18px;
-  transition: background 0.3s, color 0.3s;
-}
-
-.navbar a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-}
-
+      /* RESET BÁSICO */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+        background-color: #222222;
+        color: #fff;
+      }
+      header {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .header-container {
+        background-image: url('../public/MEDIA/imagens/background.png');
+        background-size: cover;
+        background-position: center;
+        padding: 40px 0;
+        width: 100%;
+      }
+      .navbar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 0 20px;
+      }
+      .navbar a {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 10px 15px;
+        transition: background 0.3s, color 0.3s;
+      }
+      .navbar a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+      }
 .search-box {
   background: white;
   border-radius: 30px;
