@@ -14,30 +14,51 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: #000;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #fff;
-      overflow-x: hidden;
-    }
-
-    /* Fonte padrão do corpo */
-    body {
-      margin: 0;
-      font-family: 'Roboto', Arial, sans-serif;
-      background: #121212;
-      color: #e0e0e0;
-    }
-
-    /* Cabeçalhos, links e campos de busca com Adamina */
-    h1, h2, h3, h4, h5, h6,
-    .navbar a,
-    .search-box input {
-      font-family: 'Adamina', serif !important;
-    }
-
+    /* BÁSICO */
+      /* RESET BÁSICO */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+        background-color: #222222;
+        color: #fff;
+      }
+      header {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .header-container {
+        background-image: url('../public/MEDIA/imagens/background.png');
+        background-size: cover;
+        background-position: center;
+        padding: 40px 0;
+        width: 100%;
+      }
+      .navbar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 0 20px;
+      }
+      .navbar a {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 10px 15px;
+        transition: background 0.3s, color 0.3s;
+      }
+      .navbar a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+      }
     .container {
       max-width: 1440px;
       margin: 0 auto;
