@@ -1,82 +1,78 @@
-<!-- ../views/publicar_form.php -->
+<?php
+require_once __DIR__ . '/../models/Publicar.php';
+
+$publicar = new Publicar();
+
+// Handle POST create/update
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $post = $_POST;
+    $id = !empty($post['id']) ? (int)$post['id'] : null;
+
+    $dados = [
+        'usuario_id' => $post['usuario_id'] ?? null,
+        'titulo' => $post['titulo'] ?? null,
+        'sinopse' => $post['sinopse'] ?? null,
+        'tipo' => $post['tipo'] ?? null,
+        'arquivo_url' => $post['arquivo_url'] ?? null,
+        'publicado' => isset($post['publicado']) ? (int)$post['publicado'] : 1,
+        'status' => $post['status'] ?? 'rascunho'
+    ];
+
+    if ($id) {
+        $publicar->atualizar($id, $dados);
+    } else {
+        $publicar->criar($dados);
+    }
+
+    header('Location: publicar_list.php');
+    exit;
+}
+
+// If editing, load item
+$editing = false;
+$item = null;
+if (isset($_GET['id'])) {
+    $editing = true;
+    $item = $publicar->buscarPorId((int)$_GET['id']);
+}
+
+?>
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Nova Publicação</title>
-    <style>
-        form {
-            width: 90%;
-            max-width: 600px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: #f2f2f2;
-            border-radius: 10px;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        input, textarea, select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-        }
-
-        button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-
-        h2 {
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><?php echo $editing ? 'Editar Publicação' : 'Nova Publicação'; ?></title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f6fa; margin:0; padding:0; }
+    main { max-width:800px; margin:2rem auto; background:#fff; padding:2rem; border-radius:8px; }
+    input, textarea, select { width:100%; padding:0.6rem; margin-bottom:0.8rem; }
+    button { background:#0097e6; color:#fff; padding:0.7rem 1rem; border:none; border-radius:4px; }
+    a { color:#0097e6; }
+  </style>
 </head>
 <body>
-
-    <h2>Nova Publicação</h2>
-
-    <form action="/while_play/save-publicar" method="POST" enctype="multipart/form-data">
-        <label for="usuario_id">ID do Usuário:</label>
-        <input type="number" name="usuario_id" id="usuario_id" required>
-
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required>
-
-        <label for="titulo">Título do Projeto:</label>
-        <input type="text" name="titulo" id="titulo" required>
-
-        <label for="sinopse">Sinopse:</label>
-        <textarea name="sinopse" id="sinopse" required></textarea>
-
-        <label for="tipo">Tipo:</label>
-        <select name="tipo" id="tipo" required>
-            <option value="roteiro">Roteiro</option>
-            <option value="outro">Outro</option>
-        </select>
-
-        <label for="arquivo">Arquivo (PNG ou DOC):</label>
-        <input type="file" name="arquivo" id="arquivo" accept=".png,.doc,.docx" required>
-
-        <label for="data_criacao">Data de Criação:</label>
-        <input type="date" name="data_criacao" id="data_criacao" value="<?php echo date('Y-m-d'); ?>">
-
-        <label for="publicado">Publicado?</label>
-        <select name="publicado" id="publicado">
-            <option value="1">Sim</option>
-            <option value="0">Não</option>
-        </select>
-
-        <button type="submit">Publicar</button>
+  <main>
+    <h1><?php echo $editing ? 'Editar Publicação' : 'Nova Publicação'; ?></h1>
+    <form method="post" action="">
+      <input type="hidden" name="id" value="<?php echo $editing ? (int)$item['id'] : ''; ?>" />
+      <input type="number" name="usuario_id" placeholder="ID do Usuário" required value="<?php echo $editing ? htmlspecialchars($item['usuario_id']) : ''; ?>" />
+      <input type="text" name="titulo" placeholder="Título" required value="<?php echo $editing ? htmlspecialchars($item['titulo']) : ''; ?>" />
+      <textarea name="sinopse" placeholder="Sinopse"><?php echo $editing ? htmlspecialchars($item['sinopse']) : ''; ?></textarea>
+      <select name="tipo">
+        <option value="roteiro" <?php echo ($editing && ($item['tipo'] ?? '') === 'roteiro') ? 'selected' : ''; ?>>Roteiro</option>
+        <option value="personagem" <?php echo ($editing && ($item['tipo'] ?? '') === 'personagem') ? 'selected' : ''; ?>>Personagem</option>
+      </select>
+      <input type="text" name="arquivo_url" placeholder="URL do arquivo (opcional)" value="<?php echo $editing ? htmlspecialchars($item['arquivo_url'] ?? '') : ''; ?>" />
+      <select name="status">
+        <option value="rascunho" <?php echo ($editing && ($item['status'] ?? '') === 'rascunho') ? 'selected' : ''; ?>>Rascunho</option>
+        <option value="publicado" <?php echo ($editing && ($item['status'] ?? '') === 'publicado') ? 'selected' : ''; ?>>Publicado</option>
+        <option value="rejeitado" <?php echo ($editing && ($item['status'] ?? '') === 'rejeitado') ? 'selected' : ''; ?>>Rejeitado</option>
+      </select>
+      <input type="hidden" name="publicado" value="1" />
+      <button type="submit"><?php echo $editing ? 'Atualizar' : 'Salvar'; ?></button>
     </form>
-
+    <p><a href="publicar_list.php">⬅️ Voltar para a lista</a></p>
+  </main>
 </body>
 </html>

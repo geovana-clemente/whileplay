@@ -1,178 +1,95 @@
 <?php
-
-require_once '../models/Publicar.php';
+require_once __DIR__ . '/../models/Publicar.php';
 
 class PublicarController {
 
+    // Exibir formulário de criação (se existir)
     public function showForm() {
-        require '../views/publicar_form.php';
+        include __DIR__ . '/../views/publicar_form.php';
     }
 
-    public function savePublicar() {
-        $usuario_id = $_POST['usuario_id'] ?? '';
-        $titulo = $_POST['titulo'] ?? '';
-        $sinopse = $_POST['sinopse'] ?? '';
-        $tipo = $_POST['tipo'] ?? '';
-        $data_criacao = $_POST['data_criacao'] ?? '';
-        $publicado = $_POST['publicado'] ?? '';
-
-        // Validação do usuario_id
-        $pdo = new PDO('mysql:host=localhost;dbname=while_play', 'root', '');
-        $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE id = ?");
-        $stmt->execute([$usuario_id]);
-        if ($stmt->rowCount() == 0) {
-            die("Erro: Usuário não encontrado. Informe um ID de usuário válido.");
+    // Criar nova publicação a partir de POST
+    public function criar() {
+        try {
+            $dados = $_POST;
+            $publicar = new Publicar();
+            $id = $publicar->criar($dados);
+            echo json_encode(['success' => true, 'message' => 'Publicação criada com sucesso!', 'id' => $id]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
+    }
 
-
-        // Upload do arquivo (imagem ou roteiro)
-        $arquivo_url = '';
-        if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = '../imagens/';
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0755, true);
+    // Listar publicações
+    public function listar() {
+        try {
+            $publicar = new Publicar();
+            $rows = $publicar->listar();
+            // Se existir uma view de listagem, podemos incluir; caso contrário retornamos JSON
+            if (file_exists(__DIR__ . '/../views/publicar_list.php')) {
+                $publicacoes = $rows;
+                include __DIR__ . '/../views/publicar_list.php';
+            } else {
+                echo json_encode($rows);
             }
-            $fileTmpPath = $_FILES['arquivo']['tmp_name'];
-            $fileName = basename($_FILES['arquivo']['name']);
-            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-            $newFileName = uniqid('arq_', true) . '.' . $ext;
-            $destPath = $uploadDir . $newFileName;
-
-            if (move_uploaded_file($fileTmpPath, $destPath)) {
-                // Caminho relativo para salvar no banco, adaptado conforme estrutura do projeto
-                $arquivo_url = 'imagens/' . $newFileName;
-            }
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
-
-        $publicar = new Publicar();
-        $publicar->save($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado);
-
-        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicados');
-        exit;
     }
 
-    public function listPublicados() {
-        $publicar = new Publicar();
-        $publicados = $publicar->getAll();
-        require '../views/publicar_list.php';
+    // Buscar por id e exibir (ou retornar JSON)
+    public function buscarPorId($id) {
+        try {
+            $publicar = new Publicar();
+            $item = $publicar->buscarPorId($id);
+            if (!$item) {
+                http_response_code(404);
+                echo json_encode(['success' => false, 'message' => 'Publicação não encontrada']);
+                return;
+            }
+            echo json_encode($item);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 
-    // Alias para compatibilidade com rota antiga
-    public function listPublicars() {
-        $this->listPublicados();
+    // Atualizar publicação por id
+    public function atualizar($id) {
+        try {
+            $dados = $_POST;
+            $publicar = new Publicar();
+            $rows = $publicar->atualizar($id, $dados);
+            if (!$rows) {
+                http_response_code(404);
+                echo json_encode(['success' => false, 'message' => 'Publicação não encontrada']);
+                return;
+            }
+            echo json_encode(['success' => true, 'message' => 'Publicação atualizada com sucesso']);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 
-    public function deletePublicarById($id) {
-    if ($id) {
-        $publicar = new Publicar();
-        $publicar->deleteById($id);
+    // Deletar publicação por id
+    public function deletar($id) {
+        try {
+            $publicar = new Publicar();
+            $rows = $publicar->deletar($id);
+            if (!$rows) {
+                http_response_code(404);
+                echo json_encode(['success' => false, 'message' => 'Publicação não encontrada']);
+                return;
+            }
+            echo json_encode(['success' => true, 'message' => 'Publicação excluída com sucesso']);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 
-    header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicados');
-    exit;
 }
 
-
-    public function showUpdateForm($id) {
-        $publicar = new Publicar();
-        $publicarInfo = $publicar->getById($id);
-        require '../views/update_publicar_form.php';
-    }
-
-
-    public function updatePublicar() {
-    $id = $_POST['id'] ?? null;
-
-    if ($id === null) {
-        die('ID não fornecido para atualização.');
-    }
-
-    $usuario_id = $_POST['usuario_id'] ?? '';
-    $titulo = $_POST['titulo'] ?? '';
-    $sinopse = $_POST['sinopse'] ?? '';
-    $tipo = $_POST['tipo'] ?? '';
-    $data_criacao = $_POST['data_criacao'] ?? '';
-    $publicado = $_POST['publicado'] ?? '';
-
-    $publicar = new Publicar();
-    $perfilInfo = $publicar->getById($id);
-
-    if (!$perfilInfo) {
-        die("Publicação com ID $id não encontrada.");
-    }
-
-    // Manter imagem antiga por padrão
-    $arquivo_url = $perfilInfo['arquivo_url'];
-
-    // Se enviou nova imagem
-    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = '../imagens/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
-
-        $fileTmpPath = $_FILES['imagem']['tmp_name'];
-        $fileName = basename($_FILES['imagem']['name']);
-        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-        $newFileName = uniqid('img_', true) . '.' . $ext;
-        $destPath = $uploadDir . $newFileName;
-
-        if (move_uploaded_file($fileTmpPath, $destPath)) {
-            $arquivo_url = 'imagens/' . $newFileName;
-
-            // Deletar imagem antiga (opcional)
-            $oldPath = '../' . $perfilInfo['arquivo_url'];
-            if (!empty($perfilInfo['arquivo_url']) && file_exists($oldPath)) {
-                unlink($oldPath);
-            }
-        }
-    }
-
-    // Atualiza os dados no banco
-    $publicar->update($id, $usuario_id, $titulo, $sinopse, $tipo, $data_criacao, $arquivo_url, $publicado);
-
-    // Redirecionar após salvar
-    header('Location: /');
-    exit;
-    // public function updatePublicar() {
-    //     $usuario_id = $_POST['usuario_id'] ?? '';
-    //     $titulo = $_POST['titulo'] ?? '';
-    //     $sinopse = $_POST['sinopse'] ?? 0;
-    //     $tipo = $_POST['tipo'] ?? null;
-    //     $data_criacao = $_POST['data_criacao'] ?? '';
-    //     $publicado = $_POST['publicado'] ?? '';
-
-    //     $publicar = new Publicar();
-    //     $perfilInfo = $publicar->getById($id);
-
-    //     $arquivo_url = $perfilInfo['arquivo_url']; // manter imagem antiga por padrão
-
-    //     // Se enviou nova imagem, fazer upload e atualizar caminho
-    //     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-    //         $uploadDir = '../imagens/';
-    //         if (!is_dir($uploadDir)) {
-    //             mkdir($uploadDir, 0755, true);
-    //         }
-    //         $fileTmpPath = $_FILES['imagem']['tmp_name'];
-    //         $fileName = basename($_FILES['imagem']['name']);
-    //         $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-    //         $newFileName = uniqid('img_', true) . '.' . $ext;
-    //         $destPath = $uploadDir . $newFileName;
-
-    //         if (move_uploaded_file($fileTmpPath, $destPath)) {
-    //             $arquivo_url = 'imagens/' . $newFileName;
-
-    //             // Opcional: deletar imagem antiga do servidor para evitar lixo
-    //             if (!empty($perfilInfo['arquivo_url']) && file_exists('../' . $perfilInfo['arquivo_url'])) {
-    //                 unlink('../' . $perfilInfo['arquivo_url']);
-    //             }
-    //         }
-    //     }
-
-    //     $publicar->update($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado);
-
-    //     header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicados');
-    //     exit;
-    // }
-}
-}

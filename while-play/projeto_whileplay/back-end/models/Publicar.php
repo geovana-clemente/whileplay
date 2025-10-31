@@ -8,36 +8,54 @@ class Publicar {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function save($usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado) {
-        $stmt = $this->pdo->prepare("
-            INSERT INTO publicados (usuario_id, titulo, sinopse, tipo, arquivo_url, data_criacao, publicado)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ");
-        $stmt->execute([$usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado]);
+    public function criar($dados) {
+        $sql = "INSERT INTO publicar (usuario_id, titulo, sinopse, tipo, arquivo_url, publicado, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            $dados['usuario_id'] ?? null,
+            $dados['titulo'] ?? null,
+            $dados['sinopse'] ?? null,
+            $dados['tipo'] ?? null,
+            $dados['arquivo_url'] ?? null,
+            $dados['publicado'] ?? 0,
+            $dados['status'] ?? 1
+        ]);
+
+        return $this->pdo->lastInsertId();
     }
 
-    public function getAll() {
-        $stmt = $this->pdo->query("SELECT * FROM publicados");
+    public function listar() {
+        $stmt = $this->pdo->query("SELECT * FROM publicar ORDER BY data_criacao DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getById($id) {
-        $stmt = $this->pdo->prepare("SELECT * FROM publicados WHERE id = ?");
+    public function buscarPorId($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM publicar WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update($id, $usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado) {
-        $stmt = $this->pdo->prepare("
-            UPDATE publicados
-            SET usuario_id = ?, titulo = ?, sinopse = ?, tipo = ?, arquivo_url, data_criacao, publicado = ?
-            WHERE id = ?
-        ");
-        $stmt->execute([$usuario_id, $titulo, $sinopse, $tipo, $arquivo_url, $data_criacao, $publicado, $id]);
+    public function atualizar($id, $dados) {
+        $sql = "UPDATE publicar SET titulo = ?, sinopse = ?, tipo = ?, arquivo_url = ?, publicado = ?, status = ? WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            $dados['titulo'] ?? null,
+            $dados['sinopse'] ?? null,
+            $dados['tipo'] ?? null,
+            $dados['arquivo_url'] ?? null,
+            $dados['publicado'] ?? 0,
+            $dados['status'] ?? 1,
+            $id
+        ]);
+
+        return $stmt->rowCount();
     }
 
-    public function deleteById($id) {
-        $stmt = $this->pdo->prepare("DELETE FROM publicados WHERE id = ?");
+    public function deletar($id) {
+        $stmt = $this->pdo->prepare("DELETE FROM publicar WHERE id = ?");
         $stmt->execute([$id]);
+        return $stmt->rowCount();
     }
 }
+

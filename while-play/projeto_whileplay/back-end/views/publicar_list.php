@@ -1,109 +1,136 @@
+<?php
+require_once __DIR__ . '/../models/Publicar.php';
+
+$publicar = new Publicar();
+
+// Handle delete via query string
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+    $idDel = (int) $_GET['id'];
+    try {
+        $publicar->deletar($idDel);
+    } catch (Exception $e) {
+        // log if needed
+    }
+    header('Location: publicar_list.php');
+    exit;
+}
+
+$dados = $publicar->listar();
+
+?>
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Publicações</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Publicações</title>
+
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 0;
         }
-        img {
-            max-width: 120px;
-            height: auto;
-            border-radius: 6px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 30px;
-        }
-        th, td {
-            padding: 12px;
-            border: 1px solid #333;
+
+        header {
+            background: #2f3640;
+            color: #f5f6fa;
+            padding: 1rem;
             text-align: center;
         }
-        th {
-            background-color: #f0f0f0;
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        a, button {
-            margin: 0 5px;
-            text-decoration: none;
-            padding: 6px 12px;
-            background-color: #007bff;
+
+        h2, h1 {
+            margin-bottom: 1rem;
+        }
+
+        .card {
+            background: #f1f2f6;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .actions {
+            margin-top: 1rem;
+        }
+
+        .actions button {
+            background: #44bd32;
             color: white;
             border: none;
+            padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
+            transition: 0.3s;
+            margin-right: 8px;
         }
-        button:hover, a:hover {
-            background-color: #0056b3;
+
+        .actions button.delete {
+            background: #e84118;
+        }
+
+        button.add {
+            background: #0097e6;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        button.add:hover {
+            background: #0984e3;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Lista de Publicações</h1>
+    </header>
 
-<h1>Publicações</h1>
-
-<table>
-    <thead>
-        <tr>
-            <th>Usuário ID</th>
-            <th>Título</th>
-            <th>Sinopse</th>
-            <th>Tipo</th>
-            <th>Email</th>
-            <th>Arquivo</th>
-            <th>Data de Criação</th>
-            <th>Publicado</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php if (!empty($publicados)): ?>
-        <?php foreach ($publicados as $item): ?>
-        <tr>
-            <td><?= intval($item['usuario_id']) ?></td>
-            <td><?= htmlspecialchars($item['titulo']) ?></td>
-            <td><?= nl2br(htmlspecialchars($item['sinopse'])) ?></td>
-            <td><?= htmlspecialchars($item['tipo']) ?></td>
-            <td><?= htmlspecialchars($item['email'] ?? '') ?></td>
-            <td>
-                <?php
-                    $arquivoPath = '../' . $item['arquivo_url'];
-                    $ext = strtolower(pathinfo($item['arquivo_url'], PATHINFO_EXTENSION));
-                ?>
-                <?php if (!empty($item['arquivo_url']) && file_exists($arquivoPath)): ?>
-                    <?php if (in_array($ext, ['png', 'jpg', 'jpeg', 'gif'])): ?>
-                        <img src="/meu_projeto/<?= htmlspecialchars($item['arquivo_url']) ?>" alt="Imagem" />
-                    <?php elseif (in_array($ext, ['doc', 'docx'])): ?>
-                        <a href="/meu_projeto/<?= htmlspecialchars($item['arquivo_url']) ?>" target="_blank">Baixar Documento</a>
-                    <?php else: ?>
-                        <a href="/meu_projeto/<?= htmlspecialchars($item['arquivo_url']) ?>" target="_blank">Ver Arquivo</a>
-                    <?php endif; ?>
-                <?php else: ?>
-                    Sem arquivo
-                <?php endif; ?>
-            </td>
-            <td><?= date('d/m/Y H:i', strtotime($item['data_criacao'])) ?></td>
-            <td><?= $item['publicado'] ? 'Sim' : 'Não' ?></td>
-            <td>
-                <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-publicar/<?= $item['id'] ?>">Atualizar</a>
-                <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-publicar" method="POST" style="display:inline;">
-                    <input type="hidden" name="id" value="<?= $item['id'] ?>" />
-                    <button type="submit" onclick="return confirm('Deseja excluir esta publicação?')">Excluir</button>
-                </form>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <tr><td colspan="9">Nenhuma publicação cadastrada.</td></tr>
-    <?php endif; ?>
-    </tbody>
-</table>
-
-<a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/views/publicar_form.php">Nova Publicação</a>
-
+    <main>
+        <a class="add" href="publicar_form.php">➕ Nova Publicação</a>
+        <section id="listaPublicacoes">
+            <?php if (empty($dados)): ?>
+                <p>Nenhuma publicação encontrada.</p>
+            <?php else: ?>
+                <?php foreach ($dados as $pub): ?>
+                    <div class="card">
+                        <h3><?php echo htmlspecialchars($pub['titulo'] ?? '(Sem título)'); ?></h3>
+                        <p><b>ID:</b> <?php echo (int)($pub['id'] ?? 0); ?> <b>Tipo:</b> <?php echo htmlspecialchars($pub['tipo'] ?? ''); ?></p>
+                        <p><b>Status:</b> <?php echo htmlspecialchars($pub['status'] ?? ''); ?></p>
+                        <p><b>Usuário:</b> <?php echo htmlspecialchars($pub['usuario_id'] ?? ''); ?></p>
+                        <?php if (!empty($pub['arquivo_url'])): ?>
+                            <?php
+                                $arquivoVal = $pub['arquivo_url'];
+                                $isAbsolute = preg_match('~^(https?:)?//~i', $arquivoVal) || strpos($arquivoVal, '/') === 0;
+                                $imgSrc = $isAbsolute ? $arquivoVal : '../../front-end/public/MEDIA/imagens/' . $arquivoVal;
+                            ?>
+                            <p><img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="imagem" style="max-width:200px; display:block; margin-bottom:8px;" /></p>
+                        <?php endif; ?>
+                        <p><?php echo nl2br(htmlspecialchars($pub['sinopse'] ?? '(Sem sinopse)')); ?></p>
+                        <div class="actions">
+                            <a href="publicar_form.php?id=<?php echo (int)$pub['id']; ?>">Editar</a>
+                            <a href="?action=delete&id=<?php echo (int)$pub['id']; ?>" class="delete" onclick="return confirm('Deseja realmente excluir esta publicação?')">Excluir</a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </section>
+    </main>
 </body>
 </html>
-
+</body>
+</html>
