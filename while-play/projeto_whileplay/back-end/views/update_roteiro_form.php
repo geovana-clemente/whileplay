@@ -47,7 +47,7 @@
         <input type="submit" value="Atualizar Roteiro">
     </form>
 
-    <a href="list-roteiros.php">Voltar para a lista de roteiros</a>
+    <a href="GitHub/whileplay/while-play/projeto_whileplay/back-end/list-roteiros">Voltar para a lista de roteiros</a>
 
 </body>
 </html>
