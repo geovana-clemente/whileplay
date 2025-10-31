@@ -1,6 +1,6 @@
 <?php
 
-require_once '../models/Pagamento.php';
+require_once __DIR__ . '/../models/Pagamento.php';
 
 class PagamentoController {
     private $pdo;
@@ -10,7 +10,7 @@ class PagamentoController {
     }
 
     public function showForm() {
-        require '../views/pagamento_form.php'; 
+        require __DIR__ . '/../views/pagamento_form.php';
     }
 
     public function savePagamento() {
@@ -29,7 +29,7 @@ class PagamentoController {
     public function listPagamentos() {
         $pagamento = new Pagamento($this->pdo);
         $pagamentos = $pagamento->getAll();
-        require '../views/pagamento_list.php';
+        require __DIR__ . '/../views/pagamento_list.php';
     }
 
     public function deletePagamentoById() {
@@ -45,9 +45,9 @@ class PagamentoController {
     }
 
     public function showUpdateForm($id) {
-        $pagamento = new Pagamento();
+        $pagamento = new Pagamento($this->pdo);
         $pagamentoInfo = $pagamento->getById($id);
-        require '../views/update_pagamento_form.php';
+        require __DIR__ . '/../views/update_pagamento_form.php';
     }
 
     public function updatePagamento() {
@@ -58,7 +58,7 @@ class PagamentoController {
         $codigo = $_POST['codigo'] ?? '';
 
         if ($id_pagamento) {
-            $pagamento = new Pagamento();
+            $pagamento = new Pagamento($this->pdo);
             $pagamento->update($id_pagamento, $nome_do_cartao, $numero_do_cartao, $data_de_vencimento, $codigo);
         }
 
