@@ -12,14 +12,13 @@ try {
     if ($pdo) {
         echo "<p style='color: green;'>✓ Conexão com banco de dados estabelecida com sucesso!</p>";
         
-        // Testar se a tabela users existe
-        $stmt = $pdo->query("SHOW TABLES LIKE 'users'");
+        // Testar se a tabela user existe
+        $stmt = $pdo->query("SHOW TABLES LIKE 'user'");
         if ($stmt->rowCount() > 0) {
-            echo "<p style='color: green;'>✓ Tabela 'users' encontrada!</p>";
-            
+            echo "<p style='color: green;'>✓ Tabela 'user' encontrada!</p>";
             // Mostrar estrutura da tabela
-            $stmt = $pdo->query("DESCRIBE users");
-            echo "<h3>Estrutura da tabela users:</h3>";
+            $stmt = $pdo->query("DESCRIBE user");
+            echo "<h3>Estrutura da tabela user:</h3>";
             echo "<table border='1' style='border-collapse: collapse;'>";
             echo "<tr><th>Campo</th><th>Tipo</th><th>Null</th><th>Key</th><th>Default</th></tr>";
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -32,14 +31,12 @@ try {
                 echo "</tr>";
             }
             echo "</table>";
-            
             // Contar usuários existentes
-            $stmt = $pdo->query("SELECT COUNT(*) as total FROM users");
+            $stmt = $pdo->query("SELECT COUNT(*) as total FROM user");
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             echo "<p>Total de usuários cadastrados: <strong>{$result['total']}</strong></p>";
-            
         } else {
-            echo "<p style='color: orange;'>⚠ Tabela 'users' não encontrada. Execute o script users_table.sql!</p>";
+            echo "<p style='color: orange;'>⚠ Tabela 'user' não encontrada. Execute o script users_table.sql!</p>";
         }
         
     } else {

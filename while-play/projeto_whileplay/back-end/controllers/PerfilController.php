@@ -39,7 +39,7 @@ class PerfilController {
             $nome_completo = $_POST['nome_completo'] ?? '';
             $username = $_POST['username'] ?? '';
             $email = $_POST['email'] ?? '';
-            $senha = $_POST['senha'] ?? ''; // pode ser vazio
+            $senha = $_POST['senha'] ?? '';
             $biografia = $_POST['biografia'] ?? '';
             $foto_url = $_POST['foto_url'] ?? '';
             $data_criacao = date('Y-m-d H:i:s');
@@ -53,5 +53,27 @@ class PerfilController {
         }
     }
 
-    // Outros métodos (listar, deletar) podem permanecer iguais
+    // Listar todos os perfis
+    public function listPerfis() {
+        $perfil = new Perfil();
+        $perfis = $perfil->getAll();
+        include __DIR__ . '/../views/perfil_list.php';
+    }
+
+    // Deletar perfil por ID
+    public function deletePerfilById($id) {
+        if ($id) {
+            $perfil = new Perfil();
+            $perfil->deleteById($id);
+        }
+        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-perfils');
+        exit;
+    }
+
+    // Exibir formulário de atualização de perfil
+    public function showUpdateForm($id) {
+        $perfil = new Perfil();
+        $perfilInfo = $perfil->getById($id);
+        include __DIR__ . '/../views/update_perfil_form.php';
+    }
 }

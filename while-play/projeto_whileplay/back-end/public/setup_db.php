@@ -19,24 +19,20 @@ try {
     // Conectar ao banco específico
     $pdo->exec("USE while_play");
     
-    // Criar tabela users
+    // Criar tabela user
     $sql = "
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE IF NOT EXISTS user (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        nome VARCHAR(100) NOT NULL,
+        nome VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL UNIQUE,
-        password VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        senha VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-    
     $pdo->exec($sql);
-    echo "<p style='color: green;'>✓ Tabela 'users' criada/verificada!</p>";
-    
-    // Criar índices
-    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)");
-    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_users_created_at ON users(created_at)");
-    echo "<p style='color: green;'>✓ Índices criados!</p>";
+    echo "<p style='color: green;'>✓ Tabela 'user' criada/verificada!</p>";
+    // Criar índice
+    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_user_email ON user(email)");
+    echo "<p style='color: green;'>✓ Índice criado!</p>";
     
     echo "<hr>";
     echo "<h3>✅ Configuração completa!</h3>";

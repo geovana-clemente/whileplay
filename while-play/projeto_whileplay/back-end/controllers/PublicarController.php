@@ -57,6 +57,11 @@ class PublicarController {
         require '../views/publicar_list.php';
     }
 
+    // Alias para compatibilidade com rota antiga
+    public function listPublicars() {
+        $this->listPublicados();
+    }
+
     public function deletePublicarById($id) {
     if ($id) {
         $publicar = new Publicar();
