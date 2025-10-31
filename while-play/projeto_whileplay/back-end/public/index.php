@@ -18,26 +18,18 @@ require_once '../controllers/PerfilController.php';
 require_once '../controllers/PublicarController.php';
 require_once '../controllers/PersonagemController.php';
 require_once '../controllers/SuporteController.php';
-require_once '../controllers/UserControllerV2.php'; // Novo controller híbrido
+require_once '../controllers/UserController.php';
 require_once '../config/database.php';
 
-// Criar conexão com o banco de dados (opcional, o UserControllerV2 tem fallback)
-try {
-    $database = new Database();
-    $pdo = $database->getConnection();
-} catch (Exception $e) {
-    $pdo = null; // MySQL não disponível, usar fallback
-}
+// Criar conexão com o banco de dados
+$database = new Database();
+$pdo = $database->getConnection();
 
 // Capturar URL da requisição
 $request = $_SERVER['REQUEST_URI'];
-
-// Limpar query parameters
 $request = strtok($request, '?');
 
-// Roteamento
 switch ($request) {
-    
     // ==================== ROTAS DE AUTENTICAÇÃO ====================
     case '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/register':
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/register':
@@ -49,7 +41,6 @@ switch ($request) {
             echo "Método não permitido";
         }
         break;
-        
     case '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/login':
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/login':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -60,25 +51,17 @@ switch ($request) {
             echo "Método não permitido";
         }
         break;
-        
     case '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/logout':
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/logout':
         $controller = new UserController();
         $controller->logout();
         break;
-        
     case '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/check-auth':
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/check-auth':
         $controller = new UserController();
         $controller->checkAuth();
         break;
-        
-    case '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/system-status':
-    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/system-status':
-        $controller = new UserController();
-        $controller->getSystemStatus();
-        break;
-    
+
     // ==================== ROTAS DE ASSINATURA ====================
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/assinatura':
         $controller = new AssinaturaController($pdo);
@@ -224,20 +207,17 @@ switch ($request) {
         $controller->savePerfil();
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-perfils':
-        // Implementação temporária para listar perfis
-        header('Content-Type: application/json');
-        echo json_encode(['message' => 'Funcionalidade de listar perfis será implementada em breve', 'status' => 'pending']);
+        $controller = new PerfilController($pdo);
+        $controller->listPerfis();
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-perfil':
-        // Implementação temporária para deletar perfil
-        header('Content-Type: application/json');
-        echo json_encode(['message' => 'Funcionalidade de deletar perfil será implementada em breve', 'status' => 'pending']);
+        $controller = new PerfilController($pdo);
+        $controller->deletePerfilById($_POST['id'] ?? null);
         break;
     case (preg_match('/\/GitHub\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-perfil\/(\d+)/', $request, $matches) ? true : false):
         $id = $matches[1];
-        // Implementação temporária para formulário de atualização
-        header('Content-Type: application/json');
-        echo json_encode(['message' => "Formulário de atualização para perfil ID $id será implementado em breve", 'status' => 'pending', 'id' => $id]);
+        $controller = new PerfilController($pdo);
+        $controller->showUpdateForm($id);
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-perfil':
         $controller = new PerfilController($pdo);
@@ -254,9 +234,8 @@ switch ($request) {
         $controller->savePublicar();
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicars':
-        // Implementação temporária para listar publicações
-        header('Content-Type: application/json');
-        echo json_encode(['message' => 'Funcionalidade de listar publicações será implementada em breve', 'status' => 'pending']);
+        $controller = new PublicarController($pdo);
+        $controller->listPublicars();
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-publicar':
         $controller = new PublicarController($pdo);
@@ -271,41 +250,15 @@ switch ($request) {
         $controller = new PublicarController($pdo);
         $controller->updatePublicar();
         break;
-    
+
     // ==================== ROTA DEFAULT ====================
     default:
-        // Verificar se é uma rota de autenticação usando strpos
-        if (strpos($request, '/register') !== false) {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $controller = new UserController();
-                $controller->register();
-            } else {
-                http_response_code(405);
-                echo "Método não permitido";
-            }
-        } elseif (strpos($request, '/login') !== false && strpos($request, '/logout') === false) {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $controller = new UserController();
-                $controller->login();
-            } else {
-                http_response_code(405);
-                echo "Método não permitido";
-            }
-        } elseif (strpos($request, '/logout') !== false) {
-            $controller = new UserController();
-            $controller->logout();
-        } elseif (strpos($request, '/check-auth') !== false) {
-            $controller = new UserController();
-            $controller->checkAuth();
-        } else {
-            // Página não encontrada
-            http_response_code(404);
-            header('Content-Type: application/json');
-            echo json_encode([
-                'error' => 'Página não encontrada',
-                'request' => $request,
-                'timestamp' => date('Y-m-d H:i:s')
-            ]);
-        }
+        http_response_code(404);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'error' => 'Página não encontrada',
+            'request' => $request,
+            'timestamp' => date('Y-m-d H:i:s')
+        ]);
         break;
 }
