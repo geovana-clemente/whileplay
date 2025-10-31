@@ -233,11 +233,25 @@ switch ($request) {
         $controller = new PublicarController($pdo);
         $controller->savePublicar();
         break;
+    // Aliases under /public/ so URLs like /back-end/public/list-publicar work
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/save-publicar':
+        $controller = new PublicarController($pdo);
+        $controller->savePublicar();
+        break;
+
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicars':
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicar': // alias (singular) for compatibility
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/list-publicars':
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/list-publicar':
         $controller = new PublicarController($pdo);
         $controller->listPublicars();
         break;
+
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-publicar':
+        $controller = new PublicarController($pdo);
+        $controller->deletePublicarById($_POST['id'] ?? null);
+        break;
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/delete-publicar':
         $controller = new PublicarController($pdo);
         $controller->deletePublicarById($_POST['id'] ?? null);
         break;

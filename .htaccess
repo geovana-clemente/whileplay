@@ -1,0 +1,12 @@
+# Rewrite short /back-end/... URLs to the full project path expected by the router
+# Place this file in c:/xampp/htdocs/GitHub/whileplay/.htaccess
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Avoid rewriting already-correct long URLs
+  RewriteCond %{REQUEST_URI} !^/GitHub/whileplay/while-play/projeto_whileplay/back-end/
+
+  # Map /back-end/whatever  -> /GitHub/whileplay/while-play/projeto_whileplay/back-end/whatever
+  RewriteRule ^back-end/(.*)$ /GitHub/whileplay/while-play/projeto_whileplay/back-end/$1 [L,QSA]
+</IfModule>

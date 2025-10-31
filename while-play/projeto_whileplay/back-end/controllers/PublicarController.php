@@ -2,6 +2,11 @@
 require_once __DIR__ . '/../models/Publicar.php';
 
 class PublicarController {
+    private $pdo;
+
+    public function __construct($pdo = null) {
+        $this->pdo = $pdo;
+    }
 
     // Exibir formulário de criação (se existir)
     public function showForm() {
@@ -89,6 +94,61 @@ class PublicarController {
             http_response_code(500);
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
+    }
+
+    // --- Methods expected by the router in public/index.php ---
+    public function savePublicar() {
+        // expects POST
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo 'Método não permitido';
+            return;
+        }
+        $post = $_POST;
+    $publicar = new Publicar();
+    $publicar->criar($post);
+    header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/public/list-publicar');
+        exit;
+    }
+
+    public function listPublicars() {
+        $publicar = new Publicar();
+        $rows = $publicar->listar();
+        $publicacoes = $rows;
+        include __DIR__ . '/../views/publicar_list.php';
+    }
+
+    public function deletePublicarById($id) {
+        if (empty($id)) {
+            header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/public/list-publicar');
+            exit;
+        }
+        $publicar = new Publicar();
+        $publicar->deletar($id);
+    header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/public/list-publicar');
+        exit;
+    }
+
+    public function showUpdateForm($id) {
+        $publicar = new Publicar();
+        $publicarInfo = $publicar->buscarPorId($id);
+        include __DIR__ . '/../views/update_publicar_form.php';
+    }
+
+    public function updatePublicar() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo 'Método não permitido';
+            return;
+        }
+        $post = $_POST;
+        $id = !empty($post['id']) ? (int)$post['id'] : null;
+        if ($id) {
+            $publicar = new Publicar();
+            $publicar->atualizar($id, $post);
+        }
+        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-publicars');
+        exit;
     }
 
 }

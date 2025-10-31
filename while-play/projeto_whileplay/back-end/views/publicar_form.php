@@ -18,16 +18,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'status' => $post['status'] ?? 'rascunho'
     ];
 
+  try {
     if ($id) {
-        $publicar->atualizar($id, $dados);
+      $publicar->atualizar($id, $dados);
     } else {
-        $publicar->criar($dados);
+      $publicar->criar($dados);
     }
-
-    header('Location: publicar_list.php');
+  } catch (Exception $e) {
+    echo '<p style="color:red">Erro ao salvar publicação: ' . htmlspecialchars($e->getMessage()) . '</p>';
     exit;
-}
+  }
 
+  $base = rtrim(dirname($_SERVER['REQUEST_URI']), '/\\');
+  $redirect = $base . '/publicar_list.php';
+  header('Location: ' . $redirect);
+  exit;
+}
+ 
 // If editing, load item
 $editing = false;
 $item = null;
@@ -54,7 +61,7 @@ if (isset($_GET['id'])) {
 <body>
   <main>
     <h1><?php echo $editing ? 'Editar Publicação' : 'Nova Publicação'; ?></h1>
-    <form method="post" action="">
+  <form method="post" action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/save-publicar">
       <input type="hidden" name="id" value="<?php echo $editing ? (int)$item['id'] : ''; ?>" />
       <input type="number" name="usuario_id" placeholder="ID do Usuário" required value="<?php echo $editing ? htmlspecialchars($item['usuario_id']) : ''; ?>" />
       <input type="text" name="titulo" placeholder="Título" required value="<?php echo $editing ? htmlspecialchars($item['titulo']) : ''; ?>" />
@@ -72,7 +79,7 @@ if (isset($_GET['id'])) {
       <input type="hidden" name="publicado" value="1" />
       <button type="submit"><?php echo $editing ? 'Atualizar' : 'Salvar'; ?></button>
     </form>
-    <p><a href="publicar_list.php">⬅️ Voltar para a lista</a></p>
+  <p><a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/list-publicar">⬅️ Voltar para a lista</a></p>
   </main>
 </body>
 </html>

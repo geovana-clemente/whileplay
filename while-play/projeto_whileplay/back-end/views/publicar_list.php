@@ -2,19 +2,6 @@
 require_once __DIR__ . '/../models/Publicar.php';
 
 $publicar = new Publicar();
-
-// Handle delete via query string
-if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
-    $idDel = (int) $_GET['id'];
-    try {
-        $publicar->deletar($idDel);
-    } catch (Exception $e) {
-        // log if needed
-    }
-    header('Location: publicar_list.php');
-    exit;
-}
-
 $dados = $publicar->listar();
 
 ?>
@@ -101,7 +88,7 @@ $dados = $publicar->listar();
     </header>
 
     <main>
-        <a class="add" href="publicar_form.php">➕ Nova Publicação</a>
+    <a class="add" href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/publicar">➕ Nova Publicação</a>
         <section id="listaPublicacoes">
             <?php if (empty($dados)): ?>
                 <p>Nenhuma publicação encontrada.</p>
@@ -116,21 +103,22 @@ $dados = $publicar->listar();
                             <?php
                                 $arquivoVal = $pub['arquivo_url'];
                                 $isAbsolute = preg_match('~^(https?:)?//~i', $arquivoVal) || strpos($arquivoVal, '/') === 0;
-                                $imgSrc = $isAbsolute ? $arquivoVal : '../../front-end/public/MEDIA/imagens/' . $arquivoVal;
+                                $imgSrc = $isAbsolute ? $arquivoVal : '/GitHub/whileplay/while-play/projeto_whileplay/front-end/public/MEDIA/imagens/' . $arquivoVal;
                             ?>
                             <p><img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="imagem" style="max-width:200px; display:block; margin-bottom:8px;" /></p>
                         <?php endif; ?>
                         <p><?php echo nl2br(htmlspecialchars($pub['sinopse'] ?? '(Sem sinopse)')); ?></p>
                         <div class="actions">
-                            <a href="publicar_form.php?id=<?php echo (int)$pub['id']; ?>">Editar</a>
-                            <a href="?action=delete&id=<?php echo (int)$pub['id']; ?>" class="delete" onclick="return confirm('Deseja realmente excluir esta publicação?')">Excluir</a>
+                            <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/publicar?id=<?php echo (int)$pub['id']; ?>">Editar</a>
+                            <form method="post" action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/delete-publicar" style="display:inline" onsubmit="return confirm('Deseja realmente excluir esta publicação?')">
+                                <input type="hidden" name="id" value="<?php echo (int)$pub['id']; ?>" />
+                                <button type="submit" class="delete">Excluir</button>
+                            </form>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
         </section>
     </main>
-</body>
-</html>
 </body>
 </html>
