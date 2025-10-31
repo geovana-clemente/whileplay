@@ -1,31 +1,53 @@
-<?php 
+<?php
 
 require_once '../models/Roteiro.php';
 
-class RoteiroController {
-
-    public function showForm() {
-        require '../views/roteiro_form.php'; 
+class RoteiroController
+{
+    /** Exibe o formulário de criação */
+    public function showForm()
+    {
+        require '../views/roteiro_form.php';
     }
 
-    public function saveRoteiro() {
+    /** Salva novo roteiro no banco */
+    public function saveRoteiro()
+    {
         try {
-            $titulo = $_POST['titulo'] ?? '';
+            $titulo = trim($_POST['titulo'] ?? '');
             $categoria = $_POST['categoria'] ?? '';
-            $caminho_imagem = $_POST['caminho_imagem'] ?? '';
-            $visualizacoes = $_POST['visualizacoes'] ?? 0;
-            $assinatura_id = !empty($_POST['assinatura_id']) ? $_POST['assinatura_id'] : null;
+            $visualizacoes = intval($_POST['visualizacoes'] ?? 0);
+            $assinatura_id = !empty($_POST['assinatura_id']) ? intval($_POST['assinatura_id']) : null;
+            $usuario_id = !empty($_POST['usuario_id']) ? intval($_POST['usuario_id']) : null;
+            $publicado = isset($_POST['publicado']) ? 1 : 0;
 
             if (empty($titulo) || empty($categoria)) {
                 throw new Exception("Título e categoria são obrigatórios.");
             }
 
+            // Upload da imagem (opcional)
+            $caminho_imagem = null;
+            if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+                $uploadDir = '../imagens/';
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0755, true);
+                }
+                $fileTmpPath = $_FILES['imagem']['tmp_name'];
+                $fileName = basename($_FILES['imagem']['name']);
+                $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                $newFileName = uniqid('img_', true) . '.' . $ext;
+                $destPath = $uploadDir . $newFileName;
+
+                if (move_uploaded_file($fileTmpPath, $destPath)) {
+                    $caminho_imagem = 'imagens/' . $newFileName;
+                }
+            }
+
             $roteiro = new Roteiro();
-            $roteiro->save($titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id);
+            $roteiro->save($titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id, $usuario_id, $publicado);
 
             header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
             exit;
-
         } catch (Exception $e) {
             http_response_code(400);
             echo json_encode([
@@ -36,13 +58,17 @@ class RoteiroController {
         }
     }
 
-    public function listRoteiros() {
+    /** Lista todos os roteiros */
+    public function listRoteiros()
+    {
         $roteiro = new Roteiro();
         $roteiros = $roteiro->getAll();
         require '../views/roteiro_list.php';
     }
 
-    public function deleteRoteiroById($id) {
+    /** Deleta um roteiro pelo ID */
+    public function deleteRoteiroById($id)
+    {
         if ($id) {
             $roteiro = new Roteiro();
             $roteiro->deleteById($id);
@@ -52,19 +78,25 @@ class RoteiroController {
         exit;
     }
 
-    public function showUpdateForm($id) {
+    /** Exibe o formulário de atualização */
+    public function showUpdateForm($id)
+    {
         $roteiro = new Roteiro();
         $roteiroInfo = $roteiro->getById($id);
         require '../views/update_roteiro_form.php';
     }
 
-    public function updateRoteiro() {
+    /** Atualiza um roteiro existente */
+    public function updateRoteiro()
+    {
         try {
-            $id = $_POST['id'] ?? null;
-            $titulo = $_POST['titulo'] ?? '';
+            $id = intval($_POST['id'] ?? 0);
+            $titulo = trim($_POST['titulo'] ?? '');
             $categoria = $_POST['categoria'] ?? '';
-            $visualizacoes = $_POST['visualizacoes'] ?? 0;
-            $assinatura_id = !empty($_POST['assinatura_id']) ? $_POST['assinatura_id'] : null;
+            $visualizacoes = intval($_POST['visualizacoes'] ?? 0);
+            $assinatura_id = !empty($_POST['assinatura_id']) ? intval($_POST['assinatura_id']) : null;
+            $usuario_id = !empty($_POST['usuario_id']) ? intval($_POST['usuario_id']) : null;
+            $publicado = isset($_POST['publicado']) ? 1 : 0;
 
             $roteiro = new Roteiro();
             $roteiroInfo = $roteiro->getById($id);
@@ -73,9 +105,9 @@ class RoteiroController {
                 throw new Exception("Roteiro não encontrado.");
             }
 
-            $caminho_imagem = $roteiroInfo['caminho_imagem']; // manter imagem antiga por padrão
+            $caminho_imagem = $roteiroInfo['caminho_imagem']; // mantém imagem antiga
 
-            // Se enviou nova imagem, fazer upload e atualizar caminho
+            // Upload nova imagem
             if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
                 $uploadDir = '../imagens/';
                 if (!is_dir($uploadDir)) {
@@ -83,25 +115,24 @@ class RoteiroController {
                 }
                 $fileTmpPath = $_FILES['imagem']['tmp_name'];
                 $fileName = basename($_FILES['imagem']['name']);
-                $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+                $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
                 $newFileName = uniqid('img_', true) . '.' . $ext;
                 $destPath = $uploadDir . $newFileName;
 
                 if (move_uploaded_file($fileTmpPath, $destPath)) {
                     $caminho_imagem = 'imagens/' . $newFileName;
 
-                    // Opcional: deletar imagem antiga do servidor
+                    // Remove imagem antiga
                     if (!empty($roteiroInfo['caminho_imagem']) && file_exists('../' . $roteiroInfo['caminho_imagem'])) {
                         unlink('../' . $roteiroInfo['caminho_imagem']);
                     }
                 }
             }
 
-            $roteiro->update($id, $titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id);
+            $roteiro->update($id, $titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id, $usuario_id, $publicado);
 
             header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
             exit;
-
         } catch (Exception $e) {
             http_response_code(400);
             echo json_encode([
@@ -113,6 +144,3 @@ class RoteiroController {
     }
 }
 ?>
-
-
-

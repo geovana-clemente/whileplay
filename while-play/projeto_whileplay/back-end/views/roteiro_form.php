@@ -7,88 +7,112 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 40px;
+            background-color: #f5f5f5;
         }
+
         h1 {
             color: #333;
+            text-align: center;
         }
+
         form {
-            max-width: 400px;
-            margin-bottom: 20px;
+            max-width: 500px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
+
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            font-weight: bold;
         }
+
         input[type="text"],
         input[type="number"],
-        input[type="file"] {
+        input[type="file"],
+        select {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 14px;
         }
+
         input[type="submit"] {
             background-color: #28a745;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
             cursor: pointer;
+            width: 100%;
         }
+
         input[type="submit"]:hover {
             background-color: #218838;
         }
 
         a {
-            display: inline-block;
-            margin-top: 10px;
+            display: block;
+            text-align: center;
+            margin-top: 15px;
             color: #007bff;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
-
-        
     </style>
 </head>
 <body>
 
     <h1>Criar Novo Roteiro</h1>
 
+    <?php
+    try {
+        $pdo = new PDO('mysql:host=localhost;dbname=while_play;charset=utf8', 'root', '');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $assinaturas = $pdo->query("SELECT id, usuario_id FROM assinaturas")->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "<p style='color: red; text-align: center;'>Erro ao carregar assinaturas: " . $e->getMessage() . "</p>";
+        $assinaturas = [];
+    }
+    ?>
+
     <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/save-roteiro" method="POST" enctype="multipart/form-data">
-        <label for="titulo">Título:</label><br>
-        <input type="text" id="titulo" name="titulo" required><br><br>
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required>
 
-        <label for="categoria">Categoria:</label><br>
-        <input type="text" id="categoria" name="categoria" required><br><br>
+        <label for="categoria">Categoria:</label>
+        <input type="text" id="categoria" name="categoria" required>
 
-        <label for="imagem">Imagem:</label><br>
-        <input type="file" id="imagem" name="imagem" accept="image/*" required><br><br>
+        <label for="imagem">Imagem:</label>
+        <input type="file" id="imagem" name="imagem" accept="image/*" required>
 
-        <label for="visualizacoes">Visualizações:</label><br>
-        <input type="number" id="visualizacoes" name="visualizacoes" value="0" min="0"><br><br>
+        <label for="visualizacoes">Visualizações:</label>
+        <input type="number" id="visualizacoes" name="visualizacoes" value="0" min="0">
 
-        <label for="assinatura_id">ID da Assinatura:</label><br>
-        <input type="number" id="assinatura_id" name="assinatura_id" required><br><br>
+        <label for="assinatura_id">Assinatura:</label>
+        <select name="assinatura_id" id="assinatura_id" required>
+            <option value="">Selecione uma assinatura</option>
+            <?php foreach ($assinaturas as $assinatura): ?>
+                <option value="<?= htmlspecialchars($assinatura['id']) ?>">
+                    <?= htmlspecialchars($assinatura['id']) ?> - Usuário <?= htmlspecialchars($assinatura['usuario_id']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
 
         <input type="submit" value="Salvar Roteiro">
     </form>
 
-    <!-- Exemplo de campo no formulário -->
-<label for="assinatura_id">Assinatura:</label>
-<select name="assinatura_id" id="assinatura_id" required>
-    <?php
-    $pdo = new PDO('mysql:host=localhost;dbname=while_play', 'root', '');
-    $assinaturas = $pdo->query("SELECT id, usuario FROM assinaturas")->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($assinaturas as $assinatura) {
-        echo "<option value=\"{$assinatura['id']}\">{$assinatura['id']} - {$assinatura['usuario']}</option>";
-    }
-    ?>
-</select>
-
-    <br>
     <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-roteiros">Ver todos os roteiros</a>
 
 </body>
