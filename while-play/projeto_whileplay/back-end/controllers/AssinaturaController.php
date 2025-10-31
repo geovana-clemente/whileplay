@@ -1,5 +1,4 @@
 <?php
-
 require_once '../models/Assinatura.php';
 
 class AssinaturaController {
@@ -9,17 +8,20 @@ class AssinaturaController {
     }
 
     public function saveAssinatura() {
-        $usuario = $_POST['usuario'] ?? '';
+        $usuario_id = $_POST['usuario_id'] ?? '';
         $cidade = $_POST['cidade'] ?? '';
         $endereco = $_POST['endereco'] ?? '';
         $cep = $_POST['cep'] ?? '';
         $cpf = $_POST['cpf'] ?? '';
-        $data_assinatura = $_POST['data_assinatura'] ?? date('Y-m-d');
+        $status = $_POST['status'] ?? 'ativa';
+        $data_assinatura = $_POST['data_assinatura'] ?? date('Y-m-d H:i:s');
+        $data_cancelamento = $_POST['data_cancelamento'] ?? null;
 
         $assinatura = new Assinatura();
-        $assinatura->save($usuario, $cidade, $endereco, $cep, $cpf, $data_assinatura);
+        $assinatura->save($usuario_id, $cidade, $endereco, $cep, $cpf, $status, $data_assinatura, $data_cancelamento);
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
+        exit;
     }
 
     public function listAssinaturas() {
@@ -28,13 +30,14 @@ class AssinaturaController {
         require '../views/assinatura_list.php';
     }
 
-    public function deleteAssinaturaByTitle() {
-        $usuario = $_POST['usuario'] ?? null;
-        if ($usuario) {
+    public function deleteAssinaturaByUsuario() {
+        $usuario_id = $_POST['usuario_id'] ?? null;
+        if ($usuario_id) {
             $assinatura = new Assinatura();
-            $assinatura->deleteByTitle($usuario);
+            $assinatura->deleteByUsuario($usuario_id);
         }
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
+        exit;
     }
 
     public function showUpdateForm($id) {
@@ -45,32 +48,20 @@ class AssinaturaController {
 
     public function updateAssinatura() {
         $id = $_POST['id'];
-        $usuario = $_POST['usuario'] ?? '';
+        $usuario_id = $_POST['usuario_id'] ?? '';
         $cidade = $_POST['cidade'] ?? '';
         $endereco = $_POST['endereco'] ?? '';
         $cep = $_POST['cep'] ?? '';
         $cpf = $_POST['cpf'] ?? '';
-        $data_assinatura = $_POST['data_assinatura'] ?? '';
+        $status = $_POST['status'] ?? 'ativa';
+        $data_assinatura = $_POST['data_assinatura'] ?? date('Y-m-d H:i:s');
+        $data_cancelamento = $_POST['data_cancelamento'] ?? null;
 
         $assinatura = new Assinatura();
-        $assinatura->update($id, $usuario, $cidade, $endereco, $cep, $cpf, $data_assinatura);
-
-        require_once '../models/Publicacao.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = intval($_POST['id'] ?? 0);
-    if ($id > 0) {
-        $publicacao = new Publicacao();
-        $publicacao->delete($id);
-    }
-}
-header('Location: publicar_list.php');
-exit;
+        $assinatura->update($id, $usuario_id, $cidade, $endereco, $cep, $cpf, $status, $data_assinatura, $data_cancelamento);
 
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
+        exit;
     }
 }
 ?>
-<!-- Exemplo de campo correto -->
-<input type="text" name="usuario" ...>
-
