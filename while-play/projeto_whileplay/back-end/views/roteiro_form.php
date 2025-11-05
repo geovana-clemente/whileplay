@@ -43,6 +43,21 @@
             font-size: 14px;
         }
 
+        /* Correção: garantir que o SELECT esteja acima de outros elementos e possa ser clicado */
+        select {
+            background: #fff;
+            position: relative;
+            z-index: 10; /* fica acima de inputs que possam sobrepor */
+            -webkit-appearance: menulist-button;
+            appearance: menulist-button;
+        }
+
+        /* manter file input atrás do select caso haja sobreposição */
+        input[type="file"] {
+            position: relative;
+            z-index: 1;
+        }
+
         input[type="submit"] {
             background-color: #28a745;
             color: white;
@@ -106,7 +121,7 @@
         <input type="number" id="visualizacoes" name="visualizacoes" value="0" min="0">
 
         <label for="assinatura_id">Assinatura:</label>
-        <select name="assinatura_id" id="assinatura_id" required>
+        <select name="assinatura_id" id="assinatura_id" required tabindex="0">
             <option value="">Selecione uma assinatura</option>
             <?php foreach ($assinaturas as $assinatura): ?>
                 <option value="<?= htmlspecialchars($assinatura['id']) ?>">
