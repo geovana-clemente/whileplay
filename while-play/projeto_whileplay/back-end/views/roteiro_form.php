@@ -122,15 +122,6 @@
 
         <label for="visualizacoes">Visualizações:</label>
         <input type="number" id="visualizacoes" name="visualizacoes" value="0" min="0">
-            
-            <?php foreach ($assinaturas as $assinatura): ?>
-                <option value="<?= htmlspecialchars($assinatura['id']) ?>">
-                    Assinatura #<?= htmlspecialchars($assinatura['id']) ?> - 
-                    <?= htmlspecialchars($assinatura['nome_completo']) ?> - 
-                    <?= htmlspecialchars($assinatura['cidade']) ?> 
-                    (CEP: <?= htmlspecialchars($assinatura['cep']) ?>)
-                </option>
-            <?php endforeach; ?>
         </select>
 
         <input type="submit" value="Salvar Roteiro">
