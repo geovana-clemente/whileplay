@@ -16,13 +16,19 @@ class UserController {
     // Processar cadastro
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nome = trim($_POST['nome'] ?? '');
+            $nome_completo = trim($_POST['nome_completo'] ?? $_POST['nome'] ?? '');
+            $username = trim($_POST['username'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
             $password_confirm = $_POST['password_confirm'] ?? '';
 
+            // Gerar username automático se não fornecido
+            if (empty($username)) {
+                $username = $this->generateUsername($nome_completo, $email);
+            }
+
             // Validações
-            $errors = $this->validateRegistration($nome, $email, $password, $password_confirm);
+            $errors = $this->validateRegistration($nome_completo, $username, $email, $password, $password_confirm);
             
             if (!empty($errors)) {
                 $this->redirectWithError($errors[0]);
@@ -35,10 +41,16 @@ class UserController {
                 return;
             }
 
+            // Verificar se username já existe
+            if ($this->userModel->usernameExists($username)) {
+                $this->redirectWithError('username');
+                return;
+            }
+
             // Criar usuário
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             
-            if ($this->userModel->create($nome, $email, $hashedPassword)) {
+            if ($this->userModel->create($nome_completo, $username, $email, $hashedPassword)) {
                 // Redirecionar para login com sucesso
                 header('Location: ../../front-end/views/login.html?success=cadastro');
                 exit();
@@ -52,21 +64,31 @@ class UserController {
     // Processar login
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = trim($_POST['email'] ?? '');
+            $login = trim($_POST['email'] ?? $_POST['login'] ?? '');
             $password = $_POST['password'] ?? '';
 
-            if (empty($email) || empty($password)) {
+            if (empty($login) || empty($password)) {
                 $this->redirectToLogin('campos');
                 return;
             }
 
-            $user = $this->userModel->findByEmail($email);
+            // Tentar login por email ou username
+            $user = null;
+            if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+                $user = $this->userModel->findByEmail($login);
+            } else {
+                $user = $this->userModel->findByUsername($login);
+            }
             
-            if ($user && password_verify($password, $user['password'])) {
+            if ($user && password_verify($password, $user['senha'])) {
+                // Atualizar último login
+                $this->userModel->updateLastLogin($user['id']);
+                
                 // Iniciar sessão
                 session_start();
                 $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_nome'] = $user['nome'];
+                $_SESSION['user_nome'] = $user['nome_completo'];
+                $_SESSION['user_username'] = $user['username'];
                 $_SESSION['user_email'] = $user['email'];
                 
                 // Redirecionar para homepage logada
@@ -100,6 +122,7 @@ class UserController {
             $response['user'] = [
                 'id' => $_SESSION['user_id'],
                 'nome' => $_SESSION['user_nome'],
+                'username' => $_SESSION['user_username'] ?? '',
                 'email' => $_SESSION['user_email']
             ];
         }
@@ -109,13 +132,47 @@ class UserController {
         exit();
     }
 
+    // Gerar username automático
+    private function generateUsername($nome_completo, $email) {
+        // Usar primeira parte do email como base
+        $base = explode('@', $email)[0];
+        
+        // Limpar caracteres especiais
+        $base = preg_replace('/[^a-zA-Z0-9]/', '', strtolower($base));
+        
+        // Garantir que tem pelo menos 3 caracteres
+        if (strlen($base) < 3) {
+            $base = strtolower(str_replace(' ', '', $nome_completo));
+            $base = preg_replace('/[^a-zA-Z0-9]/', '', $base);
+            $base = substr($base, 0, 10);
+        }
+        
+        // Verificar se já existe e adicionar número se necessário
+        $username = $base;
+        $counter = 1;
+        
+        while ($this->userModel->usernameExists($username)) {
+            $username = $base . $counter;
+            $counter++;
+        }
+        
+        return $username;
+    }
+
     // Validar dados de registro
-    private function validateRegistration($nome, $email, $password, $password_confirm) {
+    private function validateRegistration($nome_completo, $username, $email, $password, $password_confirm) {
         $errors = [];
 
-        // Validar nome
-        if (empty($nome) || strlen($nome) < 3 || !preg_match('/^[a-zA-ZÀ-ÿ\s]+$/', $nome)) {
+        // Validar nome completo
+        if (empty($nome_completo) || strlen($nome_completo) < 3 || !preg_match('/^[a-zA-ZÀ-ÿ\s]+$/', $nome_completo)) {
             $errors[] = 'nome';
+        }
+
+        // Validar username
+        if (!empty($username)) {
+            if (strlen($username) < 3 || strlen($username) > 20 || !preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+                $errors[] = 'username_invalido';
+            }
         }
 
         // Validar email

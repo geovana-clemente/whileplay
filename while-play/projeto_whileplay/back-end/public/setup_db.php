@@ -1,5 +1,5 @@
 <?php
-// Script para criar banco e tabela automaticamente
+// Script para criar banco e todas as tabelas do sistema WhilePlay
 
 require_once '../config/database.php';
 
@@ -19,20 +19,50 @@ try {
     // Conectar ao banco específico
     $pdo->exec("USE while_play");
     
-    // Criar tabela user
-    $sql = "
-    CREATE TABLE IF NOT EXISTS user (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nome VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL UNIQUE,
-        senha VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-    $pdo->exec($sql);
-    echo "<p style='color: green;'>✓ Tabela 'user' criada/verificada!</p>";
-    // Criar índice
-    $pdo->exec("CREATE INDEX IF NOT EXISTS idx_user_email ON user(email)");
-    echo "<p style='color: green;'>✓ Índice criado!</p>";
+    // Ler e executar o SQL completo do arquivo users_table.sql
+    $sqlFile = '../users_table.sql';
+    if (file_exists($sqlFile)) {
+        $sql = file_get_contents($sqlFile);
+        
+        // Dividir em comandos separados
+        $commands = array_filter(array_map('trim', explode(';', $sql)));
+        
+        foreach ($commands as $command) {
+            if (!empty($command) && !preg_match('/^(--|\/\*|\*\/|CREATE\s+DATABASE|USE\s+while_play)/i', trim($command))) {
+                try {
+                    $pdo->exec($command);
+                } catch (PDOException $e) {
+                    // Ignorar erros de tabelas já existentes
+                    if (!strpos($e->getMessage(), 'already exists')) {
+                        throw $e;
+                    }
+                }
+            }
+        }
+        echo "<p style='color: green;'>✓ Todas as tabelas do sistema criadas/verificadas!</p>";
+    } else {
+        echo "<p style='color: orange;'>⚠ Arquivo SQL não encontrado, criando tabela básica...</p>";
+        
+        // Criar apenas tabela perfil básica se o arquivo SQL não existir
+        $sql = "
+        CREATE TABLE IF NOT EXISTS perfil (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nome_completo VARCHAR(255) NOT NULL,
+            username VARCHAR(100) UNIQUE NOT NULL,
+            email VARCHAR(255) UNIQUE NOT NULL,
+            senha VARCHAR(255) NOT NULL,
+            biografia TEXT,
+            foto_url VARCHAR(255),
+            status ENUM('ativo', 'inativo', 'banido') DEFAULT 'ativo',
+            token_recuperacao VARCHAR(255),
+            ultimo_login DATETIME,
+            data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_email (email),
+            INDEX idx_username (username)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+        $pdo->exec($sql);
+        echo "<p style='color: green;'>✓ Tabela 'perfil' criada/verificada!</p>";
+    }
     
     echo "<hr>";
     echo "<h3>✅ Configuração completa!</h3>";

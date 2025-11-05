@@ -26,16 +26,19 @@ $uri = $_SERVER['REQUEST_URI'];
 // Remover query string se existir
 $uri = strtok($uri, '?');
 
-// Definir rotas simples baseadas no final da URL
-$route = '';
-if (strpos($uri, 'register') !== false) {
-    $route = 'register';
-} elseif (strpos($uri, 'login') !== false && strpos($uri, 'logout') === false) {
-    $route = 'login';
-} elseif (strpos($uri, 'logout') !== false) {
-    $route = 'logout';
-} elseif (strpos($uri, 'check-auth') !== false) {
-    $route = 'check-auth';
+// Definir rotas simples baseadas no final da URL ou parâmetro action
+$route = $_GET['action'] ?? '';
+
+if (empty($route)) {
+    if (strpos($uri, 'register') !== false) {
+        $route = 'register';
+    } elseif (strpos($uri, 'login') !== false && strpos($uri, 'logout') === false) {
+        $route = 'login';
+    } elseif (strpos($uri, 'logout') !== false) {
+        $route = 'logout';
+    } elseif (strpos($uri, 'check-auth') !== false) {
+        $route = 'check-auth';
+    }
 }
 
 // Processar rota

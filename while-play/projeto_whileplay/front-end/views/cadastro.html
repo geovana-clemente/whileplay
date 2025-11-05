@@ -112,9 +112,10 @@
     <h1>Cadastro</h1>
     <p>Crie sua conta e comece agora!</p>
     <form id="cadastroForm" action="../../back-end/register" method="POST">
-  <input type="text" name="nome" placeholder="Nome completo" required>
+  <input type="text" name="nome_completo" placeholder="Nome completo" required>
+  <input type="text" name="username" placeholder="Nome de usuário (opcional)">
   <input type="email" name="email" placeholder="Email" required>
-  <input type="password" name="password" placeholder="Senha" required>
+  <input type="password" name="password" placeholder="Senha (mín. 6 caracteres)" required>
   <input type="password" name="password_confirm" placeholder="Confirme a senha" required>
   <button type="submit">Cadastrar</button>
     </form>
@@ -132,6 +133,12 @@
       }
       if (params.get('erro') === 'email') {
         alert('Email já cadastrado!');
+      }
+      if (params.get('erro') === 'username') {
+        alert('Username já existe! Tente outro.');
+      }
+      if (params.get('erro') === 'username_invalido') {
+        alert('Username deve ter entre 3-20 caracteres, apenas letras, números e _');
       }
       if (params.get('erro') === 'bd') {
         alert('Erro ao cadastrar usuário. Tente novamente.');

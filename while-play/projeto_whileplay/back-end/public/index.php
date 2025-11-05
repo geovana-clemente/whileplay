@@ -10,7 +10,26 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Carregar controladores
+// Definir cabeçalhos CORS se necessário
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Capturar ação da URL
+$action = $_GET['action'] ?? $_POST['action'] ?? '';
+$uri = $_SERVER['REQUEST_URI'];
+
+// Roteamento para autenticação
+if (in_array($action, ['login', 'register', 'logout', 'check-auth']) || 
+    strpos($uri, 'auth') !== false || 
+    strpos($uri, 'login') !== false || 
+    strpos($uri, 'register') !== false) {
+    
+    require_once 'auth_router.php';
+    exit();
+}
+
+// Carregar controladores para outras funcionalidades
 require_once '../controllers/AssinaturaController.php';
 require_once '../controllers/RoteiroController.php';
 require_once '../controllers/PagamentoController.php';
@@ -77,7 +96,7 @@ switch ($request) {
         break;
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-assinatura':
         $controller = new AssinaturaController($pdo);
-        $controller->deleteAssinaturaByTitle();
+        $controller->deleteAssinaturaByUsuario();
         break;
     case (preg_match('/\/GitHub\/whileplay\/while-play\/projeto_whileplay\/back-end\/update-assinatura\/(\d+)/', $request, $matches) ? true : false):
         $id = $matches[1];
