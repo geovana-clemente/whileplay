@@ -90,6 +90,7 @@ class UserController {
                 $_SESSION['user_nome'] = $user['nome_completo'];
                 $_SESSION['user_username'] = $user['username'];
                 $_SESSION['user_email'] = $user['email'];
+                $_SESSION['user_foto'] = $user['foto_url'];
                 
                 // Redirecionar para homepage logada
                 header('Location: ../../front-end/views/homepage2_com_login.html');
@@ -123,7 +124,8 @@ class UserController {
                 'id' => $_SESSION['user_id'],
                 'nome' => $_SESSION['user_nome'],
                 'username' => $_SESSION['user_username'] ?? '',
-                'email' => $_SESSION['user_email']
+                'email' => $_SESSION['user_email'],
+                'foto_url' => $_SESSION['user_foto'] ?? null
             ];
         }
         

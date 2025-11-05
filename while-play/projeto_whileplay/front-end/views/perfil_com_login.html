@@ -384,6 +384,8 @@
             <span class="material-icons">person</span>
           </div>
           <div class="dropdown-content">
+            <a href="perfil_com_login.html">👤 Meu Perfil</a>
+            <a href="#" onclick="logout()">🚪 Logout</a>
           </div>
         </div>
       </div>
@@ -434,11 +436,174 @@
           <input type="password" id="senha" name="senha">
         </div>
   
-        <button class="salvar">Salvar dados</button>
+        <button class="salvar" onclick="salvarPerfil()">Salvar dados</button>
       </div>
+    </div>
+    
+    <!-- Upload de foto -->
+    <div class="upload-foto">
+      <label for="upload-foto" class="upload-label">
+        <i class="material-icons">camera_alt</i> Alterar Foto
+      </label>
+      <input type="file" id="upload-foto" accept="image/*" onchange="uploadFoto()" style="display: none;">
     </div>
   </div>  
   </div>
+  
+  <script>
+    // Carregar dados do perfil ao carregar a página
+    document.addEventListener('DOMContentLoaded', function() {
+        carregarDadosPerfil();
+    });
+    
+    // Função para carregar dados do perfil
+    function carregarDadosPerfil() {
+  fetch('../../back-end/public/perfil_router.php?action=get_data')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('nomecompleto').value = data.user.nome_completo || '';
+                    document.getElementById('username').value = data.user.username || '';
+                    document.getElementById('email').value = data.user.email || '';
+                    document.getElementById('biografia').value = data.user.biografia || '';
+                    
+                    // Atualizar foto do perfil
+                    if (data.user.foto_url) {
+                        document.querySelector('.fotoperfil img').src = '../../back-end/' + data.user.foto_url;
+                    }
+                } else {
+                    console.error('Erro ao carregar dados:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+    }
+    
+    // Função para salvar perfil
+    function salvarPerfil() {
+        const formData = new FormData();
+        formData.append('nome_completo', document.getElementById('nomecompleto').value);
+        formData.append('username', document.getElementById('username').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('biografia', document.getElementById('biografia').value);
+        
+  fetch('../../back-end/public/perfil_router.php?action=update', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                alert('Perfil atualizado com sucesso!');
+                carregarDadosPerfil(); // Recarregar dados
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao salvar perfil!');
+        });
+    }
+    
+    // Função para upload de foto
+    function uploadFoto() {
+        const fileInput = document.getElementById('upload-foto');
+        const file = fileInput.files[0];
+        
+        if (!file) return;
+        
+        // Verificar se é uma imagem
+        if (!file.type.startsWith('image/')) {
+            alert('Por favor, selecione apenas arquivos de imagem!');
+            return;
+        }
+        
+        // Verificar tamanho (máx 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('A imagem deve ter no máximo 5MB!');
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('foto', file);
+        
+  fetch('../../back-end/public/upload_foto.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Atualizar a imagem na página
+                document.querySelector('.fotoperfil img').src = '../../back-end/' + data.foto_url;
+                alert('Foto atualizada com sucesso!');
+            } else {
+                alert('Erro ao fazer upload: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao fazer upload da foto!');
+        });
+    }
+    
+    // Função de logout
+    function logout() {
+        if (confirm('Deseja realmente sair?')) {
+            window.location.href = '../../back-end/public/auth_router.php?action=logout';
+        }
+    }
+    
+    // Verificar se o usuário está logado
+  fetch('../../back-end/public/auth_router.php?action=check-auth')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.logged) {
+                alert('Você precisa estar logado para acessar esta página!');
+                window.location.href = 'login.html';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao verificar autenticação:', error);
+        });
+  </script>
+  
+  <style>
+    .upload-foto {
+        text-align: center;
+        margin: 20px 0;
+    }
+    
+    .upload-label {
+        background: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.3s;
+    }
+    
+    .upload-label:hover {
+        background: #45a049;
+    }
+    
+    .fotoperfil {
+        text-align: center;
+        margin: 20px 0;
+    }
+    
+    .fotoperfil img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #4CAF50;
+    }
+  </style>
   
 <div class="rodape">
     <div class="producao">

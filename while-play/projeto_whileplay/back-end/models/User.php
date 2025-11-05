@@ -2,7 +2,7 @@
 
 class User {
     private $conn;
-    private $table_name = "perfil";
+    private $table_name = "perfil_novo";
 
     public function __construct($db) {
         $this->conn = $db;

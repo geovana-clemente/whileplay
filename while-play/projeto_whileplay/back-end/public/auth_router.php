@@ -1,85 +1,33 @@
 <?php
+// auth_router.php - Roteador para autenticação (login, cadastro, logout, check-auth)
+session_start();
 
-// Ativar exibição de erros para depuração
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Iniciar sessão se não estiver iniciada
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Definir cabeçalhos CORS se necessário
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-
-// Carregar dependências
 require_once '../controllers/UserController.php';
-require_once '../config/database.php';
+require_once '../controllers/UserControllerV2.php';
 
-// Capturar método e rota
-$method = $_SERVER['REQUEST_METHOD'];
-$uri = $_SERVER['REQUEST_URI'];
+$action = $_GET['action'] ?? '';
 
-// Remover query string se existir
-$uri = strtok($uri, '?');
+$controller = new UserController();
 
-// Definir rotas simples baseadas no final da URL ou parâmetro action
-$route = $_GET['action'] ?? '';
-
-if (empty($route)) {
-    if (strpos($uri, 'register') !== false) {
-        $route = 'register';
-    } elseif (strpos($uri, 'login') !== false && strpos($uri, 'logout') === false) {
-        $route = 'login';
-    } elseif (strpos($uri, 'logout') !== false) {
-        $route = 'logout';
-    } elseif (strpos($uri, 'check-auth') !== false) {
-        $route = 'check-auth';
-    }
-}
-
-// Processar rota
-switch ($route) {
+switch ($action) {
     case 'register':
-        if ($method === 'POST') {
-            $controller = new UserController();
-            $controller->register();
-        } else {
-            http_response_code(405);
-            echo json_encode(['error' => 'Método não permitido']);
-        }
+        $controller->register();
         break;
-        
     case 'login':
-        if ($method === 'POST') {
-            $controller = new UserController();
-            $controller->login();
-        } else {
-            http_response_code(405);
-            echo json_encode(['error' => 'Método não permitido']);
-        }
+        $controller->login();
         break;
-        
     case 'logout':
-        $controller = new UserController();
-        $controller->logout();
-        break;
-        
+        session_destroy();
+        header('Location: ../../front-end/views/login.html?success=logout');
+        exit();
     case 'check-auth':
-        if ($method === 'GET') {
-            $controller = new UserController();
-            $controller->checkAuth();
-        } else {
-            http_response_code(405);
-            echo json_encode(['error' => 'Método não permitido']);
-        }
-        break;
-        
+        header('Content-Type: application/json');
+        $response = [
+            'logged' => isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])
+        ];
+        echo json_encode($response);
+        exit();
     default:
-        http_response_code(404);
-        echo json_encode(['error' => 'Rota não encontrada']);
-        break;
+        header('Location: ../../front-end/views/login.html');
+        exit();
 }

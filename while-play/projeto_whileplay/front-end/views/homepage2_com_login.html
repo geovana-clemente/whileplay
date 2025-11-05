@@ -152,6 +152,18 @@ header {
   display: block;
 }
 
+.dropdown-content a {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.dropdown-content a:hover {
+  background: #f0f0f0;
+}
+
 /* TÍTULOS */
 .container-titulos {
   color: aliceblue;
@@ -264,8 +276,12 @@ h2 {
         <a href="assinatura.html">Assinatura</a>
 
         <div class="profile-dropdown">
-          <div class="profile-icon" onclick="window.location.href='perfil.html'">
+          <div class="profile-icon">
             <span class="material-icons">person</span>
+          </div>
+          <div class="dropdown-content">
+            <a href="perfil_com_login.html">👤 Meu Perfil</a>
+            <a href="#" onclick="logout()">🚪 Logout</a>
           </div>
         </div>
       </div>
@@ -275,6 +291,24 @@ h2 {
       function clearSearch() {
         document.getElementById('searchInput').value = '';
       }
+      
+      function logout() {
+        if (confirm('Deseja realmente sair?')) {
+          window.location.href = '../../back-end/public/auth_router.php?action=logout';
+        }
+      }
+      
+      // Verificar se usuário está logado
+      fetch('../../back-end/public/auth_router.php?action=check-auth')
+        .then(response => response.json())
+        .then(data => {
+          if (!data.logged) {
+            window.location.href = 'login.html';
+          }
+        })
+        .catch(error => {
+          console.error('Erro ao verificar autenticação:', error);
+        });
     </script>
   </header>
 
