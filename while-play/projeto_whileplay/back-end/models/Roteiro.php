@@ -5,6 +5,7 @@ class Roteiro {
 
     public function __construct() {
         try {
+            // AQUI: Ajuste as credenciais de conexão se necessário
             $this->pdo = new PDO('mysql:host=localhost;dbname=while_play;charset=utf8', 'root', '');
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
@@ -26,7 +27,7 @@ class Roteiro {
         }
     }
 
-    // ✅ Cria um novo roteiro
+    // ✅ Cria um novo roteiro (5 argumentos)
     public function save($titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id) {
         $this->validarAssinatura($assinatura_id);
 
@@ -50,7 +51,7 @@ class Roteiro {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // ✅ Atualiza um roteiro existente
+    // ✅ Atualiza um roteiro existente (6 argumentos: $id + 5 campos)
     public function update($id, $titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id) {
         $this->validarAssinatura($assinatura_id);
 

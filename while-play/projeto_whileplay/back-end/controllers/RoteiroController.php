@@ -18,14 +18,16 @@ class RoteiroController
             $categoria = $_POST['categoria'] ?? '';
             $visualizacoes = intval($_POST['visualizacoes'] ?? 0);
             $assinatura_id = !empty($_POST['assinatura_id']) ? intval($_POST['assinatura_id']) : null;
-            $usuario_id = !empty($_POST['usuario_id']) ? intval($_POST['usuario_id']) : null;
-            $publicado = isset($_POST['publicado']) ? 1 : 0;
+            
+            // Variáveis lidas, mas não passadas ao Model, pois ele não as espera:
+            $usuario_id = !empty($_POST['usuario_id']) ? intval($_POST['usuario_id']) : null; 
+            $publicado = isset($_POST['publicado']) ? 1 : 0; // A tabela 'roteiros' não usa este campo
 
             if (empty($titulo) || empty($categoria)) {
                 throw new Exception("Título e categoria são obrigatórios.");
             }
 
-            // Upload da imagem (opcional)
+            // Upload da imagem
             $caminho_imagem = null;
             if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
                 $uploadDir = '../imagens/';
@@ -44,7 +46,8 @@ class RoteiroController
             }
 
             $roteiro = new Roteiro();
-            $roteiro->save($titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id, $usuario_id, $publicado);
+            // ❌ CORREÇÃO: Passando APENAS 5 argumentos, conforme definido em Roteiro::save
+            $roteiro->save($titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id);
 
             header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
             exit;
@@ -95,8 +98,10 @@ class RoteiroController
             $categoria = $_POST['categoria'] ?? '';
             $visualizacoes = intval($_POST['visualizacoes'] ?? 0);
             $assinatura_id = !empty($_POST['assinatura_id']) ? intval($_POST['assinatura_id']) : null;
-            $usuario_id = !empty($_POST['usuario_id']) ? intval($_POST['usuario_id']) : null;
-            $publicado = isset($_POST['publicado']) ? 1 : 0;
+            
+            // Variáveis lidas, mas não passadas ao Model, pois ele não as espera:
+            $usuario_id = !empty($_POST['usuario_id']) ? intval($_POST['usuario_id']) : null; 
+            $publicado = isset($_POST['publicado']) ? 1 : 0; // A tabela 'roteiros' não usa este campo
 
             $roteiro = new Roteiro();
             $roteiroInfo = $roteiro->getById($id);
@@ -129,7 +134,8 @@ class RoteiroController
                 }
             }
 
-            $roteiro->update($id, $titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id, $usuario_id, $publicado);
+            // ❌ CORREÇÃO: Passando APENAS 6 argumentos, conforme definido em Roteiro::update
+            $roteiro->update($id, $titulo, $categoria, $caminho_imagem, $visualizacoes, $assinatura_id);
 
             header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-roteiros');
             exit;
