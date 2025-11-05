@@ -80,7 +80,12 @@
         $pdo = new PDO('mysql:host=localhost;dbname=while_play;charset=utf8', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $assinaturas = $pdo->query("SELECT id, usuario_id FROM assinaturas")->fetchAll(PDO::FETCH_ASSOC);
+        $assinaturas = $pdo->query("
+            SELECT a.id, a.usuario_id, a.cidade, a.cep, p.nome_completo 
+            FROM assinaturas a
+            INNER JOIN perfil p ON a.usuario_id = p.id 
+            WHERE a.status = 'ativa'
+        ")->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "<p style='color: red; text-align: center;'>Erro ao carregar assinaturas: " . $e->getMessage() . "</p>";
         $assinaturas = [];
@@ -105,7 +110,10 @@
             <option value="">Selecione uma assinatura</option>
             <?php foreach ($assinaturas as $assinatura): ?>
                 <option value="<?= htmlspecialchars($assinatura['id']) ?>">
-                    <?= htmlspecialchars($assinatura['id']) ?> - Usuário <?= htmlspecialchars($assinatura['usuario_id']) ?>
+                    Assinatura #<?= htmlspecialchars($assinatura['id']) ?> - 
+                    <?= htmlspecialchars($assinatura['nome_completo']) ?> - 
+                    <?= htmlspecialchars($assinatura['cidade']) ?> 
+                    (CEP: <?= htmlspecialchars($assinatura['cep']) ?>)
                 </option>
             <?php endforeach; ?>
         </select>
