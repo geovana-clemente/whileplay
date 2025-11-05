@@ -29,6 +29,12 @@ class Suporte {
         $stmt->execute([$usuario_id]);
     }
 
+    // Deletar por id da mensagem (corresponde ao formulário de listagem)
+    public function deleteById($id) {
+        $stmt = $this->pdo->prepare("DELETE FROM suportes WHERE id = ?");
+        $stmt->execute([$id]);
+    }
+
     // Buscar por ID
     public function getById($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM suportes WHERE id = ?");

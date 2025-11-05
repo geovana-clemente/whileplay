@@ -26,10 +26,12 @@ class SuporteController {
     }
 
     public function deleteSuporteByTitle() {
-        $usuario_id = $_POST['usuario_id'] ?? null;
-        if ($usuario_id) {
+        // A view envia o id da mensagem no campo 'id'. Ajustar para deletar
+        // pela própria mensagem em vez de deletar por usuario_id.
+        $id = $_POST['id'] ?? null;
+        if ($id) {
             $suporte = new Suporte();
-            $suporte->deleteByTitle($usuario_id);
+            $suporte->deleteById($id);
         }
         header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-suportes');
     }
