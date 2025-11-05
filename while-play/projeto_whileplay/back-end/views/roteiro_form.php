@@ -47,7 +47,7 @@
         select {
             background: #fff;
             position: relative;
-            z-index: 10; /* fica acima de inputs que possam sobrepor */
+            z-index: 9999; /* fica acima de outros elementos */
             -webkit-appearance: menulist-button;
             appearance: menulist-button;
         }
@@ -58,7 +58,10 @@
             z-index: 1;
         }
 
+        /* garantir que o botão de submit não sobreponha o select dropdown */
         input[type="submit"] {
+            position: relative;
+            z-index: 1;
             background-color: #28a745;
             color: white;
             border: none;
@@ -121,8 +124,9 @@
         <input type="number" id="visualizacoes" name="visualizacoes" value="0" min="0">
 
         <label for="assinatura_id">Assinatura:</label>
-        <select name="assinatura_id" id="assinatura_id" required tabindex="0">
-            <option value="">Selecione uma assinatura</option>
+        <select name="assinatura_id" id="assinatura_id" required>
+            <option value="" disabled selected>Selecione uma assinatura</option>
+            
             <?php foreach ($assinaturas as $assinatura): ?>
                 <option value="<?= htmlspecialchars($assinatura['id']) ?>">
                     Assinatura #<?= htmlspecialchars($assinatura['id']) ?> - 
@@ -137,6 +141,17 @@
     </form>
 
     <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-roteiros">Ver todos os roteiros</a>
+
+    <script>
+    // Evita que outros ouvintes de clique no documento interfiram ao abrir o select
+    document.addEventListener('DOMContentLoaded', function(){
+        var sel = document.getElementById('assinatura_id');
+        if (!sel) return;
+        // Evita propagação de eventos que possam fechar o dropdown imediatamente
+        sel.addEventListener('mousedown', function(e){ e.stopPropagation(); }, true);
+        sel.addEventListener('click', function(e){ e.stopPropagation(); });
+    });
+    </script>
 
 </body>
 </html>
