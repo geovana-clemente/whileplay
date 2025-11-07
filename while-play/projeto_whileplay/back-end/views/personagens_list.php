@@ -48,8 +48,8 @@
 <table>
     <thead>
         <tr>
-            <th>Mais Bem Avaliados</th>
-            <th>Lançados Recentemente</th>
+            <th>Nome</th>
+            <th>Descrição</th>
             <th>Imagem</th>
             <th>Criado em</th>
             <th>Ações</th>
@@ -59,8 +59,8 @@
     <?php if (!empty($personagens)): ?>
         <?php foreach ($personagens as $personagem): ?>
         <tr>
-            <td><?= htmlspecialchars($personagem['mais_bem_avaliados']) ?></td>
-            <td><?= htmlspecialchars($personagem['lançados_recentemente']) ?></td>
+            <td><?= htmlspecialchars($personagem['nome']) ?></td>
+            <td><?= htmlspecialchars($personagem['descricao']) ?></td>
             <td>
                 <?php
                     $imgPath = '../' . $personagem['caminho_imagem'];
@@ -71,11 +71,11 @@
                     Sem imagem
                 <?php endif; ?>
             </td>
-            <td><?= date('d/m/Y H:i', strtotime($personagem['created_at'])) ?></td>
+            <td><?= date('d/m/Y H:i', strtotime($personagem['data_criacao'])) ?></td>
             <td>
-                <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-personagem/<?= $personagem['id_sobre'] ?>">Atualizar</a>
-                <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/delete-personagem" method="POST" style="display:inline;">
-                    <input type="hidden" name="id" value="<?= $personagem['id_sobre'] ?>" />
+                <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/update-personagens/<?= $personagem['id_sobre'] ?>">Atualizar</a>
+                <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/delete-personagens" method="POST" style="display:inline;">
+                    <input type="hidden" name="id_sobre" value="<?= $personagem['id_sobre'] ?>" />
                     <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este personagem?')">Excluir</button>
                 </form>
             </td>
@@ -87,7 +87,7 @@
     </tbody>
 </table>
 
-<a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/personagem">Novo Personagem</a>
+<a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/personagens/create">Novo Personagem</a>
 
 </body>
 </html>

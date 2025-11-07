@@ -20,7 +20,7 @@
             font-weight: bold;
         }
         input[type="text"],
-        input[type="number"],
+        textarea,
         input[type="file"] {
             width: 100%;
             padding: 10px;
@@ -57,17 +57,14 @@
 </head>
 <body>
 
-<form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/save-personagem" method="POST" enctype="multipart/form-data">
+<form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/save-personagens" method="POST" enctype="multipart/form-data">
     <h2>Cadastrar Novo Personagem</h2>
 
-    <label for="id_sobre">ID Sobre:</label>
-    <input type="text" id="id_sobre" name="id_sobre" required>
+    <label for="nome">Nome do Personagem:</label>
+    <input type="text" id="nome" name="nome" required>
 
-    <label for="mais_bem_avaliados">Mais Bem Avaliados:</label>
-    <input type="text" id="mais_bem_avaliados" name="mais_bem_avaliados" required>
-
-    <label for="lançados_recentemente">Lançados Recentemente:</label>
-    <input type="text" id="lançados_recentemente" name="lançados_recentemente" required>
+    <label for="descricao">Descrição:</label>
+    <textarea id="descricao" name="descricao" rows="4" required></textarea>
 
     <label for="imagem">Imagem do Personagem:</label>
     <input type="file" id="imagem" name="imagem" accept="image/*">
@@ -75,7 +72,7 @@
     <button type="submit">Salvar</button>
 </form>
 
-<a class="back-link" href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-personagens">← Voltar para a lista de personagens</a>
+<a class="back-link" href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/personagens">← Voltar para a lista de personagens</a>
 
 </body>
 </html>

@@ -46,17 +46,14 @@
 
 <h2 style="text-align:center;">Editar Personagem</h2>
 
-<form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-personagem" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="id" value="<?= htmlspecialchars($personagemInfo['id']) ?>">
-
-    <label for="id_sobre">ID Sobre:</label>
-    <input type="text" name="id_sobre" id="id_sobre" value="<?= htmlspecialchars($personagemInfo['id_sobre']) ?>" required>
-
-    <label for="mais_bem_avaliados">Mais Bem Avaliados:</label>
-    <input type="text" name="mais_bem_avaliados" id="mais_bem_avaliados" value="<?= htmlspecialchars($personagemInfo['mais_bem_avaliados']) ?>" required>
-
-    <label for="lançados_recentemente">Lançados Recentemente:</label>
-    <input type="text" name="lançados_recentemente" id="lançados_recentemente" value="<?= htmlspecialchars($personagemInfo['lançados_recentemente']) ?>" required>
+<form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/update-personagens" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="id_sobre" value="<?= htmlspecialchars($personagemInfo['id_sobre']) ?>">
+    
+    <label for="nome">Nome do Personagem:</label>
+    <input type="text" name="nome" id="nome" value="<?= htmlspecialchars($personagemInfo['nome']) ?>" required>
+    
+    <label for="descricao">Descrição:</label>
+    <textarea name="descricao" id="descricao" rows="4" required><?= htmlspecialchars($personagemInfo['descricao']) ?></textarea>
 
     <label for="imagem">Imagem Atual:</label>
     <?php if (!empty($personagemInfo['caminho_imagem'])): ?>
@@ -69,6 +66,7 @@
     <input type="file" name="imagem" id="imagem" accept="image/*">
 
     <input type="submit" value="Salvar Alterações">
+    <input type="hidden" name="usuario_id" value="<?= htmlspecialchars($personagemInfo['usuario_id'] ?? '') ?>">
 </form>
 
 </body>
