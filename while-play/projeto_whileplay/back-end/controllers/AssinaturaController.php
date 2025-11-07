@@ -87,3 +87,5 @@ class AssinaturaController {
     }
 }
 ?>
+
+<form id="cadastroForm" action="http://localhost/while-play/projeto_whileplay/back-end/public/auth_router.php?action=register" method="POST">

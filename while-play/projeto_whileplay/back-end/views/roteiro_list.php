@@ -1,3 +1,4 @@
+<?php include __DIR__ . '/cabecalho_dinamico.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

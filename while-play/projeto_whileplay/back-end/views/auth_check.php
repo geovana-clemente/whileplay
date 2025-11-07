@@ -2,6 +2,12 @@
 // auth_check.php
 session_start();
 
+// Verifica se o usuário tem assinatura ativa e salva na sessão
+if (isset($_SESSION['usuario_id'])) {
+    require_once __DIR__ . '/../helpers/AssinaturaHelper.php';
+    $_SESSION['assinatura_ativa'] = AssinaturaHelper::usuarioTemAssinaturaAtiva($_SESSION['usuario_id']);
+}
+
 /*
   Este script protege páginas restritas.
   Ele deve ser incluído no início de cada arquivo PHP protegido:

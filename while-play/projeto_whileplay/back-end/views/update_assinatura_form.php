@@ -1,4 +1,5 @@
 <?php include __DIR__ . '/auth_check.php'; ?>
+<?php include __DIR__ . '/cabecalho_dinamico.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

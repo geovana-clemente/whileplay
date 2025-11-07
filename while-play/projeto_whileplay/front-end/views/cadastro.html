@@ -111,57 +111,57 @@
   <div class="login-container">
     <h1>Cadastro</h1>
     <p>Crie sua conta e comece agora!</p>
-  <form id="cadastroForm" action="../../back-end/public/auth_router.php?action=register" method="POST">
-  <input type="text" name="nome_completo" placeholder="Nome completo" required>
-  <input type="text" name="username" placeholder="Nome de usuário (opcional)">
-  <input type="email" name="email" placeholder="Email" required>
-  <input type="password" name="password" placeholder="Senha (mín. 6 caracteres)" required>
-  <input type="password" name="password_confirm" placeholder="Confirme a senha" required>
-  <button type="submit">Cadastrar</button>
+    <div id="feedback" style="color: #ff3333; margin-bottom: 1rem;"></div>
+    <form id="cadastroForm" action="../../back-end/public/auth_router.php?action=register" method="POST">
+      <input type="text" name="nome_completo" placeholder="Nome completo" required>
+      <input type="text" name="username" placeholder="Nome de usuário (opcional)">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Senha (mín. 6 caracteres)" required>
+      <input type="password" name="password_confirm" placeholder="Confirme a senha" required>
+      <button type="submit">Cadastrar</button>
     </form>
     <div class="footer">
-  <a href="login.html">Já tem conta?</a>
+      <a href="login.html">Já tem conta?</a>
     </div>
   </div>
 
   <script>
-    // Exibe mensagem de erro/sucesso se houver parâmetro na URL
-    document.addEventListener('DOMContentLoaded', function() {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('erro') === 'senhas') {
-        alert('As senhas não coincidem!');
-      }
-      if (params.get('erro') === 'email') {
-        alert('Email já cadastrado!');
-      }
-      if (params.get('erro') === 'username') {
-        alert('Username já existe! Tente outro.');
-      }
-      if (params.get('erro') === 'username_invalido') {
-        alert('Username deve ter entre 3-20 caracteres, apenas letras, números e _');
-      }
-      if (params.get('erro') === 'bd') {
-        alert('Erro ao cadastrar usuário. Tente novamente.');
-      }
-      if (params.get('erro') === 'nome') {
-        alert('Digite um nome válido (mínimo 3 letras).');
-      }
-      if (params.get('erro') === 'emailinvalido') {
-        alert('Digite um email válido.');
-      }
-      if (params.get('erro') === 'senhapequena') {
-        alert('A senha deve ter pelo menos 6 caracteres.');
-      }
-    });
-
-    // O formulário agora submete para o back-end
-    // Não precisamos mais interceptar o submit
     function handleBackgroundClick(event) {
       const container = document.querySelector('.login-container');
       if (!container.contains(event.target)) {
         const confirmRedirect = confirm("Deseja voltar para a homepage?");
         if (confirmRedirect) {
           window.location.href = "homepage1.html";
+        }
+      }
+    }
+
+    // Exibir mensagens de feedback vindas da URL
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      const feedback = document.getElementById('feedback');
+      if (params.has('erro')) {
+        switch (params.get('erro')) {
+          case 'email':
+            feedback.textContent = 'Email já cadastrado.';
+            break;
+          case 'username':
+            feedback.textContent = 'Nome de usuário já existe.';
+            break;
+          case 'senhas':
+            feedback.textContent = 'As senhas não coincidem.';
+            break;
+          case 'senhapequena':
+            feedback.textContent = 'A senha deve ter pelo menos 6 caracteres.';
+            break;
+          case 'emailinvalido':
+            feedback.textContent = 'Email inválido.';
+            break;
+          case 'bd':
+            feedback.textContent = 'Erro interno. Tente novamente.';
+            break;
+          default:
+            feedback.textContent = 'Erro desconhecido.';
         }
       }
     }

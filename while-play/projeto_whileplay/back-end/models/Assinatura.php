@@ -3,6 +3,10 @@
 class Assinatura {
     private $pdo;
 
+    public function getPdo() {
+        return $this->pdo;
+    }
+
     public function __construct() {
         try {
             $this->pdo = new PDO('mysql:host=localhost;dbname=while_play;charset=utf8', 'root', '');

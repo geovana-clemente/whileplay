@@ -92,8 +92,13 @@ class UserController {
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['user_foto'] = $user['foto_url'];
                 
-                // Redirecionar para homepage logada
-                header('Location: ../../front-end/views/homepage2_com_login.html');
+                // Verificar se o usuário tem assinatura ativa
+                require_once '../helpers/AssinaturaHelper.php';
+                if (AssinaturaHelper::usuarioTemAssinaturaAtiva($user['id'])) {
+                    header('Location: ../../front-end/views/perfil_assinatura.html');
+                } else {
+                    header('Location: ../../front-end/views/homepage2_com_login.html');
+                }
                 exit();
             } else {
                 $this->redirectToLogin('invalido');
