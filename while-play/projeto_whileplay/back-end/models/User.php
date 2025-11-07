@@ -27,6 +27,7 @@ class User {
         
         if ($stmt->execute()) {
             return $this->conn->lastInsertId();
+            
         }
         
         return false;

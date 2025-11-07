@@ -20,7 +20,7 @@ class UserController {
             $username = trim($_POST['username'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
-            $password_confirm = $_POST['password_confirm'] ?? '';
+                $password_confirm = $_POST['password_confirm'] ?? ''; // Ensure password confirmation is captured
 
             // Gerar username automático se não fornecido
             if (empty($username)) {
@@ -52,7 +52,8 @@ class UserController {
             
             if ($this->userModel->create($nome_completo, $username, $email, $hashedPassword)) {
                 // Redirecionar para login com sucesso
-                header('Location: ../../front-end/views/login.html?success=cadastro');
+                    // Redirecionar para login.html após cadastro bem-sucedido
+                    header('Location: ../../front-end/views/login.html?cadastro=sucesso');
                 exit();
             } else {
                 $this->redirectWithError('bd');
@@ -68,8 +69,8 @@ class UserController {
             $password = $_POST['password'] ?? '';
 
             if (empty($login) || empty($password)) {
-                $this->redirectToLogin('campos');
-                return;
+                header('Location: ../../front-end/views/login.html?error=campos');
+                exit();
             }
 
             // Tentar login por email ou username
@@ -79,30 +80,32 @@ class UserController {
             } else {
                 $user = $this->userModel->findByUsername($login);
             }
-            
-            if ($user && password_verify($password, $user['senha'])) {
+
+            if ($user && isset($user['senha']) && password_verify($password, $user['senha'])) {
                 // Atualizar último login
-                $this->userModel->updateLastLogin($user['id']);
-                
+                if (method_exists($this->userModel, 'updateLastLogin')) {
+                    $this->userModel->updateLastLogin($user['id']);
+                }
+
                 // Iniciar sessão
                 session_start();
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_nome'] = $user['nome_completo'];
                 $_SESSION['user_username'] = $user['username'];
                 $_SESSION['user_email'] = $user['email'];
-                $_SESSION['user_foto'] = $user['foto_url'];
-                
+                $_SESSION['user_foto'] = $user['foto_url'] ?? '';
+
                 // Verificar se o usuário tem assinatura ativa
                 require_once '../helpers/AssinaturaHelper.php';
-                if (AssinaturaHelper::usuarioTemAssinaturaAtiva($user['id'])) {
+                if (class_exists('AssinaturaHelper') && method_exists('AssinaturaHelper', 'usuarioTemAssinaturaAtiva') && AssinaturaHelper::usuarioTemAssinaturaAtiva($user['id'])) {
                     header('Location: ../../front-end/views/perfil_assinatura.html');
                 } else {
                     header('Location: ../../front-end/views/homepage2_com_login.html');
                 }
                 exit();
             } else {
-                $this->redirectToLogin('invalido');
-                return;
+                header('Location: ../../front-end/views/login.html?error=invalido');
+                exit();
             }
         }
     }

@@ -11,7 +11,7 @@ class Perfil {
     // Salvar novo perfil
     public function save($nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao) {
         $stmt = $this->pdo->prepare("
-            INSERT INTO perfil (nome_completo, username, email, senha, biografia, foto_url, data_criacao)
+            INSERT INTO perfil_novo (nome_completo, username, email, senha, biografia, foto_url, data_criacao)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         $stmt->execute([$nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao]);
