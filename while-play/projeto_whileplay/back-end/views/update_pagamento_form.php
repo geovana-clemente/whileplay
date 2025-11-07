@@ -3,74 +3,127 @@
 <head>
     <meta charset="UTF-8" />
     <title>Atualizar Pagamento</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        form {
-            max-width: 400px;
-            margin: 30px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: Arial, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Adamina&display=swap');
+        @import url('https://fonts.googleapis.com/css?family=PT+Mono|Quicksand:400,700&display=swap');
+
+        :root {
+            --coral: #EF533D;
+            --navy: #0F1626;
+            --leather: #AB987A;
+            --eggshell: #F5F5F5;
         }
+
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('/while-play/projeto_whileplay/front-end/public/MEDIA/imagens/backgroundclean.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--navy);
+            font-family: 'Adamina', serif;
+            margin-bottom: 2rem;
+        }
+
+        form {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+            box-shadow: 
+                2px 2px 8px rgba(15,22,38,0.05),
+                0 0 64px rgba(15,22,38,0.1);
+            width: 350px;
+        }
+
         label {
             display: block;
-            margin-top: 15px;
+            margin-bottom: 0.3rem;
             font-weight: bold;
+            color: var(--navy);
         }
+
         input[type="text"],
-        input[type="date"],
-        input[type="number"] {
+        input[type="number"],
+        input[type="month"] {
             width: 100%;
-            padding: 8px 6px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            margin-top: 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 12px;
-            cursor: pointer;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            width: 100%;
-            font-size: 16px;
+            margin-bottom: 1rem;
+            font-family: inherit;
         }
-        a {
-            display: block;
-            margin: 15px auto;
+
+        input[type="submit"] {
+            width: 100%;
+            background: var(--coral);
+            border: none;
+            color: white;
+            font-family: inherit;
+            font-weight: 700;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.2s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background: var(--navy);
+        }
+
+        a h4 {
             text-align: center;
-            color: #555;
-            text-decoration: none;
+            margin-top: 1.5rem;
+            color: var(--coral);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        a h4:hover {
+            color: var(--navy);
+        }
+
+        /* Responsividade */
+        @media (max-width: 400px) {
+            form {
+                width: 90%;
+                padding: 2rem 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div>
+        <h1>Atualizar Pagamento</h1>
+        <form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-pagamento" method="POST">
+            
+            <input type="hidden" name="id_pagamento" value="<?php echo htmlspecialchars($pagamentoInfo['id_pagamento']); ?>">
 
-<h2 style="text-align:center;">Atualizar Pagamento</h2>
+            <label for="nome_do_cartao">Nome no Cartão:</label>
+            <input type="text" id="nome_do_cartao" name="nome_do_cartao" value="<?php echo htmlspecialchars($pagamentoInfo['nome_do_cartao']); ?>" required autocomplete="cc-name" placeholder="Como aparece no cartão">
 
-<form action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/update-pagamento" method="POST">
+            <label for="numero_do_cartao">Número do Cartão:</label>
+            <input type="text" id="numero_do_cartao" name="numero_do_cartao" value="<?php echo htmlspecialchars($pagamentoInfo['numero_do_cartao']); ?>" required pattern="\d{13,19}" title="Insira um número válido do cartão" autocomplete="cc-number" placeholder="Somente números">
 
-    <label for="id_pagamento">ID do Pagamento:</label>
-    <input type="hidden" name="id_pagamento" value="<?php echo htmlspecialchars($pagamentoInfo['id_pagamento']); ?>">
+            <label for="data_de_vencimento">Data de Vencimento:</label>
+            <input type="month" id="data_de_vencimento" name="data_de_vencimento" value="<?php echo htmlspecialchars($pagamentoInfo['data_de_vencimento']); ?>" required autocomplete="cc-exp">
 
-    <label for="nome_do_cartao">Nome no Cartão:</label>
-    <input type="text" id="nome_do_cartao" name="nome_do_cartao" value="<?php echo htmlspecialchars($pagamentoInfo['nome_do_cartao']); ?>" required>
+            <label for="codigo">Código de Segurança (CVV):</label>
+            <input type="text" id="codigo" name="codigo" value="<?php echo htmlspecialchars($pagamentoInfo['codigo']); ?>" required pattern="\d{3,4}" title="3 ou 4 dígitos" autocomplete="cc-csc" placeholder="3 ou 4 dígitos">
 
-    <label for="numero_do_cartao">Número do Cartão:</label>
-    <input type="text" id="numero_do_cartao" name="numero_do_cartao" value="<?php echo htmlspecialchars($pagamentoInfo['numero_do_cartao']); ?>" required pattern="\d{13,19}" title="Insira um número válido do cartão">
-
-    <label for="data_de_vencimento">Data de Vencimento:</label>
-    <input type="month" id="data_de_vencimento" name="data_de_vencimento" value="<?php echo htmlspecialchars($pagamentoInfo['data_de_vencimento']); ?>" required>
-
-    <label for="codigo">Código:</label>
-    <input type="text" id="codigo" name="codigo" value="<?php echo htmlspecialchars($pagamentoInfo['codigo']); ?>" required pattern="\d{3,4}" title="Código de 3 ou 4 dígitos">
-
-    <input type="submit" value="Atualizar Pagamento">
-</form>
-
-<a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-pagamentos">Voltar para a lista de pagamentos</a>
-
+            <input type="submit" value="Atualizar Pagamento">
+        </form>
+        <a href="/GitHub/whileplay/while-play/projeto_whileplay/back-end/list-pagamentos"><h4>Voltar para a lista de pagamentos</h4></a>
+    </div>
 </body>
 </html>

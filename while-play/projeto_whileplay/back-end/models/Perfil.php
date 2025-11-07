@@ -10,11 +10,27 @@ class Perfil {
 
     // Salvar novo perfil
     public function save($nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao) {
+        // Verificar se o email já existe
+        $checkEmail = $this->pdo->prepare("SELECT id FROM perfil WHERE email = ?");
+        $checkEmail->execute([$email]);
+        if ($checkEmail->fetch()) {
+            throw new Exception("Este email já está cadastrado.");
+        }
+
+        // Verificar se o username já existe
+        $checkUsername = $this->pdo->prepare("SELECT id FROM perfil WHERE username = ?");
+        $checkUsername->execute([$username]);
+        if ($checkUsername->fetch()) {
+            throw new Exception("Este nome de usuário já está em uso.");
+        }
+
         $stmt = $this->pdo->prepare("
             INSERT INTO perfil (nome_completo, username, email, senha, biografia, foto_url, data_criacao)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         $stmt->execute([$nome_completo, $username, $email, $senha, $biografia, $foto_url, $data_criacao]);
+        
+        return $this->pdo->lastInsertId(); // Retorna o ID do perfil criado
     }
 
     // Listar todos os perfis

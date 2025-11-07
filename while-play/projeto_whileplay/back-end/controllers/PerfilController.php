@@ -2,32 +2,50 @@
 require_once '../models/Perfil.php';
 
 class PerfilController {
+    
+    private function checkSession() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
 
     // Exibir formulário de criação de perfil
     public function showForm() {
+        $this->checkSession();
         include __DIR__ . '/../views/perfil_form.php';
     }
 
     // Salvar novo perfil
     public function savePerfil() {
         try {
-            $nome_completo = $_POST['nome_completo'] ?? '';
-            $username = $_POST['username'] ?? '';
-            $email = $_POST['email'] ?? '';
+            $this->checkSession();
+            
+            // Validar dados obrigatórios
+            $nome_completo = trim($_POST['nome_completo'] ?? '');
+            $username = trim($_POST['username'] ?? '');
+            $email = trim($_POST['email'] ?? '');
             $senha = $_POST['senha'] ?? '';
-            $biografia = $_POST['biografia'] ?? '';
+            $biografia = trim($_POST['biografia'] ?? '');
             $foto_url = $_POST['foto_url'] ?? '';
             $data_criacao = date('Y-m-d H:i:s');
 
-            if (empty($senha)) {
-                throw new Exception("A senha é obrigatória.");
+            if (empty($nome_completo) || empty($username) || empty($email) || empty($senha)) {
+                throw new Exception("Todos os campos obrigatórios devem ser preenchidos.");
+            }
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                throw new Exception("Email inválido.");
             }
 
             // Hash da senha antes de salvar
             $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
             $perfil = new Perfil();
-            $perfil->save($nome_completo, $username, $email, $senhaHash, $biografia, $foto_url, $data_criacao);
+            $newId = $perfil->save($nome_completo, $username, $email, $senhaHash, $biografia, $foto_url, $data_criacao);
+            
+            // Iniciar sessão com o novo ID
+            $_SESSION['user_id'] = $newId;
+            $_SESSION['username'] = $username;
 
             // Se a requisição for AJAX, retornamos JSON; caso contrário, redirecionamos para a lista
             $isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')
@@ -62,7 +80,15 @@ class PerfilController {
     // Atualizar perfil existente
     public function updatePerfil() {
         try {
-            $id = $_POST['id'] ?? 0;
+            $this->checkSession();
+            
+            // Verificar se o usuário está logado
+            if (!isset($_SESSION['user_id'])) {
+                throw new Exception('Usuário não autenticado. Por favor, faça login.');
+            }
+
+            // Usar o ID da sessão ao invés do POST para segurança
+            $id = $_SESSION['user_id'];
 
             $perfil = new Perfil();
             $perfilInfo = $perfil->getById($id);
@@ -141,6 +167,7 @@ class PerfilController {
 
     // Listar todos os perfis
     public function listPerfis() {
+        $this->checkSession();
         $perfil = new Perfil();
         $perfis = $perfil->getAll();
         include __DIR__ . '/../views/perfil_list.php';
@@ -148,6 +175,7 @@ class PerfilController {
 
     // Deletar perfil por ID
     public function deletePerfilById($id) {
+        $this->checkSession();
         if ($id) {
             $perfil = new Perfil();
             $perfil->deleteById($id);
@@ -158,6 +186,7 @@ class PerfilController {
 
     // Exibir formulário de atualização de perfil
     public function showUpdateForm($id) {
+        $this->checkSession();
         $perfil = new Perfil();
         $perfilInfo = $perfil->getById($id);
         include __DIR__ . '/../views/update_perfil_form.php';
