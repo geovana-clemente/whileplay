@@ -2,7 +2,7 @@
 
 // Verificar se o usuário está logado
 function checkAuth() {
-    return fetch('../../back-end/check-auth', {
+    return fetch('../../back-end/public/auth_router.php?action=check-auth', {
         method: 'GET',
         credentials: 'same-origin'
     })
@@ -16,7 +16,7 @@ function checkAuth() {
 // Fazer logout
 function logout() {
     if (confirm('Deseja realmente sair?')) {
-        window.location.href = '../../back-end/logout';
+        window.location.href = '../../back-end/public/auth_router.php?action=logout';
     }
 }
 

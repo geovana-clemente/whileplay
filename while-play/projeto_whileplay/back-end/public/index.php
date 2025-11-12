@@ -23,14 +23,7 @@ $action = $_GET['action'] ?? $_POST['action'] ?? '';
 $uri = $_SERVER['REQUEST_URI'];
 
 // Roteamento para autenticação
-if (in_array($action, ['login', 'register', 'logout', 'check-auth']) || 
-    strpos($uri, 'auth') !== false || 
-    strpos($uri, 'login') !== false || 
-    strpos($uri, 'register') !== false) {
-    
-    require_once 'auth_router.php';
-    exit();
-}
+// Agora o roteamento é feito diretamente abaixo via switch/case
 
 // Carregar controladores para outras funcionalidades
 require_once '../controllers/AssinaturaController.php';

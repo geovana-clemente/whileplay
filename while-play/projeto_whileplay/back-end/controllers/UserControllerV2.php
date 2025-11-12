@@ -2,9 +2,10 @@
 
 require_once '../storage/FileUserStorage.php';
 
-class UserController {
+class UserControllerV2 {
     private $storage;
     private $useMysql;
+    private $userModel;
 
     public function __construct() {
         // Tentar usar MySQL, se não funcionar usar arquivo
@@ -52,7 +53,9 @@ class UserController {
 
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                 
-                if ($this->userModel->create($nome, $email, $hashedPassword)) {
+                // Gerar username automático a partir do nome/email
+                $username = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', explode('@', $email)[0]));
+                if ($this->userModel->create($nome, $username, $email, $hashedPassword)) {
                     header('Location: ../../front-end/views/login.html?success=cadastro');
                     exit();
                 } else {

@@ -1,10 +1,18 @@
+<FilesMatch "\.php$">
+	SetHandler application/x-httpd-php
+</FilesMatch>
+
 RewriteEngine On
 
 # Rotas de autenticação
-RewriteRule ^register/?$ public/auth_router.php [L]
-RewriteRule ^login/?$ public/auth_router.php [L]
-RewriteRule ^logout/?$ public/auth_router.php [L]
-RewriteRule ^check-auth/?$ public/auth_router.php [L]
+RewriteRule ^register/?$ public/auth_router.php?action=register [L]
+RewriteRule ^login/?$ public/auth_router.php?action=login [L]
+RewriteRule ^logout/?$ public/auth_router.php?action=logout [L]
+RewriteRule ^check-auth/?$ public/auth_router.php?action=check-auth [L]
+
+# Rotas para outras funcionalidades
+RewriteRule ^perfil/upload-foto/?$ public/upload_foto.php [L]
+RewriteRule ^perfil/?$ public/perfil_router.php [L]
 
 # Outras rotas
 RewriteCond %{REQUEST_FILENAME} !-f

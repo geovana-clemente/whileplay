@@ -1,3 +1,4 @@
+<?php include __DIR__ . '/cabecalho_dinamico.php'; ?>
 <?php
 require_once __DIR__ . '/../models/Publicar.php';
 

@@ -6,6 +6,7 @@
   <title>Login - NewTalent Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    
     * {
       margin: 0;
       padding: 0;
@@ -14,8 +15,7 @@
     }
 
     body {
-        background: url('../public/MEDIA/imagens/fundo_login.png') no-repeat left center fixed;
-      /* background: url(/Whileplay/VIEWS/MEDIA/imagens/While) no-repeat left center fixed; */
+      background: url('../public/MEDIA/imagens/fundo_login.png') no-repeat left center fixed;
       background-size: cover;
       color: #ffffff;
       height: 100vh;
@@ -112,34 +112,18 @@
   <div class="login-container">
     <h1>Login</h1>
     <p>Bem vindo de volta criativo!</p>
-    <form id="loginForm" action="../../back-end/login" method="POST">
-      <input type="text" name="email" placeholder="Email ou Username" required>
-      <input type="password" name="password" placeholder="Senha" required>
-      <button type="submit">Logar</button>
+    <div id="feedback" style="margin: 0 0 1rem 0; font-weight: 500;"></div>
+  <form id="loginForm" action="../../back-end/public/auth_router.php?action=login" method="POST">
+  <input type="text" name="email" placeholder="Email ou Username" required>
+  <input type="password" name="password" placeholder="Senha" required>
+  <button type="submit">Logar</button>
     </form>
-    <a href="recuperar_senha.html">Esqueceu sua senha?</a>
-    <div class="footer"><a href="cadastro.html">Não tem login? Faça cadastro</a>
+  <a href="recuperar_senha.html">Esqueceu sua senha?</a>
+  <div class="footer"><a href="cadastro.html">Não tem login? Faça cadastro</a>
     </div>
   </div>
 
   <script>
-    // Exibe mensagem de erro/sucesso se houver parâmetro na URL
-    document.addEventListener('DOMContentLoaded', function() {
-      const params = new URLSearchParams(window.location.search);
-      
-      if (params.get('erro') === 'campos') {
-        alert('Preencha todos os campos!');
-      } else if (params.get('erro') === 'invalido') {
-        alert('Email ou senha inválidos!');
-      }
-      
-      if (params.get('success') === 'cadastro') {
-        alert('Cadastro realizado com sucesso! Faça login.');
-      }
-      
-      // O formulário agora submete para o back-end
-      // Não precisamos mais interceptar o submit
-    });
     function handleBackgroundClick(event) {
       const container = document.querySelector('.login-container');
       if (!container.contains(event.target)) {
@@ -149,6 +133,40 @@
         }
       }
     }
+
+    // Exibir mensagens de sucesso/erro vindo por query string
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const fb = document.getElementById('feedback');
+      if (!fb) return;
+
+      if (params.get('success') === 'cadastro') {
+        fb.textContent = 'Cadastro realizado com sucesso! Faça login para continuar.';
+        fb.style.color = '#0f5132';
+        fb.style.background = '#d1e7dd';
+        fb.style.padding = '8px 12px';
+        fb.style.borderRadius = '6px';
+      }
+
+      const err = params.get('error') || params.get('erro');
+      if (err) {
+        let msg = 'Erro ao fazer login.';
+        if (err === 'campos') msg = 'Preencha email/usuário e senha.';
+        if (err === 'invalido') msg = 'Credenciais inválidas.';
+        fb.textContent = msg;
+        fb.style.color = '#842029';
+        fb.style.background = '#f8d7da';
+        fb.style.padding = '8px 12px';
+        fb.style.borderRadius = '6px';
+      }
+
+      // Preencher campo de email/username se veio na URL (após cadastro)
+      const emailParam = params.get('email');
+      if (emailParam) {
+        const emailInput = document.querySelector('input[name="email"]');
+        if (emailInput) emailInput.value = emailParam;
+      }
+    })();
   </script>
 </body>
 </html>

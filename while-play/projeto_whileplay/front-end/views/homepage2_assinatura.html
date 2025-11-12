@@ -13,6 +13,27 @@
 </head>
 
 <body>
+  <script>
+    // Base absoluta do front para evitar 404 em diferentes caminhos de acesso
+    function getFrontBase() {
+      return '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/front-end/views/';
+    }
+
+    // Exigir login e assinatura ativa para acessar esta página
+    fetch('../../back-end/public/auth_router.php?action=check-auth')
+      .then(r => r.json())
+      .then(data => {
+        if (!data.logged) {
+          window.location.href = getFrontBase() + 'login.html';
+          return;
+        }
+        if (!data.user || !data.user.assinatura_ativa) {
+          // Redirecionar para página de assinatura se não for assinante
+          window.location.href = getFrontBase() + 'assinatura.html';
+        }
+      })
+      .catch(err => console.error('Erro ao verificar assinatura:', err));
+  </script>
   <style>
     /* BÁSICO */
       /* RESET BÁSICO */

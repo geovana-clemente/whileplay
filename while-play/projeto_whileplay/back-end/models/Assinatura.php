@@ -3,6 +3,10 @@
 class Assinatura {
     private $pdo;
 
+    public function getPdo() {
+        return $this->pdo;
+    }
+
     public function __construct() {
         try {
             $this->pdo = new PDO('mysql:host=localhost;dbname=while_play;charset=utf8', 'root', '');
@@ -38,9 +42,9 @@ class Assinatura {
     // 🟢 Listar todas as assinaturas
     public function getAll() {
         $stmt = $this->pdo->query("
-            SELECT a.*, p.nome AS nome_usuario
+            SELECT a.*, p.nome_completo AS nome_usuario
             FROM assinaturas a
-            LEFT JOIN perfil p ON a.usuario_id = p.id
+            LEFT JOIN perfil_novo p ON a.usuario_id = p.id
             ORDER BY a.id DESC
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
