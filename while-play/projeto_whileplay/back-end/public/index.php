@@ -5,6 +5,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Define a URL base do projeto
+define('BASE_URL', '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public');
+
 // Iniciar sessão se não estiver iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -182,8 +185,44 @@ switch ($request) {
         $controller->updateSuporte();
         break;
 
-    // ==================== ROTAS DE PERSONAGEM ====================
+    // ==================== ROTAS DE PERSONAGENS ====================
+    // Novas rotas padronizadas
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/personagens':
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/personagens/create':
+        $controller = new PersonagemController($pdo);
+        $controller->showForm();
+        break;
+    
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/save-personagens':
+        $controller = new PersonagemController($pdo);
+        $controller->savePersonagem();
+        break;
+    
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/personagens/list':
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/personagens':
+        $controller = new PersonagemController($pdo);
+        $controller->listPersonagens();
+        break;
+    
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/delete-personagens':
+        $controller = new PersonagemController($pdo);
+        $controller->deletePersonagemById($_POST['id_sobre'] ?? null);
+        break;
+    
+    case (preg_match('/\/GitHub\/whileplay\/while-play\/projeto_whileplay\/back-end\/public\/update-personagens\/(\d+)/', $request, $matches) ? true : false):
+        $id = $matches[1];
+        $controller = new PersonagemController($pdo);
+        $controller->showUpdateForm($id);
+        break;
+    
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/update-personagens':
+        $controller = new PersonagemController($pdo);
+        $controller->updatePersonagem();
+        break;
+    
+    // Rotas antigas para compatibilidade
     case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/public/personagem':
+    case '/GitHub/whileplay/while-play/projeto_whileplay/back-end/personagem':
         $controller = new PersonagemController($pdo);
         $controller->showForm();
         break;
