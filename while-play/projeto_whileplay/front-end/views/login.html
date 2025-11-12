@@ -112,6 +112,7 @@
   <div class="login-container">
     <h1>Login</h1>
     <p>Bem vindo de volta criativo!</p>
+    <div id="feedback" style="margin: 0 0 1rem 0; font-weight: 500;"></div>
   <form id="loginForm" action="../../back-end/public/auth_router.php?action=login" method="POST">
   <input type="text" name="email" placeholder="Email ou Username" required>
   <input type="password" name="password" placeholder="Senha" required>
@@ -132,6 +133,40 @@
         }
       }
     }
+
+    // Exibir mensagens de sucesso/erro vindo por query string
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const fb = document.getElementById('feedback');
+      if (!fb) return;
+
+      if (params.get('success') === 'cadastro') {
+        fb.textContent = 'Cadastro realizado com sucesso! Faça login para continuar.';
+        fb.style.color = '#0f5132';
+        fb.style.background = '#d1e7dd';
+        fb.style.padding = '8px 12px';
+        fb.style.borderRadius = '6px';
+      }
+
+      const err = params.get('error') || params.get('erro');
+      if (err) {
+        let msg = 'Erro ao fazer login.';
+        if (err === 'campos') msg = 'Preencha email/usuário e senha.';
+        if (err === 'invalido') msg = 'Credenciais inválidas.';
+        fb.textContent = msg;
+        fb.style.color = '#842029';
+        fb.style.background = '#f8d7da';
+        fb.style.padding = '8px 12px';
+        fb.style.borderRadius = '6px';
+      }
+
+      // Preencher campo de email/username se veio na URL (após cadastro)
+      const emailParam = params.get('email');
+      if (emailParam) {
+        const emailInput = document.querySelector('input[name="email"]');
+        if (emailInput) emailInput.value = emailParam;
+      }
+    })();
   </script>
 </body>
 </html>

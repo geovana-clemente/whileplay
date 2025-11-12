@@ -185,12 +185,13 @@ button {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 <script>
-  document.getElementById('view-library').onclick = function() {
-    window.location.href = 'perfil_com_login.html';
-  };
-  document.getElementById('continue-shopping').onclick = function() {
-    window.location.href = 'homepage2_assinatura.html';
-  };
+  // Helper para montar base do front de forma robusta, independente do caminho acessado
+  function getFrontBase() {
+    // Use uma base absoluta estável do seu ambiente XAMPP
+    return '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/front-end/views/';
+  }
+
+  // Removido: handlers duplicados via .onclick. Vamos usar apenas addEventListener abaixo.
 // Set window height and width variables
 let width = window.innerWidth,
   height = window.innerHeight;
@@ -253,14 +254,12 @@ setTimeout(function() {
 // Adicionar eventos aos botões
 document.getElementById("view-library").addEventListener("click", function() {
   alert("Redirecionando para a Biblioteca...");
-  // Aqui você adicionaria o código para redirecionar para a página da biblioteca
-   window.location.href = "/while-play/projeto_whileplay/front-end/views/biblioteca.html";
+  window.location.href = getFrontBase() + "biblioteca.html";
 });
 
 document.getElementById("continue-shopping").addEventListener("click", function() {
   alert("Continuando a navegação...");
-  // Aqui você adicionaria o código para voltar à página principal ou outra página
-   window.location.href = "/while-play/projeto_whileplay/front-end/views/homepage2_assinatura.html";
+  window.location.href = getFrontBase() + "homepage2_assinatura.html";
 });
 
 // This project uses Matter.js so load in the modules as necessary

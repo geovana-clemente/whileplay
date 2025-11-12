@@ -6,6 +6,31 @@ require_once '../config/database.php';
 class UserController {
     private $userModel;
     private $db;
+    // Base do front calculada de forma robusta a partir do caminho no disco (independe da URL acessada)
+    private function getFrontBase() {
+        // 1) Tentar calcular a partir do filesystem (DocumentRoot + caminho do projeto)
+        $docRoot = $_SERVER['DOCUMENT_ROOT'] ?? '';
+        $docRoot = $docRoot ? str_replace('\\', '/', realpath($docRoot)) : '';
+        $projectDir = str_replace('\\', '/', realpath(__DIR__ . '/../../')); // .../projeto_whileplay
+
+        if ($docRoot && $projectDir && strpos($projectDir, $docRoot) === 0) {
+            $relative = substr($projectDir, strlen($docRoot)); // ex: /GitHub/whileplay/whileplay/while-play/projeto_whileplay
+            $relative = '/' . ltrim($relative, '/');
+            return rtrim($relative, '/') . '/front-end/views/';
+        }
+
+        // 2) Fallback: derivar da URL atual, caso o servidor não exponha DOCUMENT_ROOT corretamente
+        $uri = $_SERVER['REQUEST_URI'] ?? '';
+        $marker = '/projeto_whileplay/';
+        $pos = strpos($uri, $marker);
+        if ($pos !== false) {
+            $prefix = substr($uri, 0, $pos);
+            return $prefix . 'projeto_whileplay/front-end/views/';
+        }
+
+        // 3) Fallback final: caminho padrão deste repositório
+        return '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/front-end/views/';
+    }
 
     public function __construct() {
         $database = new Database();
@@ -16,6 +41,7 @@ class UserController {
     // Processar cadastro
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (session_status() === PHP_SESSION_NONE) { session_start(); }
             $nome_completo = trim($_POST['nome_completo'] ?? $_POST['nome'] ?? '');
             $username = trim($_POST['username'] ?? '');
             $email = trim($_POST['email'] ?? '');
@@ -50,10 +76,14 @@ class UserController {
             // Criar usuário
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             
-            if ($this->userModel->create($nome_completo, $username, $email, $hashedPassword)) {
-                // Redirecionar para login com sucesso
-                    // Redirecionar para login.html após cadastro bem-sucedido
-                    header('Location: ../../front-end/views/login.html?cadastro=sucesso');
+            $newId = $this->userModel->create($nome_completo, $username, $email, $hashedPassword);
+            if ($newId) {
+                // Após cadastro, redirecionar para a página de login (sem auto-login)
+                $query = http_build_query([
+                    'success' => 'cadastro',
+                    'email'   => $email
+                ]);
+                header('Location: ' . $this->getFrontBase() . 'login.html?' . $query);
                 exit();
             } else {
                 $this->redirectWithError('bd');
@@ -65,6 +95,7 @@ class UserController {
     // Processar login
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (session_status() === PHP_SESSION_NONE) { session_start(); }
             $login = trim($_POST['email'] ?? $_POST['login'] ?? '');
             $password = $_POST['password'] ?? '';
 
@@ -87,8 +118,7 @@ class UserController {
                     $this->userModel->updateLastLogin($user['id']);
                 }
 
-                // Iniciar sessão
-                session_start();
+                // Iniciar sessão (já iniciada acima se necessário)
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_nome'] = $user['nome_completo'];
                 $_SESSION['user_username'] = $user['username'];
@@ -97,14 +127,27 @@ class UserController {
 
                 // Verificar se o usuário tem assinatura ativa
                 require_once '../helpers/AssinaturaHelper.php';
-                if (class_exists('AssinaturaHelper') && method_exists('AssinaturaHelper', 'usuarioTemAssinaturaAtiva') && AssinaturaHelper::usuarioTemAssinaturaAtiva($user['id'])) {
-                    header('Location: ../../front-end/views/perfil_assinatura.html');
+                $temAssinatura = false;
+                if (class_exists('AssinaturaHelper') && method_exists('AssinaturaHelper', 'usuarioTemAssinaturaAtiva')) {
+                    try {
+                        $temAssinatura = AssinaturaHelper::usuarioTemAssinaturaAtiva($user['id']);
+                    } catch (\Throwable $e) {
+                        // Ignorar erro de tabela inexistente e seguir fluxo padrão
+                        $temAssinatura = false;
+                    }
+                }
+                // Guardar flag em sessão para uso no front-end
+                $_SESSION['user_assinatura_ativa'] = $temAssinatura ? 1 : 0;
+
+                if ($temAssinatura) {
+                    // Acesso direto à homepage com assinatura
+                    header('Location: ' . $this->getFrontBase() . 'homepage2_assinatura.html');
                 } else {
-                    header('Location: ../../front-end/views/homepage2_com_login.html');
+                    header('Location: ' . $this->getFrontBase() . 'homepage2_com_login.html');
                 }
                 exit();
             } else {
-                header('Location: ../../front-end/views/login.html?error=invalido');
+                header('Location: ' . $this->getFrontBase() . 'login.html?error=invalido');
                 exit();
             }
         }
@@ -112,9 +155,9 @@ class UserController {
 
     // Logout
     public function logout() {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) { session_start(); }
         session_destroy();
-        header('Location: ../../front-end/views/homepage1.html');
+        header('Location: ' . $this->getFrontBase() . 'homepage1.html');
         exit();
     }
 
@@ -133,7 +176,8 @@ class UserController {
                 'nome' => $_SESSION['user_nome'],
                 'username' => $_SESSION['user_username'] ?? '',
                 'email' => $_SESSION['user_email'],
-                'foto_url' => $_SESSION['user_foto'] ?? null
+                'foto_url' => $_SESSION['user_foto'] ?? null,
+                'assinatura_ativa' => isset($_SESSION['user_assinatura_ativa']) ? (bool)$_SESSION['user_assinatura_ativa'] : false
             ];
         }
         
@@ -205,13 +249,13 @@ class UserController {
 
     // Redirecionar com erro para cadastro
     private function redirectWithError($error) {
-        header('Location: ../../front-end/views/cadastro.html?erro=' . $error);
+        header('Location: ' . $this->getFrontBase() . 'cadastro.html?erro=' . $error);
         exit();
     }
 
     // Redirecionar com erro para login
     private function redirectToLogin($error) {
-        header('Location: ../../front-end/views/login.html?erro=' . $error);
+        header('Location: ' . $this->getFrontBase() . 'login.html?error=' . $error);
         exit();
     }
 }

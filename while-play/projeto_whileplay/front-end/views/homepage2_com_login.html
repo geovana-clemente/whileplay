@@ -292,18 +292,27 @@ h2 {
         document.getElementById('searchInput').value = '';
       }
       
+      // Base absoluta do front para evitar 404 em diferentes caminhos de acesso
+      function getFrontBase() {
+        return '/GitHub/whileplay/whileplay/while-play/projeto_whileplay/front-end/views/';
+      }
+
       function logout() {
         if (confirm('Deseja realmente sair?')) {
           window.location.href = '../../back-end/public/auth_router.php?action=logout';
         }
       }
       
-      // Verificar se usuário está logado
+      // Verificar login e assinatura: se tiver assinatura, enviar direto para a homepage com assinatura
       fetch('../../back-end/public/auth_router.php?action=check-auth')
         .then(response => response.json())
         .then(data => {
           if (!data.logged) {
-            window.location.href = 'login.html';
+            window.location.href = getFrontBase() + 'login.html';
+            return;
+          }
+          if (data.user && data.user.assinatura_ativa) {
+            window.location.href = getFrontBase() + 'homepage2_assinatura.html';
           }
         })
         .catch(error => {

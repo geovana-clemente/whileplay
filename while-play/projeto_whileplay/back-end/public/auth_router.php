@@ -21,11 +21,8 @@ switch ($action) {
         header('Location: ../../front-end/views/login.html?success=logout');
         exit();
     case 'check-auth':
-        header('Content-Type: application/json');
-        $response = [
-            'logged' => isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])
-        ];
-        echo json_encode($response);
+        // Delegar para o controlador para retornar detalhes do usuário e assinatura
+        $controller->checkAuth();
         exit();
     default:
         header('Location: ../../front-end/views/login.html');

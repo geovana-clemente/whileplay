@@ -27,7 +27,17 @@ class AssinaturaController {
         $assinatura = new Assinatura();
         $assinatura->save($usuario_id, $cidade, $endereco, $cep, $cpf, $status, $data_assinatura, $data_cancelamento);
 
-        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
+        // Se o usuário desta assinatura é o mesmo da sessão atual, marque a flag em sessão e redirecione para homepage premium
+        if (session_status() === PHP_SESSION_NONE) { session_start(); }
+        if (!empty($_SESSION['user_id']) && (int)$_SESSION['user_id'] === (int)$usuario_id && $status === 'ativa') {
+            $_SESSION['user_assinatura_ativa'] = 1;
+            // Redireciona direto para a homepage premium do front-end (caminho relativo, funciona em qualquer base)
+            header('Location: ../../front-end/views/homepage2_assinatura.html?assinatura=ok');
+            exit;
+        }
+
+        // Caso contrário (ex.: criado via painel), mantém redirecionamento padrão
+    header('Location: /GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
         exit;
     }
 
@@ -47,7 +57,7 @@ class AssinaturaController {
             $assinatura->deleteByUsuario($usuario_id);
         }
 
-        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
+    header('Location: /GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
         exit;
     }
 
@@ -82,10 +92,9 @@ class AssinaturaController {
         $assinatura = new Assinatura();
         $assinatura->update($id, $usuario_id, $cidade, $endereco, $cep, $cpf, $status, $data_assinatura, $data_cancelamento);
 
-        header('Location: /GitHub/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
+        header('Location: /GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/list-assinaturas');
         exit;
     }
 }
 ?>
 
-<form id="cadastroForm" action="http://localhost/while-play/projeto_whileplay/back-end/public/auth_router.php?action=register" method="POST">

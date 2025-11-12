@@ -5,8 +5,8 @@
   RewriteEngine On
 
   # Avoid rewriting already-correct long URLs
-  RewriteCond %{REQUEST_URI} !^/GitHub/whileplay/while-play/projeto_whileplay/back-end/
+  RewriteCond %{REQUEST_URI} !^/GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/
 
-  # Map /back-end/whatever  -> /GitHub/whileplay/while-play/projeto_whileplay/back-end/whatever
-  RewriteRule ^back-end/(.*)$ /GitHub/whileplay/while-play/projeto_whileplay/back-end/$1 [L,QSA]
+  # Map /back-end/whatever  -> /GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/whatever
+  RewriteRule ^back-end/(.*)$ /GitHub/whileplay/whileplay/while-play/projeto_whileplay/back-end/$1 [L,QSA]
 </IfModule>
