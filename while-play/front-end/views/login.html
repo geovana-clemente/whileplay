@@ -1,0 +1,21 @@
+async function fazerLogin(evento) {
+    evento.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
+
+    try {
+        const resposta = await api.login(email, senha);
+        if (resposta.success) {
+            localStorage.setItem('usuario', JSON.stringify(resposta.user));
+            window.location.href = 'homepage2_com_login.html';
+        } else {
+            alert('Falha no login: ' + resposta.message);
+        }
+    } catch (erro) {
+        console.error('Erro:', erro);
+        alert('Erro ao fazer login');
+    }
+}
+
+document.getElementById('formLogin').addEventListener('submit', fazerLogin);
