@@ -556,12 +556,6 @@
                 </div>
             </div>
             
-            <form id="form-publicar" action="/GitHub/whileplay/while-play/projeto_whileplay/back-end/save-publicar" method="POST" enctype="multipart/form-data">
-              <div class="detail-info">
-                  <div class="input-field">
-                      <label for="usuario_id">ID do Usuário</label>
-                      <input type="number" id="usuario_id" name="usuario_id" required>
-                  </div>
                   <div class="input-field">
                       <label for="titulo">Título do Projeto</label>
                       <input type="text" id="titulo" name="titulo" placeholder="Digite o título do seu projeto" required>
@@ -644,7 +638,7 @@
         // Adicionar evento de clique no botão de publicar para redirecionar para perfil_assinatura.html
         document.getElementById('submit-btn').addEventListener('click', function(event) {
             event.preventDefault(); // Previne o envio do formulário
-            window.location.href = 'perfil_assinatura.html'; // Redireciona para a página de perfil assinatura
+            window.location.href = 'biblioteca.html'; // Redireciona para a página de perfil assinatura
         });
     </script>
     <!-- INÍCIO DO RODAPÉ ADICIONADO -->

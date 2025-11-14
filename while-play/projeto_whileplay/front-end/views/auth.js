@@ -76,4 +76,32 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Exibir informações do usuário se houver elemento específico
     displayUserInfo('userInfo');
+
+    // Aplicar foto do usuário no ícone do perfil, se houver
+    applyProfilePhotoToNavbar();
 });
+
+// Substitui o ícone do perfil na navbar pela foto do usuário (se existir)
+function applyProfilePhotoToNavbar() {
+    checkAuth().then(response => {
+        if (!response.logged) return;
+
+        const foto = response.user && response.user.foto_url ? response.user.foto_url : null;
+        const icon = document.querySelector('.profile-icon');
+        if (!icon) return;
+
+        if (foto) {
+            // Limpar conteúdo atual e inserir imagem
+            icon.innerHTML = '';
+            const img = document.createElement('img');
+            img.alt = 'Foto do perfil';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '50%';
+            // Prefixo para acessar o backend a partir do front
+            img.src = '../../back-end/' + foto + '?t=' + Date.now(); // cache-busting
+            icon.appendChild(img);
+        }
+    }).catch(() => {});
+}
