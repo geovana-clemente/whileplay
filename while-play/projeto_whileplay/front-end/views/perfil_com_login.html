@@ -460,7 +460,7 @@
     function carregarDadosPerfil() {
   fetch('../../back-end/public/perfil_router.php?action=get_data')
             .then(response => response.json())
-            .then(data => {
+      .then(data => {
                 if (data.success) {
                     document.getElementById('nomecompleto').value = data.user.nome_completo || '';
                     document.getElementById('username').value = data.user.username || '';
@@ -469,7 +469,7 @@
                     
                     // Atualizar foto do perfil
                     if (data.user.foto_url) {
-                        document.querySelector('.fotoperfil img').src = '../../back-end/' + data.user.foto_url;
+            document.querySelector('.fotoperfil img').src = '../../back-end/' + data.user.foto_url + '?t=' + Date.now();
                     }
                 } else {
                     console.error('Erro ao carregar dados:', data.message);
@@ -533,10 +533,10 @@
             body: formData
         })
         .then(response => response.json())
-        .then(data => {
+    .then(data => {
             if (data.success) {
                 // Atualizar a imagem na página
-                document.querySelector('.fotoperfil img').src = '../../back-end/' + data.foto_url;
+        document.querySelector('.fotoperfil img').src = '../../back-end/' + data.foto_url + '?t=' + Date.now();
                 alert('Foto atualizada com sucesso!');
             } else {
                 alert('Erro ao fazer upload: ' + data.message);
